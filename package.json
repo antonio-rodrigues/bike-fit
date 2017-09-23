@@ -11,6 +11,7 @@
         "android": "npm run build && cordova run android",
         "ios": "npm run build && cordova run ios"
     },
+    "browserslist": "last 2 versions, ie 10",
     "dependencies": {
         "cordova-android": "^6.2.3",
         "cordova-browser": "^5.0.0",
@@ -37,9 +38,10 @@
         "vuex": "^2.3.1"
     },
     "devDependencies": {
+        "babel-cli": "^6.26.0",
         "babel-core": "^6.0.0",
         "babel-loader": "^6.0.0",
-        "babel-preset-env": "^1.5.1",
+        "babel-preset-env": "^1.6.0",
         "cross-env": "^3.0.0",
         "css-loader": "^0.25.0",
         "file-loader": "^0.9.0",
