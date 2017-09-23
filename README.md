@@ -1,6 +1,12 @@
-# template
+# bike-fit
 
-> A Vue.js project
+> Keep your motorcycle fit & lean!
+
+## Built with
+
+- VueJS
+- Cordova
+- Framework7
 
 ## Build Setup
 
