@@ -2,7 +2,10 @@
  * F7 Themes
  * Avaiable themes ['ios', 'material']
  */
-const theme = 'ios';
+const THEMES = {
+  IOS: 'ios',
+  MATERIAL: 'material'
+};
 
 import Vue from 'vue';
 import App from './components/App.vue';
@@ -15,8 +18,10 @@ import { store } from './store/store';
 import { i18n } from "./i18n";
 
 require('framework7');
+
+// set theme by device type
+const theme = (Framework7.prototype.device.android ? THEMES.MATERIAL : THEMES.IOS);
 require('framework7/dist/css/framework7.' + theme + '.min.css');
-if (store.getters.direction === "rtl") require('framework7/dist/css/framework7.' + theme + '.rtl.min.css');
 require('framework7/dist/css/framework7.' + theme + '.colors.min.css');
 require('framework7-icons/css/framework7-icons.css');
 

@@ -20,8 +20,6 @@ const getters = {
 
 const mutations = {
   locale: function (state, locale) {
-    console.log('__ mutations.locale', locale)
-
     state.locale = locale;
     localStorage.setItem("locale", locale);
   }
