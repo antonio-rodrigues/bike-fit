@@ -1,7 +1,7 @@
 {
     "name": "com.app.bikefit",
     "description": "Keep your motorcycle fit and lean!",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "author": "BikeFit Dev Team <dev@bikefitapp.com>",
     "private": true,
     "scripts": {
