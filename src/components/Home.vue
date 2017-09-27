@@ -15,7 +15,7 @@
           <div class="card-header color-white no-border background-photo" valign="bottom">...</div>
           <div class="card-content">
             <div class="card-content-inner">
-              <img src="{{ myBikeImg }}" class="avatar" />
+              <img src="img/my-bike.png" class="avatar" />
               <p class="color-gray">Posted on January 25, 2017</p>
               <p>Quisque eget vestibulum nulla...</p>
             </div>
@@ -43,7 +43,6 @@
 
 <script>
 import Vue from 'vue'
-const myBikeImg = require('../assets/my-bike.png')
 
 export default {
   computed: {
@@ -139,13 +138,10 @@ export default {
   }
 
   .background-photo {
-    background-image:url(../assets/road-bg.png);
+    /* background: url(img/road-bg.png); */
+    background-color: #000000;
     opacity: 0.8;
   }
-
-  /* .my-bike-photo {
-    background-image:url(../assets/my-bike.png);
-  } */
 
   .avatar {
     position: relative;
@@ -155,8 +151,8 @@ export default {
     bottom: auto;
     margin-right: -50%;
     transform: translate(-50%, -50%);
-    max-width: 100px;
-    max-height: 100px;
+    max-width: 110px;
+    max-height: 110px;
     position: relative;
     border-radius: 50%;
     box-shadow: 0 0 0 1px #fff, 0 0 0 2px #999, 0 1px 3px 3px rgba(0,0,0,.2);
