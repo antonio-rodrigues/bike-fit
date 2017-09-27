@@ -13,7 +13,11 @@ export default {
       save: "Guardar todas as definições",
       restore: "Repôr definições guardadas",
       success: "Operação concluída",
-      failure: "Upssss! Algo correu mal... por favor, tenta mais tarde"
+      failure: "Upssss! Algo correu mal... por favor, tenta mais tarde",
+      info: {
+        row1: "A App pode guardar uma cópia das suas definições na Cloud. Clique em \"Guardar...\" para efectuar a cópia.",
+        row2: "Enganou-se? Não se lembra quais as opções que estavam selecionadas antes? Ou simplesmente re-instalou a app... Nesse caso, pode recuperar facilmente as definições guardadas na Cloud. Clique em \"Repôr...\" e já está!"
+      }
     }
   },
   language: "Linguagem",

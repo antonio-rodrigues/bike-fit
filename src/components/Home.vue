@@ -6,27 +6,44 @@
     <div class="page-content pull-to-refresh-content">
       <div class="pull-to-refresh-layer">
         <div class="preloader"></div>
-        <div class="pull-to-refresh-arrow"></div>
+        <!-- <div class="pull-to-refresh-arrow"></div> -->
       </div>
       <div class="content-block">
-        <card v-for="post in posts" :post="post" :key="post.id" @liked="posts.filter(function(row){ return row.id == post.id})[0].isLiked = true"></card>
+        <!-- <card v-for="post in posts" :post="post" :key="post.id" @liked="posts.filter(row => { return row.id == post.id})[0].isLiked = true"></card> -->
+
+        <div class="card bike-card-header-pic">
+          <div class="card-header color-white no-border background-photo" valign="bottom">...</div>
+          <div class="card-content">
+            <div class="card-content-inner">
+              <img src="{{ myBikeImg }}" class="avatar" />
+              <p class="color-gray">Posted on January 25, 2017</p>
+              <p>Quisque eget vestibulum nulla...</p>
+            </div>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="link">Like</a>
+            <a href="#" class="link">Read more</a>
+          </div>
+        </div>
+
       </div>
     </div>
 
-    <div class="toolbar toolbar-bottom ">
+    <!-- <div class="toolbar toolbar-bottom ">
       <div class="toolbar-inner">
         <a href="#" class="link">1</a>
         <a href="#" class="link">2</a>
         <a href="#" class="link">3</a>
         <a href="#" class="link">4</a>
       </div>
-    </div>
+    </div> -->
 
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
+const myBikeImg = require('../assets/my-bike.png')
 
 export default {
   computed: {
@@ -84,7 +101,7 @@ export default {
       self.getPosts();
 
       // pull to reload event
-      self.$$('.pull-to-refresh-content').on("ptr:refresh", function() {
+      self.$$('.pull-to-refresh-content').on("ptr:refresh", () => {
         self.getPosts();
       });
     },
@@ -92,11 +109,11 @@ export default {
     getPosts: function() {
       const self = this;
 
-      self.$store.dispatch("posts").then(function(response) {
+      self.$store.dispatch("posts").then(response => {
         // success response
         self.$f7.pullToRefreshDone();
         self.$f7.initImagesLazyLoad(".homepage");
-      }, function(response) {
+      }, response => {
         // other responses
         self.$f7.pullToRefreshDone();
         self.$f7.addNotification({
@@ -113,3 +130,35 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .bike-card-header-pic .card-header {
+    height: 40vw;
+    background-size: cover;
+    background-position: 50% 25%;
+  }
+
+  .background-photo {
+    background-image:url(../assets/road-bg.png);
+    opacity: 0.8;
+  }
+
+  /* .my-bike-photo {
+    background-image:url(../assets/my-bike.png);
+  } */
+
+  .avatar {
+    position: relative;
+    top: -15px;
+    left: 50%;
+    right: auta;
+    bottom: auto;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    max-width: 100px;
+    max-height: 100px;
+    position: relative;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px #fff, 0 0 0 2px #999, 0 1px 3px 3px rgba(0,0,0,.2);
+  }
+</style>
