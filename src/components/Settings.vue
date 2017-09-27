@@ -4,7 +4,7 @@
     <div class="navbar">
       <div class="navbar-inner">
         <div class="left">
-          <a href="#" class="link icon-only" @click="$app.router.back()">
+          <a href="#" class="link icon-only" @click="goBack()">
             <i class="icon f7-icons">arrow-left</i>
           </a>
         </div>
@@ -38,6 +38,17 @@
       </div>
     </div>
 
+    <!--backup-options-->
+    <div class="toolbar toolbar-bottom toolbar-fixed">
+      <div class="toolbar-inner">
+        <div class="left"></div>
+        <div class="right">
+          <a href="#" class="link icon-only right open-picker" data-picker=".backup-options">
+            <i class="icon f7-icons icon-more">more_vertical</i>
+          </a>
+        </div>
+      </div>
+    </div>
     <!-- Picker:backup-options -->
     <div class="picker-modal backup-options">
       <div class="toolbar">
@@ -47,50 +58,41 @@
         </div>
       </div>
       <div class="picker-modal-inner">
-        <div class="content-block">
-          <div class="list-block">
-            <div class="row no-gutter backup-header">
-              <div class="col-40">
-                <h4>{{ $app.trans('general_settings.backup.label') }}</h4>
-              </div>
-              <div class="col-60">
-                <i class="icon f7-icons color-bluegray">info</i>
-              </div>
+        <div class="page-content">
+          <div class="content-block backup-header">
+            <div class="content-block-title"><span>{{ $app.trans('general_settings.backup.label') }}</span><i class="icon f7-icons color-bluegray help-icon" @click="showBackupInfo()">info</i></div>
+            <div class="list-block">
+              <ul>
+                <li>
+                  <a href="#" class="list-button item-link item-link-icon" @click="cloudBackup($event.target.value)">
+                    <i class="icon f7-icons">cloud_upload</i>
+                    {{ $app.trans('general_settings.backup.save') }}
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="list-button item-link item-link-icon" @click="cloudRestore($event.target.value)">
+                    <i class="icon f7-icons">cloud_download</i>
+                    {{ $app.trans('general_settings.backup.restore') }}
+                  </a>
+                </li>
+              </ul>
             </div>
-            <ul>
-              <li class="center">
-                <a href="#" class="list-button item-link item-link-icon">
-                  <i class="icon f7-icons">cloud_upload</i>
-                  {{ $app.trans('general_settings.backup.save') }}
-                </a>
-              </li>
-              <li class="center">
-                <a href="#" class="list-button item-link item-link-icon center">
-                  <i class="icon f7-icons">cloud_download</i>
-                  {{ $app.trans('general_settings.backup.restore') }}
-                </a>
-              </li>
-            </ul>
           </div>
         </div>
       </div>
     </div>
 
-    <!--backup-options-->
-    <div class="toolbar toolbar-bottom toolbar-fixed">
-      <div class="toolbar-inner">
-        <div class="left"></div>
-        <div class="right">
-          <a href="#" class="link icon-only right open-picker" data-picker=".backup-options">
-            <i class="icon f7-icons">more_vertical</i>
-          </a>
-        </div>
+    <!-- Backup Options Info Popup -->
+    <div class="popup popup-info-backup">
+      <div class="content-block">
+        <p>Backup options</p>
+        <p><a href="#" class="close-popup">{{ $app.trans('close') }}</a></p>
+        <p>{{ $app.trans('general_settings.backup.info.row1') }}</p>
+        <p>{{ $app.trans('general_settings.backup.info.row2') }}</p>
       </div>
     </div>
-
   </div>
 </template>
-
 
 <script>
 export default {
@@ -107,11 +109,11 @@ export default {
   },
 
   methods: {
-    onF7Init: function() {
+    onF7Init: () => {
       console.info('>> onF7Init()')
     },
 
-    setLocale(locale) {
+    setLocale (locale) {
       const self = this;
 
       self.$f7.showIndicator();
@@ -123,6 +125,27 @@ export default {
       }, 2600);
     },
 
+    cloudBackup (locale) {
+      const self = this;
+      console.log('__ onCloudBackup()')
+      self.$f7.alert(self.$app.trans('general_settings.backup.success'), self.$app.trans('general_settings.backup.save'))
+    },
+
+    cloudRestore (locale) {
+      const self = this;
+      console.log('__ onCloudRestore()')
+      self.$f7.alert(self.$app.trans('general_settings.backup.failure'), self.$app.trans('general_settings.backup.restore'))
+    },
+
+    showBackupInfo () {
+      this.$f7.popup('.popup-info-backup')
+    },
+
+    goBack () {
+      this.$f7.closeModal('.backup-options')
+      this.$app.router.back()
+    },
+
     trans: (key) => {
       return this.$app.trans(key, this.$store.getters.locale);
     }
@@ -132,19 +155,19 @@ export default {
 
 <style scoped>
   .backup-header {
-    padding: 15px 0;
+    margin: 0;
   }
 
-  .backup-header h4 {
-    margin: 1px 0 0;
+  .icon-more {
+    margin-right: 6px;
   }
 
-  .backup-header .f7-icons {
+  .help-icon {
     font-size: 1.2em;
-    /* line-height: 16px; */
+    margin: -4px 0 0 10px;
   }
 
-  .item-link-icon  .f7-icons {
-    margin-right: 10px;
+  .item-link-icon .f7-icons {
+    margin-right: 8px;
   }
 </style>

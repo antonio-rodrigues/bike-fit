@@ -13,7 +13,11 @@ export default {
       save: "Save",
       restore: "Restore",
       success: "Operation successful",
-      failure: "Upssss! Something went wrong... please, try again later"
+      failure: "Upssss! Something went wrong... please, try again later",
+      info: {
+        row1: "This app can save your current setting to the Cloud. Click on \"Save\" to persist your options.",
+        row2: "Made a mistake? Cannot remember what are the previous selected options? Or you simply re-instaled the app... In that case, you easily recover your stored settings from the Cloud. Just click on \"Recover\"."
+      }
     }
   },
   language: "Prefered Language",
