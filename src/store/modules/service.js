@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import moment from "moment"
+import moment from 'moment'
 
 const handleError = (response) => {
   return {
@@ -9,15 +9,6 @@ const handleError = (response) => {
     }
   }
 }
-
-// const appendInfo = (data) => {
-//   return data.map(d => {
-//     console.log('>>> D:', d, this.$moment())
-//     const color = (this.$moment().diff(this.$moment(d.date), 'days') <= 1) ? 'red' : 'yellow'
-//     console.log('color:', color)
-//     Object.assign(d, {color: color})
-//   })
-// }
 
 export default {
   state: {
@@ -29,10 +20,10 @@ export default {
 
   getters: {
     services: (state) => {
-      return state.services;
+      return state.services
     },
     error: (state) => {
-      return state.status.error;
+      return state.status.error
     }
   },
 
@@ -50,18 +41,17 @@ export default {
       // add level and color
       const appendInfo = (data) => {
         data.map(d => {
-          const level = (moment().diff(moment(d.date), 'days') <= 1) ? 1 : 2
+          const level = (moment().diff(moment(d.serviceDate), 'days') <= 1) ? 1 : 2
           Object.assign(d, {level, color: (level === 1 ? 'red' : 'yellow')})
         })
         return data
       }
-      return Vue.http.get('services', []).then(response => {
-        // console.log('__ service.js__response', response)
+      return Vue.http.get('Service', []).then(response => {
         if (response.status && parseInt(response.status) === 200) {
-          store.commit('services', appendInfo(response.body.result))
+          store.commit('services', appendInfo(response.data))
         }
       }, response => store.commit('error', handleError(response)))
-      .catch(reason => store.commit('error', handleError(response)))
+      .catch(reason => store.commit('error', handleError(reason)))
     }
   }
 }

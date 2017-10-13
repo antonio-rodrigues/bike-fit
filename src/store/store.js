@@ -16,7 +16,7 @@ const state = {
   newsTotal: 0,
   loading: false,
   success: false,
-  error: false,
+  error: false
 }
 
 export const store = new Vuex.Store({

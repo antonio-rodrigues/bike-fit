@@ -63,7 +63,8 @@ export default {
       CHAIN_FULL_CLEAN: "Corrente: limpeza total",
       CHAIN_LUBE: "Corrente: lubrificar",
       CHAIN_REPLACE: "Corrente: substituir",
-      GARAGE: "Garage service"
+      GARAGE: "Revisão Periódica",
+      UIC_RENEWAL: "Pagamento UIC"
     }
   },
   messages: {

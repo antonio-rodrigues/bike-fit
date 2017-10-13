@@ -63,7 +63,8 @@ export default {
       CHAIN_FULL_CLEAN: "Chain full clean",
       CHAIN_LUBE: "Chain lube",
       CHAIN_REPLACE: "Replace chain",
-      GARAGE: "Garage service"
+      GARAGE: "Garage service",
+      UIC_RENEWAL: "Renew tax"
     }
   },
   messages: {

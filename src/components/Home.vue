@@ -9,25 +9,30 @@
           <div class="pull-to-refresh-arrow"></div>
       </div>
 
-      <div class="content-block center">
-        <i class="f7-icons color-red size-50">settings</i>
+      <div v-if="!isLogged" class="content-block center">
+        <h1><i class="f7-icons">login</i> Login, please!</h1>
       </div>
 
-      <!-- <card v-for="service in services" :post="service" :key="service.id"></card> -->
+      <div v-if="isLogged" class="content-block">
+        <div class="content-block center">
+          <i class="f7-icons color-red size-50">settings</i>
+        </div>
 
-      <div class="content-block-title">{{ $app.trans("home.nextServices") }}</div>
-      <div class="list-block">
-        <ul>
-          <li class="item-content" v-for="service in services" :post="service" :key="service.id">
-            <div class="item-media"><i class="icon f7-icons">{{ serviceIcon(service) }}</i></div>
-            <div class="item-inner">
-              <div class="item-title">{{ $app.trans("services.type." + service.type) }}</div>
-              <div class="item-after">{{ service.date }}</div>
-            </div>
-          </li>
-        </ul>
-        <div class="list-block-label">This items will generate notifications</div>
+        <div class="content-block-title">{{ $app.trans("home.nextServices") }}</div>
+        <div class="list-block">
+          <ul>
+            <li class="item-content" v-for="service in services" :post="service" :key="service.id">
+              <div class="item-media"><i class="icon f7-icons">{{ serviceIcon(service) }}</i></div>
+              <div class="item-inner">
+                <div class="item-title">{{ $app.trans("services.type." + service.typeId) }}</div>
+                <div class="item-after">{{ service.serviceDate.split('T')[0] }}</div>
+              </div>
+            </li>
+          </ul>
+          <div class="list-block-label">This items will generate notifications</div>
+        </div>
       </div>
+
     </div>
   </div>
 </template>
@@ -42,6 +47,7 @@ const mapServiceIcon = (key) => {
   let icon = {
     'CHAIN_LUBE': 'refresh_round',
     'CHAIN_FULL_CLEAN': 'refresh_round_fill',
+    'UIC_RENEWAL': 'card',
     'DEFAULT': 'info'
   }
   return (icon[key] || icon['DEFAULT'])
@@ -50,7 +56,6 @@ const mapServiceIcon = (key) => {
 export default {
   computed: {
     services() {
-      console.log('Services computed!', this.$store.getters.services)
       return this.$store.getters.services
     },
     error() {
@@ -60,6 +65,7 @@ export default {
 
   data: () => {
     return {
+      isLogged: false,
       images: {
         background: bgImage,
         bike: bikeImage
@@ -74,6 +80,9 @@ export default {
   methods: {
     onF7Init() {
       const self = this
+      if (self.$app.auth.user('id')) {
+        this.isLogged = true
+      }
       self.getNextServiceList()
       // pull to reload event
       self.$$('.pull-to-refresh-content').on('ptr:refresh', () => {
@@ -81,30 +90,28 @@ export default {
       });
     },
 
-    handleError(response) {
+    handleError(stack) {
       const self = this
-      console.warn('other.response', response)
+      console.error(stack)
       self.$f7.pullToRefreshDone()
       self.$f7.addNotification({
         title: self.$app.trans('error.title'),
-        message: response.data ? response.data : self.$app.trans('error.connection'),
+        message: stack.data ? stack.data : self.$app.trans('error.connection'),
         hold: 6000
       })
     },
 
     getNextServiceList() {
       const self = this
-      self.$store.dispatch('services')
-        .then(() => {
-          self.$f7.pullToRefreshDone()
-          // self.$f7.initImagesLazyLoad('.homepage')
-          }, failure => self.handleError(failure)
-        )
-        .catch(reason => self.handleError(reason))
+      self.$store.dispatch('services').then(() => {
+        self.$f7.pullToRefreshDone()
+        // self.$f7.initImagesLazyLoad('.homepage')
+      })
+      .catch(reason => self.handleError(reason))
     },
 
     serviceIcon(service) {
-      return mapServiceIcon(service.type)
+      return mapServiceIcon(service.typeId)
     },
   },
 

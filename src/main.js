@@ -2,11 +2,6 @@
  * F7 Themes
  * Avaiable themes ['ios', 'material']
  */
-const THEMES = {
-  IOS: 'ios',
-  MATERIAL: 'material'
-}
-
 import Vue from 'vue'
 import App from './components/App.vue'
 import VueResource from 'vue-resource'
@@ -17,10 +12,15 @@ import Routes from './routes'
 import { store } from './store/store'
 import { i18n } from './i18n'
 
-import moment from "moment"
-import VueMomentJS from "vue-momentjs"
+import moment from 'moment'
+import VueMomentJS from 'vue-momentjs'
 
 require('framework7')
+
+const THEMES = {
+  IOS: 'ios',
+  MATERIAL: 'material'
+}
 
 // set theme by device type
 const theme = (Framework7.prototype.device.android ? THEMES.MATERIAL : THEMES.IOS)
@@ -48,8 +48,7 @@ Vue.app = {
   i18n: i18n,
   store: store,
   initialize: function () {
-
-    const self = this
+    // const self = this
 
     /**
      * set API base url
@@ -96,10 +95,9 @@ Vue.app = {
         modalButtonOk: i18n.t('ok'),
         modalButtonCancel: i18n.t('cancel'),
         notificationTitle: i18n.t('name'),
-        notificationHold: 1000,
+        notificationHold: 1000
       },
       mounted: function () {
-
         // On Framework init
         document.addEventListener('page:init', (page) => {
           if (!Vue.app.f7) {
@@ -123,7 +121,6 @@ Vue.app = {
         }, false)
       }
     })
-
   },
 
   on: function (service, callback) {
@@ -309,10 +306,8 @@ Vue.app.initialize()
 
 // Fix android Back behaviour
 document.addEventListener('deviceready', () => {
-
   // Bind to the back button for Android
   document.addEventListener('backbutton', () => {
-
     // NOTE: The back button will behave differently depending on circumstance
     // If the side panel is open, close it
     if (document.querySelector('.panel-left.active')) {
