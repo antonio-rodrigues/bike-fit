@@ -54,8 +54,9 @@ export default {
   data: function() {
     return {
       user: {
-        email: "telly.hoeger@billy.biz",
-        password: "MustBeWideAndNumber123",
+        username: 'dean',
+        email: "james.dean@biker.movie",
+        password: "Password.123",
       },
       submitted: false
     }
@@ -66,44 +67,46 @@ export default {
     },
 
     login () {
-      const self = this;
+      const self = this
 
-      self.$f7.showPreloader(this.$app.trans('please_wait'));
-      self.submitted = true;
+      self.$f7.showPreloader(this.$app.trans('please_wait'))
+      self.submitted = true
 
       self.$validator.validateAll().then(valid => {
         if (valid) {
           self.$store.dispatch('login', self.user).then(response => {
+            console.log('post.login.response', response)
             // 200 ok response
             self.$f7.addNotification({
               title: self.$app.trans('login'),
               message: self.$app.trans('login_success'),
               hold: 2000
-            });
-            self.$app.router.load('/');
+            })
+            self.$app.router.load('/')
           }, response => {
+            console.log('post.login.response(2)', response)
             // other responses
-            self.$f7.addNotification({
-              title: self.$app.trans('login'),
-              message: response.body.data ? response.body.data : self.$app.trans('connection_error'),
-              hold: 6000
-            });
+            // self.$f7.addNotification({
+            //   title: self.$app.trans('login'),
+            //   message: response.body.data ? response.body.data : self.$app.trans('connection_error'),
+            //   hold: 6000
+            // })
           }).then(response => {
             self.submitted = false;
-            self.$f7.hidePreloader();
-          });
+            self.$f7.hidePreloader()
+          })
         } else {
           self.$validator.errors.items.reverse().forEach(error => {
             self.$f7.addNotification({
               title: self.$app.trans('login'),
               message: error.msg,
               hold: 6000
-            });
-          });
+            })
+          })
           self.submitted = false;
           self.$f7.hidePreloader();
         }
-      });
+      })
     }
   }
 }

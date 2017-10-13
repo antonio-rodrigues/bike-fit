@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import Vue from 'vue'
 
 export default {
   state: {
@@ -8,71 +8,72 @@ export default {
   },
 
   getters: {
-    user: function (state) {
-      return state.user;
+    user: (state) => {
+      return state.user
     },
 
-    token: function (state) {
-      return state.token;
+    token: (state) => {
+      return state.token
     },
 
-    expiration: function (state) {
-      return state.expiration;
+    expiration: (state) => {
+      return state.expiration
     },
 
-    auth: function (state) {
+    auth: (state) => {
       if (!state.token || !state.expiration) {
-        return false;
+        return false
       }
       if (Date.now() > state.expiration) {
-         return false;
+        return false
       }
-      return true;
+      return true
     }
   },
 
   mutations: {
     login: (state, body) => {
-      state.user = body; // .data.user;
-      localStorage.setItem('user', JSON.stringify(body));
+      state.user = body // .data.user;
+      localStorage.setItem('user', JSON.stringify(body))
 
-      state.token = body.email; // body.data.token;
-      localStorage.setItem('token', body.email);
+      state.token = body.id
+      localStorage.setItem('token', body.id)
 
       state.expiration = new Date(2030, 11, 30) // body.data.expires;
-      localStorage.setItem('expiration', state.expiration);
+      localStorage.setItem('expiration', state.expiration)
     },
 
     logout: (state) => {
-      state.user = {};
-      localStorage.removeItem('user');
+      state.user = {}
+      localStorage.removeItem('user')
 
-      state.token = null;
-      localStorage.removeItem('token');
+      state.token = null
+      localStorage.removeItem('token')
 
-      state.expiration = 0;
-      localStorage.removeItem('expiration');
+      state.expiration = 0
+      localStorage.removeItem('expiration')
     }
   },
 
   actions: {
     login: (store, user) => {
       const params = {
+        username: user.username,
         email: user.email,
-        // password: user.password,
-      };
-      // return Vue.http.post('auth', params).then(function (response) {
-      return Vue.http.get('users/7', params).then(function (response) {
+        password: user.password
+      }
+      return Vue.http.post('Persons/login', params).then(function (response) {
         console.log('__ users.js__get.response', response)
         if (response.status) {
-          store.commit('login', response.body);
+          store.commit('login', response.body)
         }
-      });
+      })
     },
 
     register: (store, user) => {
+      // TODO: change Person fields to match API...
       const params = {
-        name: user.first_name + ' ' + user.last_name,
+        name: user.firstName + ' ' + user.lastName,
         username: user.email.split('@')[0].toLowerCase(),
         email: user.email,
         password: user.password,
@@ -94,12 +95,12 @@ export default {
           catchPhrase: 'Multi-layered client-server neural-net',
           bs: 'harness real-time e-markets'
         }
-      };
-      return Vue.http.post('users', params).then(response => {
+      }
+      return Vue.http.post('Persons', params).then(response => {
         if (response.status) {
-          store.commit('login', response.body);
+          store.commit('login', response.body)
         }
-      });
+      })
     }
   }
 }

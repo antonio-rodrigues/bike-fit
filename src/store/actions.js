@@ -21,7 +21,7 @@ export const getSomeDataFromAPI = (context) => {
 }
 
 export const updateSomeTotal = (context, payload) => {
-   context.commit('UPDATE_NEWS_TOTAL', payload)
+  context.commit('UPDATE_NEWS_TOTAL', payload)
 }
 
 export const paginate = (context, payload) => {
