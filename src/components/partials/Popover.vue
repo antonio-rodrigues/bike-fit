@@ -8,7 +8,7 @@
             <a href="/login" class="list-button close-popover item-link">{{ $app.trans("login") }}</a>
           </li>
           <li v-if="$app.auth.check()">
-            <a href="#" class="list-button close-popover item-link">{{ $app.trans("profile") }}</a>
+            <a href="/profile" class="list-button close-popover item-link">{{ $app.trans("profile.title") }}</a>
           </li>
           <li v-if="$app.auth.check()">
             <a href="#" class="list-button close-popover item-link" @click="$app.auth.logout()">{{ $app.trans("logout") }}</a>

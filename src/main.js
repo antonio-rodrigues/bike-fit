@@ -5,32 +5,36 @@
 const THEMES = {
   IOS: 'ios',
   MATERIAL: 'material'
-};
+}
 
-import Vue from 'vue';
-import App from './components/App.vue';
-import VueResource from 'vue-resource';
-import VueCordova from 'vue-cordova';
-import Framework7Vue from 'framework7-vue';
+import Vue from 'vue'
+import App from './components/App.vue'
+import VueResource from 'vue-resource'
+import VueCordova from 'vue-cordova'
+import Framework7Vue from 'framework7-vue'
 
-import Routes from './routes';
-import { store } from './store/store';
-import { i18n } from "./i18n";
+import Routes from './routes'
+import { store } from './store/store'
+import { i18n } from './i18n'
 
-require('framework7');
+import moment from "moment"
+import VueMomentJS from "vue-momentjs"
+
+require('framework7')
 
 // set theme by device type
-const theme = (Framework7.prototype.device.android ? THEMES.MATERIAL : THEMES.IOS);
-require('framework7/dist/css/framework7.' + theme + '.min.css');
-require('framework7/dist/css/framework7.' + theme + '.colors.min.css');
-require('framework7-icons/css/framework7-icons.css');
+const theme = (Framework7.prototype.device.android ? THEMES.MATERIAL : THEMES.IOS)
+require('framework7/dist/css/framework7.' + theme + '.min.css')
+require('framework7/dist/css/framework7.' + theme + '.colors.min.css')
+require('framework7-icons/css/framework7-icons.css')
 
-Vue.use(VueResource);
-Vue.use(Framework7Vue);
-Vue.use(VueCordova, {});
+Vue.use(VueResource)
+Vue.use(Framework7Vue)
+Vue.use(VueCordova, {})
+Vue.use(VueMomentJS, moment)
 
-Vue.conf = require("./config").items;
-Vue.prototype.$config = Vue.conf;
+Vue.conf = require('./config').items
+Vue.prototype.$config = Vue.conf
 
 /**
  *  Application object
@@ -45,30 +49,31 @@ Vue.app = {
   store: store,
   initialize: function () {
 
-    const self = this;
+    const self = this
 
     /**
      * set API base url
      * @type {string}
      */
-    Vue.http.options.root = Vue.app.config.get("url");
+    Vue.http.options.root = Vue.app.config.get('api').slug
 
     /**
      * append access token to every request
      */
     if (Vue.app.auth.check()) {
-      Vue.http.interceptors.push(function (request, next) {
-        request.params['token'] = Vue.app.auth.token();
-        next();
-      });
+      console.log('>>> Vue.app.auth.check()')
+      Vue.http.interceptors.push((request, next) => {
+        request.params['token'] = Vue.app.auth.token()
+        next()
+      })
     }
 
     /**
      * Native click sound
      */
-    Vue.cordova.on('deviceready', function () {
-      nativeclick.watch(['sound-click', 'button', 'a']);
-    });
+    Vue.cordova.on('deviceready', () => {
+      nativeclick.watch(['sound-click', 'button', 'a'])
+    })
 
     /**
      * initializing vue instance
@@ -86,45 +91,45 @@ Vue.app = {
         animateNavBackIcon: true,
         routes: Routes,
         dynamicNavbar: true,
-        swipePanel: Vue.app.isRTL() ? "right" : "left",
-        modalTitle: i18n.t("name"),
-        modalButtonOk: i18n.t("ok"),
-        modalButtonCancel: i18n.t("cancel"),
-        notificationTitle: i18n.t("name"),
+        swipePanel: Vue.app.isRTL() ? 'right' : 'left',
+        modalTitle: i18n.t('name'),
+        modalButtonOk: i18n.t('ok'),
+        modalButtonCancel: i18n.t('cancel'),
+        notificationTitle: i18n.t('name'),
         notificationHold: 1000,
       },
       mounted: function () {
 
         // On Framework init
-        document.addEventListener("page:init", function (page) {
+        document.addEventListener('page:init', (page) => {
           if (!Vue.app.f7) {
-            Vue.app.f7 = Vue.app.vue.$f7Router.framework7;
-            Vue.app.dom = Vue.app.vue.$f7Router.dom7;
+            Vue.app.f7 = Vue.app.vue.$f7Router.framework7
+            Vue.app.dom = Vue.app.vue.$f7Router.dom7
           }
-        });
+        })
 
         // On offline connection
-        document.addEventListener("offline", function () {
+        document.addEventListener('offline', () => {
           Vue.app.f7.addNotification({
-            message: Vue.app.trans("offline_message"),
+            message: Vue.app.trans('offline_message'),
             hold: false
-          });
-        }, false);
+          })
+        }, false)
 
         // On online connection
-        document.addEventListener("online", function () {
+        document.addEventListener('online', () => {
           // Don't do any thing
-          // Vue.app.f7.addNotification({ message: Vue.app.trans("online_message"), hold: false });
-        }, false);
+          // Vue.app.f7.addNotification({ message: Vue.app.trans('online_message'), hold: false })
+        }, false)
       }
-    });
+    })
 
   },
 
   on: function (service, callback) {
-    return document.addEventListener(service, function () {
-      callback(Vue.app);
-    });
+    return document.addEventListener(service, () => {
+      callback(Vue.app)
+    })
   },
 
   /**
@@ -137,7 +142,7 @@ Vue.app = {
      * @returns {boolean}
      */
     get: function (item) {
-      return Vue.conf[item] !== undefined ? Vue.conf[item] : false;
+      return Vue.conf[item] !== undefined ? Vue.conf[item] : false
     },
 
     /**
@@ -146,7 +151,7 @@ Vue.app = {
      * @param value
      */
     set: function (name, value) {
-      Vue.conf[name] = value;
+      Vue.conf[name] = value
     }
   },
 
@@ -157,10 +162,10 @@ Vue.app = {
      */
     user: function (field) {
       if (field) {
-        return store.getters.user[field] !== undefined ? store.getters.user[field] : false;
+        return store.getters.user[field] !== undefined ? store.getters.user[field] : false
       }
 
-      return store.getters.user;
+      return store.getters.user
     },
 
     /**
@@ -168,7 +173,7 @@ Vue.app = {
      * @returns {Vue.app.auth.token|*|getters.token|null|token}
      */
     token: function () {
-      return 'SomeTokenHere'; // store.getters.token;
+      return store.getters.token
     },
 
     /**
@@ -176,7 +181,7 @@ Vue.app = {
      * @returns {*|getters.expiration|number|expiration}
      */
     expiration: function () {
-      return store.getters.expiration;
+      return store.getters.expiration
     },
 
     /**
@@ -185,37 +190,36 @@ Vue.app = {
      */
     check: function () {
       if (store.getters.auth) {
-        return true;
+        return true
       }
 
-      return false;
+      return false
     },
 
     logout: function () {
-      Vue.app.f7.showIndicator();
+      Vue.app.f7.showIndicator()
 
-      Vue.app.store.commit('logout');
+      Vue.app.store.commit('logout')
 
       Vue.app.f7.addNotification({
         title: Vue.app.trans('logout'),
         message: Vue.app.trans('logout_success'),
         hold: 2500
-      });
+      })
 
-      setTimeout(function () {
-        Vue.app.f7.hideIndicator();
-        Vue.app.router.load("/");
-      }, 3000);
-
+      setTimeout(() => {
+        Vue.app.f7.hideIndicator()
+        Vue.app.router.load('/')
+      }, 3000)
     }
   },
 
   /**
-   * get current locale
+   * get current theme
    * @returns {string}
    */
   theme: function () {
-    return theme;
+    return theme
   },
 
   /**
@@ -223,7 +227,7 @@ Vue.app = {
    * @returns {boolean}
    */
   isIOS: function () {
-    return this.theme() === "ios";
+    return this.theme() === 'ios'
   },
 
   /**
@@ -231,14 +235,14 @@ Vue.app = {
    * @returns {boolean}
    */
   isMaterial: function () {
-    return this.theme() === "material";
+    return this.theme() === 'material'
   },
 
   /**
    * get current application locale
    */
   locale: function () {
-    return this.store.getters.locale;
+    return this.store.getters.locale
   },
 
   /**
@@ -246,7 +250,7 @@ Vue.app = {
    * @returns {string}
    */
   direction: function () {
-    return this.store.getters.locale === "ar" ? "rtl" : "ltr";
+    return this.store.getters.locale === 'ar' ? 'rtl' : 'ltr'
   },
 
   /**
@@ -254,7 +258,7 @@ Vue.app = {
    * @returns {boolean}
    */
   isRTL: function () {
-    return this.direction() === "rtl";
+    return this.direction() === 'rtl'
   },
 
   /**
@@ -262,7 +266,7 @@ Vue.app = {
    * @returns {boolean}
    */
   isLTR: function () {
-    return this.direction() === "ltr";
+    return this.direction() === 'ltr'
   },
 
   /**
@@ -285,7 +289,7 @@ Vue.app = {
      * @returns {*}
      */
     load: function (url) {
-      return Vue.app.vue.$f7Router.framework7.mainView.router.loadPage(url);
+      return Vue.app.vue.$f7Router.framework7.mainView.router.loadPage(url)
     },
 
     /**
@@ -293,38 +297,38 @@ Vue.app = {
      * @returns {*}
      */
     back: function () {
-      return Vue.app.vue.$f7Router.framework7.mainView.router.back();
+      return Vue.app.vue.$f7Router.framework7.mainView.router.back()
     }
   }
-};
+}
 
-Vue.prototype.$app = Vue.app;
+Vue.prototype.$app = Vue.app
 
 // APP init
-Vue.app.initialize();
+Vue.app.initialize()
 
 // Fix android Back behaviour
 document.addEventListener('deviceready', () => {
 
   // Bind to the back button for Android
-  document.addEventListener('backbutton', function () {
+  document.addEventListener('backbutton', () => {
 
     // NOTE: The back button will behave differently depending on circumstance
     // If the side panel is open, close it
     if (document.querySelector('.panel-left.active')) {
       // This will do nothing when the split-view is open
-      return window.f7.closePanel();
+      return window.f7.closePanel()
     }
     // Close modals
     // @TODO How to handle modals we shouldn't close like a login-screen?
     if (document.querySelector('.modal-in')) {
-      return f7.closeModal();
+      return f7.closeModal()
     }
     // If we have a back button, we want it to go back
     if (f7.mainView.history.length > 1) {
-      return f7.mainView.router.back();
+      return f7.mainView.router.back()
     }
     // Default to closing the app
-    return window.navigator.app.exitApp();
-  });
-});
+    return window.navigator.app.exitApp()
+  })
+})

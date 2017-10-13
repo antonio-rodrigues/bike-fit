@@ -1,7 +1,5 @@
 export default {
-
   name: "Bike Fit",
-
   login: "Login",
   register: "Registar",
   logout: "Logout",
@@ -22,12 +20,18 @@ export default {
   },
   language: "Linguagem",
   back: "Voltar",
-  profile: "Perfil",
   news_feed: "Feed Notícias",
   close: "Fechar",
   ok: "OK",
   open_popup: "Abrir janela",
   connection_error: "Erro de comunicações",
+  error: {
+    title: "Erro",
+    general: "Erro genérico",
+    connection: "Erro de comunicações",
+    database: "Erro de base de dados",
+    unknown: "Erro desconhecido"
+  },
   email: "Email",
   password: "Password",
   register_new_account: "Registar nova conta!",
@@ -44,7 +48,24 @@ export default {
   offline_message: "Está offline",
   online_message: "Está online",
   please_wait: "por favor, aguarde...",
-
+  home: {
+    title: 'Home',
+    like: "Gosto",
+    more: "Detalhe...",
+    nextServices: "Próximos serviços"
+  },
+  profile: {
+    title: "Perfil",
+    update: "Actualizar"
+  },
+  services: {
+    type: {
+      CHAIN_FULL_CLEAN: "Corrente: limpeza total",
+      CHAIN_LUBE: "Corrente: lubrificar",
+      CHAIN_REPLACE: "Corrente: substituir",
+      GARAGE: "Garage service"
+    }
+  },
   messages: {
     _default: function (e) {
       return "The " + e + " value is not valid."

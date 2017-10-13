@@ -18,5 +18,13 @@ export default [
   {
     path: '/posts',
     component: require("./components/Posts.vue")
+  },
+  {
+    path: '/profile',
+    component: require("./components/Profile.vue")
+  },
+  {
+    path: '/test',
+    component: require("./components/Test.vue")
   }
 ];

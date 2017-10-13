@@ -1,9 +1,9 @@
 export const items = {
-  /**
-   * Application base URL
-   */
-  // url: "http://52.48.72.75:1337/"
-  // url: "https://api.chucknorris.io/jokes/random"
-  url: "https://jsonplaceholder.typicode.com"
+  api: {
+    version: '1.0',
+    slug: 'http://demo6624510.mockable.io', // 'https://jsonplaceholder.typicode.com',
+    privateKey: 'API_PRIVATE_KEY',
+    publicKey: 'API_PUBLIC_KEY'
+  },
+  imageFolder: 'img'
 }
-

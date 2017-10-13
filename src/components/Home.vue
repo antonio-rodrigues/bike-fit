@@ -5,132 +5,125 @@
 
     <div class="page-content pull-to-refresh-content">
       <div class="pull-to-refresh-layer">
-        <div class="preloader"></div>
-        <!-- <div class="pull-to-refresh-arrow"></div> -->
+          <div class="preloader"></div>
+          <div class="pull-to-refresh-arrow"></div>
       </div>
-      <div class="content-block">
-        <!-- <card v-for="post in posts" :post="post" :key="post.id" @liked="posts.filter(row => { return row.id == post.id})[0].isLiked = true"></card> -->
 
-        <div class="card bike-card-header-pic">
-          <div class="card-header color-white no-border background-photo" valign="bottom">...</div>
-          <div class="card-content">
-            <div class="card-content-inner">
-              <img src="img/my-bike.png" class="avatar" />
-              <p class="color-gray">Posted on January 25, 2017</p>
-              <p>Quisque eget vestibulum nulla...</p>
+      <div class="content-block center">
+        <i class="f7-icons color-red size-50">settings</i>
+      </div>
+
+      <!-- <card v-for="service in services" :post="service" :key="service.id"></card> -->
+
+      <div class="content-block-title">{{ $app.trans("home.nextServices") }}</div>
+      <div class="list-block">
+        <ul>
+          <li class="item-content" v-for="service in services" :post="service" :key="service.id">
+            <div class="item-media"><i class="icon f7-icons">{{ serviceIcon(service) }}</i></div>
+            <div class="item-inner">
+              <div class="item-title">{{ $app.trans("services.type." + service.type) }}</div>
+              <div class="item-after">{{ service.date }}</div>
             </div>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="link">Like</a>
-            <a href="#" class="link">Read more</a>
-          </div>
-        </div>
-
+          </li>
+        </ul>
+        <div class="list-block-label">This items will generate notifications</div>
       </div>
     </div>
-
-    <!-- <div class="toolbar toolbar-bottom ">
-      <div class="toolbar-inner">
-        <a href="#" class="link">1</a>
-        <a href="#" class="link">2</a>
-        <a href="#" class="link">3</a>
-        <a href="#" class="link">4</a>
-      </div>
-    </div> -->
-
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
+import { mapActions, mapGetters } from 'vuex'
+import bgImage from '../assets/road-bg.png'
+import bikeImage from '../assets/my-bike.png'
+
+const mapServiceIcon = (key) => {
+  let icon = {
+    'CHAIN_LUBE': 'refresh_round',
+    'CHAIN_FULL_CLEAN': 'refresh_round_fill',
+    'DEFAULT': 'info'
+  }
+  return (icon[key] || icon['DEFAULT'])
+}
 
 export default {
   computed: {
-    posts: function() {
-      return this.$store.getters.posts;
+    services() {
+      console.log('Services computed!', this.$store.getters.services)
+      return this.$store.getters.services
+    },
+    error() {
+      return this.$store.state.status.error
+    },
+  },
+
+  data: () => {
+    return {
+      images: {
+        background: bgImage,
+        bike: bikeImage
+      }
     }
   },
 
-  data: function() {
-    return {};
-  },
-
-  mounted: function() {
-    console.log("Home.vue");
-
-    /*const self = this;
-
-    self.$app.on("cordova", function (app) {
-        app.f7.alert("cordova loaded");
-    });
-
-    self.$app.load(function (app) {
-      navigator.geolocation.getCurrentPosition(function (position) {
-          app.f7.alert('Latitude: ' + position.coords.latitude + '\n' +
-              'Longitude: ' + position.coords.longitude + '\n' +
-              'Altitude: ' + position.coords.altitude + '\n' +
-              'Accuracy: ' + position.coords.accuracy + '\n' +
-              'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '\n' +
-              'Heading: ' + position.coords.heading + '\n' +
-              'Speed: ' + position.coords.speed + '\n' +
-              'Timestamp: ' + position.timestamp + '\n');
-      }, function (error) {
-          app.f7.alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
-      });
-
-      app.f7.addNotification({
-          title: 'Cordova',
-          message: 'Device is ready !',
-          button: {
-              text: 'Close Me',
-              color: 'lightgreen'
-          },
-          onClose: function () {
-              app.f7.alert('Device : ' + app.cordova.device.manufacturer + ' ' + app.cordova.device.platform + ' ' + app.cordova.device.version)
-          }
-      });
-
-      app.f7.alert("hhahahah");
-    });*/
+  mounted: () => {
+    console.log('@Home.vue')
   },
 
   methods: {
-    onF7Init: function() {
-      const self = this;
-      self.getPosts();
-
+    onF7Init() {
+      const self = this
+      self.getNextServiceList()
       // pull to reload event
-      self.$$('.pull-to-refresh-content').on("ptr:refresh", () => {
-        self.getPosts();
+      self.$$('.pull-to-refresh-content').on('ptr:refresh', () => {
+        self.getNextServiceList()
       });
     },
 
-    getPosts: function() {
-      const self = this;
+    handleError(response) {
+      const self = this
+      console.warn('other.response', response)
+      self.$f7.pullToRefreshDone()
+      self.$f7.addNotification({
+        title: self.$app.trans('error.title'),
+        message: response.data ? response.data : self.$app.trans('error.connection'),
+        hold: 6000
+      })
+    },
 
-      self.$store.dispatch("posts").then(response => {
-        // success response
-        self.$f7.pullToRefreshDone();
-        self.$f7.initImagesLazyLoad(".homepage");
-      }, response => {
-        // other responses
-        self.$f7.pullToRefreshDone();
-        self.$f7.addNotification({
-          title: self.$app.trans('login'),
-          message: response.body.data ? response.body.data : self.$app.trans("connection_error"),
-          hold: 8000
-        });
-      });
-    }
+    getNextServiceList() {
+      const self = this
+      self.$store.dispatch('services')
+        .then(() => {
+          self.$f7.pullToRefreshDone()
+          // self.$f7.initImagesLazyLoad('.homepage')
+          }, failure => self.handleError(failure)
+        )
+        .catch(reason => self.handleError(reason))
+    },
+
+    serviceIcon(service) {
+      return mapServiceIcon(service.type)
+    },
   },
+
   components: {
-    navbar: require("./partials/Navbar.vue"),
-    card: require("./partials/Card.vue")
+    navbar: require('./partials/Navbar.vue'),
+    card: require('./partials/Card.vue')
   }
 }
 </script>
 
 <style scoped>
+  .center {
+    text-align: center;
+    padding: 5px;
+  }
+  .size-50 {
+    font-size: 50px;
+  }
+
   .bike-card-header-pic .card-header {
     height: 40vw;
     background-size: cover;
@@ -138,7 +131,7 @@ export default {
   }
 
   .background-photo {
-    /* background: url(img/road-bg.png); */
+    /* background: url(../assets/road-bg.png); */
     background-color: #000000;
     opacity: 0.8;
   }

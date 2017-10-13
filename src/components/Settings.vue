@@ -1,7 +1,9 @@
 <template>
   <div class="page" data-page="settings">
 
-    <div class="navbar">
+    <navbar :options="{back: true, title: $app.trans('settings'), modal: '.backup-options'}"></navbar>
+
+    <!-- <div class="navbar">
       <div class="navbar-inner">
         <div class="left">
           <a href="#" class="link icon-only" @click="goBack()">
@@ -13,7 +15,7 @@
         </div>
         <div class="right"></div>
       </div>
-    </div>
+    </div> -->
 
     <div class="page-content">
       <div class="content-block">
@@ -22,7 +24,7 @@
           <ul>
             <li>
               <a href="#" class="item-link smart-select" data-open-in="picker" :data-back-text="$app.trans('close')" data-back-on-select="true">
-                <select v-model="locale" @change="setLocale($event.target.value)">
+                <select @change="setLocale($event.target.value)">
                   <option value="en" :selected="locale === 'en'">English</option>
                   <option value="pt" :selected="locale === 'pt'">Português</option>
                 </select>
@@ -95,43 +97,39 @@
 </template>
 
 <script>
-export default {
+import { mapActions, mapGetters } from 'vuex'
 
+export default {
   computed: {
-    locale: {
-      get: function() {
-        return this.$app.locale()
-      },
-      set: function(locale) {
-        this.$store.commit("locale", locale)
-      }
-    }
+    ...mapGetters([
+      'locale', 'direction'
+    ])
   },
 
   methods: {
     onF7Init: () => {
-      console.info('>> onF7Init()')
+      console.info('@Settings.vue')
     },
 
     setLocale (locale) {
-      const self = this;
-
-      self.$f7.showIndicator();
+      const self = this
+      self.$f7.showIndicator()
+      console.log('__ settings.setLocale()', locale)
 
       setTimeout(() => {
-        self.$f7.hideIndicator();
-        self.$store.commit("locale", locale);
-        self.$app.router.load("/");
-      }, 2600);
+        self.$f7.hideIndicator()
+        self.$store.dispatch('setLocale', locale)
+        self.$app.router.load('/')
+      }, 2600)
     },
 
-    cloudBackup (locale) {
+    cloudBackup () {
       const self = this;
       console.log('__ onCloudBackup()')
       self.$f7.alert(self.$app.trans('general_settings.backup.success'), self.$app.trans('general_settings.backup.save'))
     },
 
-    cloudRestore (locale) {
+    cloudRestore () {
       const self = this;
       console.log('__ onCloudRestore()')
       self.$f7.alert(self.$app.trans('general_settings.backup.failure'), self.$app.trans('general_settings.backup.restore'))
@@ -141,14 +139,18 @@ export default {
       this.$f7.popup('.popup-info-backup')
     },
 
-    goBack () {
-      this.$f7.closeModal('.backup-options')
-      this.$app.router.back()
-    },
+    // goBack () {
+    //   this.$f7.closeModal('.backup-options')
+    //   this.$app.router.back()
+    // },
 
     trans: (key) => {
-      return this.$app.trans(key, this.$store.getters.locale);
+      return this.$app.trans(key, this.$store.getters.locale)
     }
+  },
+
+  components: {
+    navbar: require('./partials/Navbar.vue')
   }
 }
 </script>
