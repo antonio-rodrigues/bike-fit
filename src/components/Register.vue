@@ -91,7 +91,7 @@
 
 <script>
 export default {
-  data: function() {
+  data: function () {
     return {
       user: {
         first_name: '',
@@ -105,48 +105,48 @@ export default {
   },
 
   methods: {
-    onF7Init: function() {
+    onF7Init: () => {
     },
 
-    register: function() {
-      const self = this;
+    register: () => {
+      const self = this
 
-      self.$f7.showPreloader('loading...');
+      self.$f7.showPreloader('loading...')
 
-      self.submitted = true;
-      self.$validator.validateAll(this.user).then(function(valid) {
+      self.submitted = true
+      self.$validator.validateAll(this.user).then(valid => {
         if (valid) {
-          self.$store.dispatch('register', self.user).then(function() {
+          self.$store.dispatch('register', self.user).then(() => {
             // 200 ok response
             self.$f7.addNotification({
               title: self.$app.trans('register'),
               message: self.$app.trans('register_success'),
               hold: 2500
-            });
-            self.$app.router.load('/');
-          }, function(response) {
+            })
+            self.$app.router.load('/')
+          }, response => {
             // other responses
             self.$f7.addNotification({
               title: self.$app.trans('register'),
               message: response.body.data ? response.body.data : self.$app.trans('connection_error'),
               hold: 8000
-            });
-          }).then(function(response) {
-            self.submitted = false;
-            self.$f7.hidePreloader();
-          });
+            })
+          }).then(response => {
+            self.submitted = false
+            self.$f7.hidePreloader()
+          })
         } else {
-          self.$validator.errors.items.reverse().forEach(function(error) {
+          self.$validator.errors.items.reverse().forEach(error => {
             self.$f7.addNotification({
               title: self.$app.trans('register'),
               message: error.msg,
               hold: 8000
-            });
-          });
-          self.submitted = false;
-          self.$f7.hidePreloader();
+            })
+          })
+          self.submitted = false
+          self.$f7.hidePreloader()
         }
-      });
+      })
     }
   }
 }

@@ -55,7 +55,7 @@ export default {
     'options'
   ],
   computed: {
-    getOptions() {
+    getOptions () {
       return Object.assign({ // default values, if not set
         badge: 0
       }, this.options)

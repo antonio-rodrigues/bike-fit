@@ -97,7 +97,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   computed: {
@@ -124,13 +124,13 @@ export default {
     },
 
     cloudBackup () {
-      const self = this;
+      const self = this
       console.log('__ onCloudBackup()')
       self.$f7.alert(self.$app.trans('general_settings.backup.success'), self.$app.trans('general_settings.backup.save'))
     },
 
     cloudRestore () {
-      const self = this;
+      const self = this
       console.log('__ onCloudRestore()')
       self.$f7.alert(self.$app.trans('general_settings.backup.failure'), self.$app.trans('general_settings.backup.restore'))
     },

@@ -38,8 +38,8 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import { mapActions, mapGetters } from 'vuex'
+// import Vue from 'vue'
+// import { mapActions, mapGetters } from 'vuex'
 import bgImage from '../assets/road-bg.png'
 import bikeImage from '../assets/my-bike.png'
 
@@ -55,12 +55,12 @@ const mapServiceIcon = (key) => {
 
 export default {
   computed: {
-    services() {
+    services () {
       return this.$store.getters.services
     },
-    error() {
+    error () {
       return this.$store.state.status.error
-    },
+    }
   },
 
   data: () => {
@@ -78,7 +78,7 @@ export default {
   },
 
   methods: {
-    onF7Init() {
+    onF7Init () {
       const self = this
       if (self.$app.auth.user('id')) {
         this.isLogged = true
@@ -87,10 +87,10 @@ export default {
       // pull to reload event
       self.$$('.pull-to-refresh-content').on('ptr:refresh', () => {
         self.getNextServiceList()
-      });
+      })
     },
 
-    handleError(stack) {
+    handleError (stack) {
       const self = this
       console.error(stack)
       self.$f7.pullToRefreshDone()
@@ -101,7 +101,7 @@ export default {
       })
     },
 
-    getNextServiceList() {
+    getNextServiceList () {
       const self = this
       self.$store.dispatch('services').then(() => {
         self.$f7.pullToRefreshDone()
@@ -110,9 +110,9 @@ export default {
       .catch(reason => self.handleError(reason))
     },
 
-    serviceIcon(service) {
+    serviceIcon (service) {
       return mapServiceIcon(service.typeId)
-    },
+    }
   },
 
   components: {

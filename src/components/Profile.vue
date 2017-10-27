@@ -10,8 +10,7 @@
           <div class="card-content">
             <div class="card-content-inner">
               <img :src="images.avatar" class="avatar" />
-              <p class="color-gray">{{ user.name }}</p>
-              <p>{{ user.email }}</p>
+              <p class="color-gray">{{ user.userId }}</p>
             </div>
           </div>
           <div class="card-footer">
@@ -25,8 +24,8 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import { mapActions, mapGetters } from 'vuex'
+// import Vue from 'vue'
+import { mapGetters } from 'vuex'
 import bgImage from '../assets/road-bg.png'
 import avatarImage from '../assets/my-bike.png'
 
@@ -47,7 +46,7 @@ export default {
   },
 
   mounted: () => {
-    console.log('@Profile.vue')
+    console.log('> Profile.vue: mounted')
   },
 
   methods: {
@@ -78,13 +77,12 @@ export default {
     position: relative;
     top: -15px;
     left: 50%;
-    right: auta;
+    right: auto;
     bottom: auto;
     margin-right: -50%;
     transform: translate(-50%, -50%);
     max-width: 110px;
     max-height: 110px;
-    position: relative;
     border-radius: 50%;
     box-shadow: 0 0 0 1px #fff, 0 0 0 2px #999, 0 1px 3px 3px rgba(0,0,0,.2);
   }

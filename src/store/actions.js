@@ -1,5 +1,6 @@
-// actions to dispatch > commit mutation > change the state - use for async ops
+/* global Request */
 
+// actions to dispatch > commit mutation > change the state - use for async ops
 export const setToken = (context, payload) => {
   context.commit('SET_TOKEN', payload)
 }

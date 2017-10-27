@@ -76,20 +76,19 @@
 
 
 <script>
-import Vue from 'vue'
+// import Vue from 'vue'
 
 export default {
-  mounted: function() {
-    console.log("home");
+  mounted: function () {
+    console.log('> home: mounted')
   },
 
   methods: {
-    onF7Init: function() {
-    },
+    onF7Init: () => { }
   },
 
   components: {
-    navbar: require("./partials/Navbar.vue")
+    navbar: require('./partials/Navbar.vue')
   }
 }
 </script>

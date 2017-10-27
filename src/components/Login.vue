@@ -51,19 +51,19 @@
 
 <script>
 export default {
-  data: function() {
+  data: function () {
     return {
       user: {
         username: 'dean',
-        email: "james.dean@biker.movie",
-        password: "Password.123",
+        email: 'james.dean@biker.movie',
+        password: 'Password.123'
       },
       submitted: false
     }
   },
 
   methods: {
-    onF7Init: function () {
+    onF7Init: () => {
     },
 
     login () {
@@ -74,8 +74,7 @@ export default {
 
       self.$validator.validateAll().then(valid => {
         if (valid) {
-          self.$store.dispatch('login', self.user).then(response => {
-            console.log('post.login.response', response)
+          self.$store.dispatch('login', self.user).then(() => {
             // 200 ok response
             self.$f7.addNotification({
               title: self.$app.trans('login'),
@@ -84,15 +83,14 @@ export default {
             })
             self.$app.router.load('/')
           }, response => {
-            console.log('post.login.response(2)', response)
             // other responses
             // self.$f7.addNotification({
             //   title: self.$app.trans('login'),
             //   message: response.body.data ? response.body.data : self.$app.trans('connection_error'),
             //   hold: 6000
             // })
-          }).then(response => {
-            self.submitted = false;
+          }).then(() => {
+            self.submitted = false
             self.$f7.hidePreloader()
           })
         } else {
@@ -103,8 +101,8 @@ export default {
               hold: 6000
             })
           })
-          self.submitted = false;
-          self.$f7.hidePreloader();
+          self.submitted = false
+          self.$f7.hidePreloader()
         }
       })
     }

@@ -1,5 +1,6 @@
-// mutation setters - possible mutations to state
+/* global localStorage */
 
+// mutation setters - possible mutations to state
 export const SET_TOKEN = (state, payload) => {
   state.token = payload
   localStorage.setItem('token', payload)

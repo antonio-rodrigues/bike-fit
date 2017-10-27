@@ -1,11 +1,12 @@
+/* global localStorage */
+
 import Vue from 'vue'
 import Vuex from 'vuex'
-import * as VALUES from './constants'
+import { VALUES } from './constants'
 import * as getters from './getters'
 import * as mutations from './mutations'
 import * as actions from './actions'
 import User from './modules/user'
-import Post from './modules/post'
 import Service from './modules/service'
 
 Vue.use(Vuex)
@@ -26,7 +27,6 @@ export const store = new Vuex.Store({
   actions,    // actions to dispatch > commit mutation > change the state (use for async ops)
   modules: [
     User,
-    Post,
     Service
   ]
 })

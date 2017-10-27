@@ -1,5 +1,5 @@
 // state values available to components, retrieve on computed methods
-import * as VALUES from './constants'
+import { VALUES } from './constants'
 
 export const locale = (state) => {
   return state.locale
