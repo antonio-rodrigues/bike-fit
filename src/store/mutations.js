@@ -11,6 +11,11 @@ export const SET_LOCALE = (state, payload) => {
   localStorage.setItem('locale', payload)
 }
 
+export const SET_BIKE = (state, payload) => {
+  state.bike = payload
+  localStorage.setItem('bike', JSON.stringify(payload))
+}
+
 export const UPDATE_NEWS_TOTAL = (state, payload) => {
   state.newsTotal = payload
 }

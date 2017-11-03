@@ -103,15 +103,21 @@ export default {
 
     getNextServiceList () {
       const self = this
+      self.$f7.showPreloader(self.trans('please_wait'))
       self.$store.dispatch('services').then(() => {
         self.$f7.pullToRefreshDone()
         // self.$f7.initImagesLazyLoad('.homepage')
+        self.$f7.hidePreloader()
       })
       .catch(reason => self.handleError(reason))
     },
 
     serviceIcon (service) {
       return mapServiceIcon(service.typeId)
+    },
+
+    trans(key) {
+      return this.$app.trans(key, this.$store.getters.locale)
     }
   },
 

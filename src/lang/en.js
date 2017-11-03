@@ -8,6 +8,8 @@ export default {
     label: 'General Settings',
     bike: {
       section: 'Setup your bike',
+      select: 'Pick one...',
+      change: 'Change...',
       brand: 'Brand',
       model: 'Model',
       version: 'Version',

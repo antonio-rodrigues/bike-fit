@@ -9,6 +9,10 @@ export const setLocale = (context, payload) => {
   context.commit('SET_LOCALE', payload)
 }
 
+export const setBike = (context, payload) => {
+  context.commit('SET_BIKE', payload)
+}
+
 export const getSomeDataFromAPI = (context) => {
   context.commit('LOADING')
   Request.getFuelLog(context.getters.pagination).then(res => {

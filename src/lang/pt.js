@@ -8,6 +8,8 @@ export default {
     label: 'Definições Gerais',
     bike: {
       section: 'Configurar moto',
+      select: 'Escolher...',
+      change: 'Modificar...',
       brand: 'Marca',
       model: 'Modelo',
       version: 'Versão',

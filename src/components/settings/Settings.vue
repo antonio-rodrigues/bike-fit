@@ -3,21 +3,9 @@
 
     <navbar :options="{back: true, title: $app.trans('settings'), modal: '.backup-options'}"></navbar>
 
-    <!-- <div class="navbar">
-      <div class="navbar-inner">
-        <div class="left">
-          <a href="#" class="link icon-only" @click="goBack()">
-            <i class="icon f7-icons">arrow-left</i>
-          </a>
-        </div>
-        <div class="center">
-          {{ $app.trans("settings") }}
-        </div>
-        <div class="right"></div>
-      </div>
-    </div> -->
-
     <div class="page-content">
+
+      <!--language.section-->
       <div class="content-block">
         <div class="content-block-title">{{ $app.trans("general_settings.label") }}</div>
         <div class="list-block">
@@ -25,8 +13,8 @@
             <li>
               <a href="#" class="item-link smart-select" data-open-in="picker" :data-back-text="$app.trans('close')" data-back-on-select="true">
                 <select @change="setLocale($event.target.value)">
-                  <option value="en" :selected="locale === 'en'">English</option>
-                  <option value="pt" :selected="locale === 'pt'">Português</option>
+                  <option value="en" :selected="locale == 'en'">English</option>
+                  <option value="pt" :selected="locale == 'pt'">Português</option>
                 </select>
                 <div class="item-content">
                   <div class="item-inner">
@@ -38,6 +26,19 @@
           </ul>
         </div>
       </div>
+
+      <!--bike.section-->
+      <div class="content-block">
+        <div class="content-block-title">{{ $app.trans("general_settings.bike.section") }}</div>
+        <f7-list form>
+          <f7-list-item smart-select smart-select-searchbar smart-select-virtual-list smart-select-back-on-select :title="selectLabel">
+            <select name="selectBikeModel" @change="selectBike($event.target.value)">
+              <option v-for="item in bikes" :post="item.id" :key="item.id" :value="item.id" :selected="bike && bike.id == item.id">{{ item.title }}</option>
+            </select>
+          </f7-list-item>
+        </f7-list>
+      </div>
+
     </div>
 
     <!--backup-options-->
@@ -101,14 +102,75 @@ import { mapGetters } from 'vuex'
 
 export default {
   computed: {
+    bikes () {
+      return this.transformToList(this.$store.getters.bikes)
+    },
+    error () {
+      return this.$store.state.status.error
+    },
     ...mapGetters([
-      'locale', 'direction'
-    ])
+      'locale', 'direction', 'bike'
+    ]),
+  },
+
+  data: () => {
+    return {
+      selectedBike: null,
+      selectLabel: null
+    }
   },
 
   methods: {
-    onF7Init: () => {
+    onF7Init () {
       console.info('@Settings.vue')
+      this.loadBikeModels()
+      this.selectLabel = this.trans('general_settings.bike.' + (this.bike ? 'change' : 'select'))
+    },
+
+    handleError (stack) {
+      const self = this
+      console.error(stack)
+      self.$f7.hidePreloader()
+      self.$f7.addNotification({
+        title: self.$app.trans('error.title'),
+        message: stack.data ? stack.data : self.$app.trans('error.connection'),
+        hold: 6000
+      })
+    },
+
+    transformToList (payload) {
+      return payload.map(item => {
+        return { title: `${item.brand} ${item.model} (${item.makeYear})`, ...item }
+      })
+    },
+
+    loadBikeModels() {
+      const self = this
+      self.$f7.showPreloader(self.trans('please_wait'))
+      // get from API
+      self.$store.dispatch('bikes').then(() => {
+        self.$f7.hidePreloader()
+      }).catch(reason => self.handleError(reason))
+    },
+
+    searchAll (query) {
+      var self = this
+      var found = []
+      for (var i = 0; i < self.bikes.length; i++) {
+          if (self.bikes[i].title.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i)
+      }
+      return found
+    },
+
+    selectBike (id) {
+      const bike = this.getBikeById(id)
+      this.selectedBike = id
+      this.selectLabel = bike.title || this.selectLabel
+      this.$store.dispatch('setBike', bike) // persist choice
+    },
+
+    getBikeById (id) {
+      return this.bikes.filter(i => i.id == id)[0] || {}
     },
 
     setLocale (locale) {
@@ -144,7 +206,7 @@ export default {
     //   this.$app.router.back()
     // },
 
-    trans: (key) => {
+    trans(key) {
       return this.$app.trans(key, this.$store.getters.locale)
     }
   },

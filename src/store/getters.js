@@ -8,3 +8,7 @@ export const locale = (state) => {
 export const direction = (state) => {
   return state.direction || VALUES.DEFAULT_LANG_DIR
 }
+
+export const bike = (state) => {
+  return state.bike || null
+}
