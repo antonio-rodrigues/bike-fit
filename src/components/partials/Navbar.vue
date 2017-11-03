@@ -36,7 +36,7 @@ export default {
     'options'
   ],
   computed: {
-    getOptions() {
+    getOptions () {
       return Object.assign({ // default values, if not set
         title: null,
         back: false,

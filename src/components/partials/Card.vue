@@ -23,12 +23,11 @@
 
 <script>
 export default {
-
   props: [
     'post'
   ],
 
-  data: function() {
+  data: function () {
     return {
       isLiked: this.post.isLiked,
       isSaved: this.post.isSaved
@@ -36,15 +35,12 @@ export default {
   },
 
   methods: {
-
-    like: function() {
-      this.isLiked = !this.isLiked;
+    like: function () {
+      this.isLiked = !this.isLiked
     },
-
-    save: function(post) {
-      this.isSaved = !this.isSaved;
-    },
-
+    save: function (post) {
+      this.isSaved = !this.isSaved
+    }
   }
 }
 </script>

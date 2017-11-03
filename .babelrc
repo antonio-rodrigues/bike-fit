@@ -2,7 +2,7 @@
   "presets": [
     ["env", {
       "debug": false,
-      "useBuiltIns": true,
+      "useBuiltIns": false,
       "targets": {
         "node": "current",
         "browsers": ["last 2 versions"]

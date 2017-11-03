@@ -1,18 +1,21 @@
+/* global localStorage */
+
 import Vue from 'vue'
 import Vuex from 'vuex'
-import * as VALUES from './constants'
+import { VALUES } from './constants'
 import * as getters from './getters'
 import * as mutations from './mutations'
 import * as actions from './actions'
 import User from './modules/user'
-import Post from './modules/post'
 import Service from './modules/service'
+import Bike from './modules/bike'
 
 Vue.use(Vuex)
 
 // app global state
 const state = {
   locale: localStorage.getItem('locale') || VALUES.DEFAULT_LANG,
+  bike: localStorage.getItem('bike') ? JSON.parse(localStorage.getItem('bike')) : null,
   newsTotal: 0,
   loading: false,
   success: false,
@@ -26,7 +29,7 @@ export const store = new Vuex.Store({
   actions,    // actions to dispatch > commit mutation > change the state (use for async ops)
   modules: [
     User,
-    Post,
-    Service
+    Service,
+    Bike
   ]
 })
