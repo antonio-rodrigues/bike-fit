@@ -5,19 +5,19 @@ export default [
   },
   {
     path: '/settings',
-    component: require('./components/Settings.vue')
+    component: require('./components/settings/Settings.vue')
   },
   {
     path: '/login',
-    component: require('./components/Login.vue')
+    component: require('./components/profile/Login.vue')
   },
   {
     path: '/register',
-    component: require('./components/Register.vue')
+    component: require('./components/profile/Register.vue')
   },
   {
     path: '/profile',
-    component: require('./components/Profile.vue')
+    component: require('./components/profile/Profile.vue')
   },
   {
     path: '/test',

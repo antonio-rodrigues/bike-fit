@@ -6,6 +6,13 @@ export default {
   settings: 'Settings',
   general_settings: {
     label: 'General Settings',
+    bike: {
+      section: 'Setup your bike',
+      brand: 'Brand',
+      model: 'Model',
+      version: 'Version',
+      year: 'Year'
+    },
     backup: {
       label: 'Backup all settings',
       save: 'Save',

@@ -6,6 +6,13 @@ export default {
   settings: 'Definições',
   general_settings: {
     label: 'Definições Gerais',
+    bike: {
+      section: 'Configurar moto',
+      brand: 'Marca',
+      model: 'Modelo',
+      version: 'Versão',
+      year: 'Ano'
+    },
     backup: {
       label: 'Cópia segurança',
       save: 'Guardar todas as definições',
