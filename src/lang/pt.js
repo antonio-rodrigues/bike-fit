@@ -13,7 +13,20 @@ export default {
       brand: 'Marca',
       model: 'Modelo',
       version: 'Versão',
-      year: 'Ano'
+      year: 'Ano',
+      mileage: 'Quilometragem'
+    },
+    legal: {
+      insurance: {
+        label: 'Seguradora',
+        company: 'Companhia',
+        startDate: 'Data inicio',
+        period: 'Períodicidade'
+      },
+      tax: {
+        label: 'UIC',
+        dueDate: 'Data renovação'
+      }
     },
     backup: {
       label: 'Cópia segurança',

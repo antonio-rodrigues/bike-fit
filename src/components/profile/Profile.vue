@@ -10,6 +10,7 @@
           <div class="card-content">
             <div class="card-content-inner">
               <img :src="images.avatar" class="avatar" />
+              <h4>{{ bike.title }}</h4>
               <p class="color-gray">{{ user.userId }}</p>
             </div>
           </div>
@@ -32,7 +33,7 @@ import avatarImage from '../../assets/my-bike.png'
 export default {
   computed: {
     ...mapGetters([
-      'user'
+      'user', 'bike'
     ])
   },
 

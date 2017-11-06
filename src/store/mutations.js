@@ -16,6 +16,16 @@ export const SET_BIKE = (state, payload) => {
   localStorage.setItem('bike', JSON.stringify(payload))
 }
 
+export const SET_MILEAGE = (state, payload) => {
+  state.mileage = payload
+  localStorage.setItem('mileage', payload)
+}
+
+export const SET_INSURER = (state, payload) => {
+  state.insurer = payload
+  localStorage.setItem('insurer', JSON.stringify(payload))
+}
+
 export const UPDATE_NEWS_TOTAL = (state, payload) => {
   state.newsTotal = payload
 }
