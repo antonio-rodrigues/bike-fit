@@ -330,7 +330,7 @@ export default {
   },
 
   components: {
-    navbar: require('../partials/Navbar.vue')
+    navbar: require('./partials/Navbar.vue')
   }
 }
 </script>

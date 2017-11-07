@@ -27,8 +27,8 @@
 <script>
 // import Vue from 'vue'
 import { mapGetters } from 'vuex'
-import bgImage from '../../assets/road-bg.png'
-import avatarImage from '../../assets/my-bike.png'
+import bgImage from '../assets/road-bg.png'
+import avatarImage from '../assets/my-bike.png'
 
 export default {
   computed: {
@@ -55,8 +55,8 @@ export default {
   },
 
   components: {
-    navbar: require('../partials/Navbar.vue'),
-    card: require('../partials/Card.vue')
+    navbar: require('./partials/Navbar.vue'),
+    card: require('./partials/Card.vue')
   }
 }
 </script>
@@ -69,7 +69,7 @@ export default {
   }
 
   .background-photo {
-    background: url(../../assets/road-bg.png);
+    background: url(../assets/road-bg.png);
     background-color: #000000;
     opacity: 0.8;
   }
