@@ -1,21 +1,22 @@
-import Vue from 'vue';
-import VueI18n from "vue-i18n";
-import VeeValidate from "vee-validate";
-import enLang from "./lang/en";
-import ptLang from "./lang/pt";
+/* global localStorage */
+import Vue from 'vue'
+import VueI18n from 'vue-i18n'
+import VeeValidate from 'vee-validate'
+import enLang from './lang/en'
+import ptLang from './lang/pt'
 
 const messages = {
   en: enLang,
-  pt: ptLang,
-};
+  pt: ptLang
+}
 
-Vue.use(VueI18n);
+Vue.use(VueI18n)
 
 Vue.use(VeeValidate, {
   errorBagName: 'errors',
   fieldsBagName: 'fields',
   delay: 0,
-  locale: localStorage.getItem("locale") || "en",
+  locale: localStorage.getItem('locale') || 'en',
   dictionary: messages,
   strict: false,
   enableAutoClasses: false,
@@ -27,10 +28,9 @@ Vue.use(VeeValidate, {
     pristine: 'pristine', // control has not been interacted with
     dirty: 'dirty' // control has been interacted with
   }
-});
+})
 
 export const i18n = new VueI18n({
-  locale: localStorage.getItem("locale") || "en",
-  messages,
-});
-
+  locale: localStorage.getItem('locale') || 'en',
+  messages
+})

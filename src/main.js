@@ -1,7 +1,4 @@
-/**
- * F7 Themes
- * Avaiable themes ['ios', 'material']
- */
+/* global Framework7, nativeclick, f7 */
 import Vue from 'vue'
 import App from './components/App.vue'
 import VueResource from 'vue-resource'
@@ -17,6 +14,7 @@ import VueMomentJS from 'vue-momentjs'
 
 require('framework7')
 
+// Available themes
 const THEMES = {
   IOS: 'ios',
   MATERIAL: 'material'

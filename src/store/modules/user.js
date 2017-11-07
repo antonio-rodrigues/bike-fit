@@ -1,3 +1,5 @@
+/* global localStorage */
+
 import Vue from 'vue'
 
 export default {

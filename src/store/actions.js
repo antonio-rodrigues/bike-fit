@@ -1,11 +1,16 @@
-// actions to dispatch > commit mutation > change the state - use for async ops
+/* global Request */
 
+// actions to dispatch > commit mutation > change the state - use for async ops
 export const setToken = (context, payload) => {
   context.commit('SET_TOKEN', payload)
 }
 
 export const setLocale = (context, payload) => {
   context.commit('SET_LOCALE', payload)
+}
+
+export const setBike = (context, payload) => {
+  context.commit('SET_BIKE', payload)
 }
 
 export const getSomeDataFromAPI = (context) => {

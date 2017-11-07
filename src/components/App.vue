@@ -48,18 +48,18 @@
 
 <script>
 export default {
-  mounted: function() {
-    console.log("App.vue");
+  mounted: function () {
+    console.log('App.vue')
   },
 
   methods: {
-    onF7Init: function() { }
+    onF7Init: () => { }
   },
 
   components: {
-    navbar: require("./partials/Navbar.vue"),
-    panel: require("./partials/Panel.vue"),
-    popover: require("./partials/Popover.vue")
+    navbar: require('./partials/Navbar.vue'),
+    panel: require('./partials/Panel.vue'),
+    popover: require('./partials/Popover.vue')
   }
 }
 </script>
