@@ -1,4 +1,4 @@
-/* global Framework7, nativeclick, f7, localStorage */
+/* global Framework7, nativeclick, f7 */
 import Vue from 'vue'
 import App from './components/App.vue'
 import VueResource from 'vue-resource'
@@ -13,9 +13,6 @@ import moment from 'moment'
 import VueMomentJS from 'vue-momentjs'
 
 require('framework7')
-
-// const session = window.sessionStorage
-// const env = process.env
 
 // Available themes
 const THEMES = {

@@ -22,6 +22,8 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
+    <hook src="scripts/vueify-build.js" type="before_compile" />
+    <engine name="android" spec="^6.2.3" />
     <engine name="browser" spec="^5.0.0" />
     <engine name="ios" spec="^4.5.0" />
     <engine name="android" spec="^6.3.0" />
