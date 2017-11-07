@@ -18,8 +18,31 @@ under the License.
 */
 
 // Note, these will be updated automatically at build time
-var CACHE_VERSION = '%CACHE_VERSION%';
-var CACHE_LIST = ['CACHE_VALUES'];
+var CACHE_VERSION = '1509967466577';
+var CACHE_LIST = [
+    "/build.js",
+    "/build.js.map",
+    "/config.xml",
+    "/cordova-sw.js",
+    "/cordova.js",
+    "/cordova_plugins.js",
+    "/favicon.ico",
+    "/i-f7-ios.png",
+    "/i-f7-material.png",
+    "/manifest.json",
+    "/my-bike.png",
+    "/plugins/cordova-plugin-device/src/browser/DeviceProxy.js",
+    "/plugins/cordova-plugin-device/www/device.js",
+    "/plugins/cordova-plugin-nativeclicksound/www/nativeclick.js",
+    "/plugins/cordova-plugin-network-information/src/browser/network.js",
+    "/plugins/cordova-plugin-network-information/www/Connection.js",
+    "/plugins/cordova-plugin-network-information/www/network.js",
+    "/plugins/cordova-plugin-splashscreen/src/browser/SplashScreenProxy.js",
+    "/plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+    "/plugins/cordova-plugin-vibration/src/browser/Vibration.js",
+    "/plugins/cordova-plugin-vibration/www/vibration.js",
+    "/road-bg.png"
+];
 
 this.addEventListener('install', function (event) {
     // Perform install steps
