@@ -3,6 +3,7 @@
 
     <navbar :options="{back: true, title: $app.trans('settings'), modal: '.backup-options'}"></navbar>
 
+    <!--page.content-->
     <div class="page-content">
 
       <!--language.section-->
@@ -39,7 +40,7 @@
                 </select>
                 <div class="item-content">
                   <div class="item-inner">
-                    <div class="item-title">{{ selectBikeLabel }}</div>
+                    <div class="item-title">{{ bikeLabel }}</div>
                   </div>
                 </div>
               </a>
@@ -68,7 +69,7 @@
                 </select>
                 <div class="item-content">
                   <div class="item-inner">
-                    <div class="item-title">{{ selectInsurerLabel }}</div>
+                    <div class="item-title">{{ insurerLabel }}</div>
                   </div>
                 </div>
               </a>
@@ -76,8 +77,11 @@
             <li>
               <div class="item-content">
                 <div class="item-inner">
-                  <div class="item-input">
-                    <input type="text" placeholder="Insurance Due Date" readonly id="calendar-default">
+                  <div class="item-title">{{ insuranceDueDateLabel }}</div>
+                  <div class="item-after">
+                    <div class="item-input">
+                      <input type="text" placeholder="AAAA-MM-DD" readonly id="calendar-default">
+                    </div>
                   </div>
                 </div>
               </div>
@@ -87,6 +91,7 @@
       </div>
 
     </div>
+    <!--page.content-->
 
     <!--Picker:bike-mileage-input-->
     <div class="picker-modal bike-mileage-options">
@@ -117,7 +122,7 @@
       </div>
     </div>
 
-    <!--Picker:backup-options-->
+    <!--backup-options-->
     <div class="toolbar toolbar-bottom toolbar-fixed">
       <div class="toolbar-inner">
         <div class="left"></div>
@@ -170,18 +175,17 @@
         <p>{{ $app.trans('general_settings.backup.info.row2') }}</p>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-let self;
+import { mapGetters } from 'vuex'
+// let self;
 
 export default {
   computed: {
     bikes () {
-      return this.transformBikesToList(this.$store.getters.bikes)
+      return this.transformToList(this.$store.getters.bikes)
     },
     insurers () {
       return this.$store.getters.insurers
@@ -191,43 +195,40 @@ export default {
     },
     mileage: {
       get: function () {
-        return self.$store.getters.mileage
+        return this.$store.getters.mileage
       },
       set: function (newMileage) {
-        return self.$store.dispatch('setMileage', newMileage)
+        return this.$store.dispatch('setMileage', newMileage)
       }
     },
     ...mapGetters([
       'locale', 'direction', 'bike', 'insurer'
-    ])
+    ]),
   },
 
   data: () => {
     return {
-      selectBikeLabel: null,
-      bikeMileageLabel: null,
-      selectInsurerLabel: null,
-      bikeMileage: 0
+      bikeLabel: null,
+      insurerLabel: null,
+      insuranceDueDateLabel: null
     }
-  },
-
-  created () {
-    self = this;
   },
 
   methods: {
     onF7Init () {
-      self.bikeMileage = self.mileage || 0
-      self.selectBikeLabel = self.bike ? self.bike.title : self.trans('general_settings.bike.model')
-      self.selectInsurerLabel = self.insurer ? self.insurer.company : self.trans('general_settings.legal.insurance.company')
-      self.loadData()
-
-      var calendarDefault = self.$f7.calendar({
-        input: '#calendar-default',
+      // console.info('@Settings.onF7Init()')
+      this.bikeLabel = this.bike ? this.bike.title : this.trans('general_settings.bike.model')
+      this.insurerLabel = this.insurer ? this.insurer.company : this.trans('general_settings.legal.insurance.company')
+      this.insuranceDueDateLabel = this.trans('general_settings.legal.insurance.period')
+      this.loadData()
+      // init calendar ctrl
+      const calendarDefault = this.$f7.calendar({
+        input: '#calendar-default'
       })
     },
 
     handleError (stack) {
+      const self = this
       console.error(stack)
       self.$f7.hidePreloader()
       self.$f7.addNotification({
@@ -237,18 +238,22 @@ export default {
       })
     },
 
+    // COMMON
     loadData () {
+      const self = this
       self.$f7.showPreloader(self.trans('please_wait'))
       Promise.all([
         self.loadBikeModels(),
-        self.loadEnsureCompanies()
+        self.loadInsureCompanies()
       ]).then(() => {
+        console.log('Data loaded!')
         self.$f7.hidePreloader()
       })
       .catch(reason => self.handleError(reason))
     },
 
-    transformBikesToList (payload) {
+    // BIKE
+    transformToList (payload) {
       return payload.map(item => {
         return { title: `${item.brand} ${item.model} (${item.makeYear})`, ...item }
       })
@@ -256,46 +261,53 @@ export default {
 
     loadBikeModels() {
       // get from API
-      self.$store.dispatch('bikes').then().catch(reason => self.handleError(reason))
+      const self = this
+      return self.$store.dispatch('bikes').then().catch(reason => self.handleError(reason))
     },
 
-    searchAllBikes (query) {
-      var found = []
+    searchAll (query) {
+      const self = this
+      let found = []
       for (var i = 0; i < self.bikes.length; i++) {
           if (self.bikes[i].title.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i)
       }
       return found
     },
 
-    getBikeById (id) {
-      return self.bikes.filter(i => i.id == id)[0] || {}
-    },
-
     selectBike (id) {
-      const bike = self.getBikeById(id)
-      self.$store.dispatch('setBike', bike) // persist choice
+      const bike = this.getBikeById(id)
+      this.selectedBike = id
+      this.bikeLabel = bike.title
+      this.$store.dispatch('setBike', bike) // persist choice
     },
 
-    loadEnsureCompanies() {
+    getBikeById (id) {
+      return this.bikes.filter(i => i.id == id)[0] || {}
+    },
+
+    // INSURER
+    loadInsureCompanies() {
       // get from API
-      self.$store.dispatch('insurers').then().catch(reason => self.handleError(reason))
+      const self = this
+      return self.$store.dispatch('insurers').then().catch(reason => self.handleError(reason))
     },
-
     searchAllInsurers (query) {
-      var found = []
+      const self = this
+      let found = []
       for (var i = 0; i < self.insurers.length; i++) {
           if (self.insurers[i].title.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i)
       }
       return found
     },
-
     selectInsurer (id) {
-      const insurerData = self.insurers.filter(i => i.id == id)[0] || {}
-      self.selectInsurerLabel = insurerData.company
-      self.$store.dispatch('setInsurer', insurerData) // persist choice
+      const insurerData = this.insurers.filter(i => i.id == id)[0] || {}
+      this.insurerLabel = insurerData.company
+      this.$store.dispatch('setInsurer', insurerData) // persist choice
     },
 
+    // LANGUAGE
     setLocale (locale) {
+      const self = this
       self.$f7.showIndicator()
       console.log('__ settings.setLocale()', locale)
 
@@ -307,25 +319,23 @@ export default {
     },
 
     cloudBackup () {
+      const self = this
       console.log('__ onCloudBackup()')
       self.$f7.alert(self.$app.trans('general_settings.backup.success'), self.$app.trans('general_settings.backup.save'))
     },
 
     cloudRestore () {
+      const self = this
       console.log('__ onCloudRestore()')
       self.$f7.alert(self.$app.trans('general_settings.backup.failure'), self.$app.trans('general_settings.backup.restore'))
     },
 
     showBackupInfo () {
-      self.$f7.popup('.popup-info-backup')
+      this.$f7.popup('.popup-info-backup')
     },
 
-    updateBikeMileage () {
-      self.$store.dispatch('setBikeMileage', self.bikeMileage)
-    },
-
-    trans(key) {
-      return self.$app.trans(key, self.$store.getters.locale)
+    trans (key) {
+      return this.$app.trans(key, this.$store.getters.locale)
     }
   },
 

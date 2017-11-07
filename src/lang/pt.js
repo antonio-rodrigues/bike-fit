@@ -6,10 +6,10 @@ export default {
   settings: 'Definições',
   general_settings: {
     label: 'Definições Gerais',
+    select: 'Escolher...',
+    change: 'Modificar...',
     bike: {
       section: 'Configurar moto',
-      select: 'Escolher...',
-      change: 'Modificar...',
       brand: 'Marca',
       model: 'Modelo',
       version: 'Versão',

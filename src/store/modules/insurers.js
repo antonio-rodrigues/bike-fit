@@ -1,5 +1,4 @@
 import Vue from 'vue'
-// import moment from 'moment'
 
 const handleError = (response) => {
   return {
