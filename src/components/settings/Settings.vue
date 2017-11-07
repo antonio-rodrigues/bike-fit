@@ -3,6 +3,7 @@
 
     <navbar :options="{back: true, title: $app.trans('settings'), modal: '.backup-options'}"></navbar>
 
+    <!--page.content-->
     <div class="page-content">
 
       <!--language.section-->
@@ -30,15 +31,95 @@
       <!--bike.section-->
       <div class="content-block">
         <div class="content-block-title">{{ $app.trans("general_settings.bike.section") }}</div>
-        <f7-list form>
-          <f7-list-item smart-select smart-select-searchbar smart-select-virtual-list smart-select-back-on-select :title="selectLabel">
-            <select name="selectBikeModel" @change="selectBike($event.target.value)">
-              <option v-for="item in bikes" :post="item.id" :key="item.id" :value="item.id" :selected="bike && bike.id == item.id">{{ item.title }}</option>
-            </select>
-          </f7-list-item>
-        </f7-list>
+        <div class="list-block">
+          <ul>
+            <li>
+              <a href="#" class="item-link smart-select" data-searchbar="true" data-virtual-list="true" :data-back-text="$app.trans('close')" data-back-on-select="true">
+                <select name="selectBikeModel" @change="selectBike($event.target.value)">
+                  <option v-for="item in bikes" :post="item.id" :key="item.id" :value="item.id" :selected="bike && bike.id == item.id">{{ item.title }}</option>
+                </select>
+                <div class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title">{{ bikeLabel }}</div>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="item-link item-content open-picker" data-picker=".bike-mileage-options">
+                <div class="item-inner">
+                  <div class="item-title">{{ $app.trans("general_settings.bike.mileage") }}</div>
+                  <div class="item-after">{{ mileage }}</div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
 
+      <!--insurance.section-->
+      <div class="content-block">
+        <div class="content-block-title">{{ $app.trans("general_settings.legal.insurance.label") }}</div>
+        <div class="list-block">
+          <ul>
+            <li>
+              <a href="#" class="item-link smart-select" data-searchbar="true" data-virtual-list="true" :data-back-text="$app.trans('close')" data-back-on-select="true">
+                <select name="selectInsurerCompany" @change="selectInsurer($event.target.value)">
+                  <option v-for="item in insurers" :post="item.id" :key="item.id" :value="item.id" :selected="insurer && insurer.id == item.id">{{ item.company }}</option>
+                </select>
+                <div class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title">{{ insurerLabel }}</div>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <div class="item-content">
+                <div class="item-inner">
+                  <div class="item-title">{{ insuranceDueDateLabel }}</div>
+                  <div class="item-after">
+                    <div class="item-input">
+                      <input type="text" placeholder="AAAA-MM-DD" readonly id="calendar-default">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+    <!--page.content-->
+
+    <!--Picker:bike-mileage-input-->
+    <div class="picker-modal bike-mileage-options">
+      <div class="toolbar">
+        <div class="toolbar-inner">
+          <div class="left"></div>
+          <div class="right"><a href="#" class="close-picker">Done</a></div>
+        </div>
+      </div>
+      <div class="picker-modal-inner">
+        <div class="content-block">
+          <h4>{{ $app.trans("general_settings.bike.mileage") }}</h4>
+          <div class="list-block">
+            <ul>
+              <li>
+                <div class="item-content">
+                  <div class="item-media"><i class="icon f7-icons">gear</i></div>
+                  <div class="item-inner">
+                    <div class="item-input">
+                      <input type="number" placeholder="0" v-model.number="mileage">
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!--backup-options-->
@@ -99,32 +180,51 @@
 
 <script>
 import { mapGetters } from 'vuex'
+// let self;
 
 export default {
   computed: {
     bikes () {
       return this.transformToList(this.$store.getters.bikes)
     },
+    insurers () {
+      return this.$store.getters.insurers
+    },
     error () {
       return this.$store.state.status.error
     },
+    mileage: {
+      get: function () {
+        return this.$store.getters.mileage
+      },
+      set: function (newMileage) {
+        return this.$store.dispatch('setMileage', newMileage)
+      }
+    },
     ...mapGetters([
-      'locale', 'direction', 'bike'
+      'locale', 'direction', 'bike', 'insurer'
     ]),
   },
 
   data: () => {
     return {
-      selectedBike: null,
-      selectLabel: null
+      bikeLabel: null,
+      insurerLabel: null,
+      insuranceDueDateLabel: null
     }
   },
 
   methods: {
     onF7Init () {
-      console.info('@Settings.vue')
-      this.loadBikeModels()
-      this.selectLabel = this.trans('general_settings.bike.' + (this.bike ? 'change' : 'select'))
+      // console.info('@Settings.onF7Init()')
+      this.bikeLabel = this.bike ? this.bike.title : this.trans('general_settings.bike.model')
+      this.insurerLabel = this.insurer ? this.insurer.company : this.trans('general_settings.legal.insurance.company')
+      this.insuranceDueDateLabel = this.trans('general_settings.legal.insurance.period')
+      this.loadData()
+      // init calendar ctrl
+      const calendarDefault = this.$f7.calendar({
+        input: '#calendar-default'
+      })
     },
 
     handleError (stack) {
@@ -138,6 +238,21 @@ export default {
       })
     },
 
+    // COMMON
+    loadData () {
+      const self = this
+      self.$f7.showPreloader(self.trans('please_wait'))
+      Promise.all([
+        self.loadBikeModels(),
+        self.loadInsureCompanies()
+      ]).then(() => {
+        console.log('Data loaded!')
+        self.$f7.hidePreloader()
+      })
+      .catch(reason => self.handleError(reason))
+    },
+
+    // BIKE
     transformToList (payload) {
       return payload.map(item => {
         return { title: `${item.brand} ${item.model} (${item.makeYear})`, ...item }
@@ -145,17 +260,14 @@ export default {
     },
 
     loadBikeModels() {
-      const self = this
-      self.$f7.showPreloader(self.trans('please_wait'))
       // get from API
-      self.$store.dispatch('bikes').then(() => {
-        self.$f7.hidePreloader()
-      }).catch(reason => self.handleError(reason))
+      const self = this
+      return self.$store.dispatch('bikes').then().catch(reason => self.handleError(reason))
     },
 
     searchAll (query) {
-      var self = this
-      var found = []
+      const self = this
+      let found = []
       for (var i = 0; i < self.bikes.length; i++) {
           if (self.bikes[i].title.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i)
       }
@@ -165,7 +277,7 @@ export default {
     selectBike (id) {
       const bike = this.getBikeById(id)
       this.selectedBike = id
-      this.selectLabel = bike.title || this.selectLabel
+      this.bikeLabel = bike.title
       this.$store.dispatch('setBike', bike) // persist choice
     },
 
@@ -173,6 +285,27 @@ export default {
       return this.bikes.filter(i => i.id == id)[0] || {}
     },
 
+    // INSURER
+    loadInsureCompanies() {
+      // get from API
+      const self = this
+      return self.$store.dispatch('insurers').then().catch(reason => self.handleError(reason))
+    },
+    searchAllInsurers (query) {
+      const self = this
+      let found = []
+      for (var i = 0; i < self.insurers.length; i++) {
+          if (self.insurers[i].title.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i)
+      }
+      return found
+    },
+    selectInsurer (id) {
+      const insurerData = this.insurers.filter(i => i.id == id)[0] || {}
+      this.insurerLabel = insurerData.company
+      this.$store.dispatch('setInsurer', insurerData) // persist choice
+    },
+
+    // LANGUAGE
     setLocale (locale) {
       const self = this
       self.$f7.showIndicator()
@@ -201,12 +334,7 @@ export default {
       this.$f7.popup('.popup-info-backup')
     },
 
-    // goBack () {
-    //   this.$f7.closeModal('.backup-options')
-    //   this.$app.router.back()
-    // },
-
-    trans(key) {
+    trans (key) {
       return this.$app.trans(key, this.$store.getters.locale)
     }
   },

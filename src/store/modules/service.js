@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import * as cache from '../../utils/cache'
 import moment from 'moment'
 
 const handleError = (response) => {
@@ -38,6 +39,11 @@ export default {
 
   actions: {
     services: (store, services) => {
+      const _cached = cache.getJson('services')
+      if (_cached) {
+        console.log('> FROM CACHE')
+        return store.commit('services', _cached)
+      }
       // add level and color
       const appendInfo = (data) => {
         data.map(d => {
@@ -48,6 +54,8 @@ export default {
       }
       return Vue.http.get('Service', []).then(response => {
         if (response.status && parseInt(response.status) === 200) {
+          cache.setJson('services', response.data)
+          console.log('> PERSIST TO CACHE')
           store.commit('services', appendInfo(response.data))
         }
       }, response => store.commit('error', handleError(response)))

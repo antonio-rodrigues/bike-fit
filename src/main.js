@@ -1,4 +1,4 @@
-/* global Framework7, nativeclick, f7 */
+/* global Framework7, nativeclick, f7, localStorage */
 import Vue from 'vue'
 import App from './components/App.vue'
 import VueResource from 'vue-resource'
@@ -13,6 +13,9 @@ import moment from 'moment'
 import VueMomentJS from 'vue-momentjs'
 
 require('framework7')
+
+// const session = window.sessionStorage
+// const env = process.env
 
 // Available themes
 const THEMES = {
@@ -55,15 +58,34 @@ Vue.app = {
     Vue.http.options.root = Vue.app.config.get('api').slug
 
     /**
+     * append cache to every request
      * append access token to every request
      */
-    if (Vue.app.auth.check()) {
-      console.log('>>> Vue.app.auth.check()')
-      Vue.http.interceptors.push((request, next) => {
-        request.params['token'] = Vue.app.auth.token()
-        next()
-      })
-    }
+    Vue.http.interceptors.push(function (request, next) {
+      // [REQUEST] append access token
+      request.params['token'] = Vue.app.auth.token()
+      next()
+
+      // // TODO: implement expires and invalidate cache option
+      // let cache = null
+      // if (request.method.toLowerCase() === 'get') {
+      //   cache = localStorage.getItem(`CACHE_${request.url}`) ? JSON.parse(localStorage.getItem(`CACHE_${request.url}`)) : null
+      //   if (cache) {
+      //     console.log('> from cache', request.url)
+      //     next(request.respondWith(cache, { status: 200, statusText: 'Ok' }))
+      //   } else {
+      //     console.log('> from server', request.url)
+      //   }
+      // }
+      // next(response => {
+      //   let { status, statusText, body } = response
+      //   if (status === 200 && request.method.toLowerCase() === 'get' && !cache) {
+      //     console.log('> persist to cache', request.url)
+      //     localStorage.setItem(`CACHE_${request.url}`, JSON.stringify(body))
+      //   }
+      //   request.respondWith(body, {status, statusText})
+      // })
+    })
 
     /**
      * Native click sound
