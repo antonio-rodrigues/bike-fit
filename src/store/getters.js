@@ -12,3 +12,11 @@ export const direction = (state) => {
 export const bike = (state) => {
   return state.bike || null
 }
+
+export const mileage = (state) => {
+  return state.mileage || null
+}
+
+export const insurer = (state) => {
+  return state.insurer || null
+}

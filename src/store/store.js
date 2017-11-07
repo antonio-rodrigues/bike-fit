@@ -9,6 +9,7 @@ import * as actions from './actions'
 import User from './modules/user'
 import Service from './modules/service'
 import Bike from './modules/bike'
+import Insurers from './modules/insurers'
 
 Vue.use(Vuex)
 
@@ -16,6 +17,8 @@ Vue.use(Vuex)
 const state = {
   locale: localStorage.getItem('locale') || VALUES.DEFAULT_LANG,
   bike: localStorage.getItem('bike') ? JSON.parse(localStorage.getItem('bike')) : null,
+  insurer: localStorage.getItem('insurer') ? JSON.parse(localStorage.getItem('insurer')) : null,
+  mileage: localStorage.getItem('mileage') || VALUES.DEFAULT_MILEAGE,
   newsTotal: 0,
   loading: false,
   success: false,
@@ -30,6 +33,7 @@ export const store = new Vuex.Store({
   modules: [
     User,
     Service,
-    Bike
+    Bike,
+    Insurers
   ]
 })

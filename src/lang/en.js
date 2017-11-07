@@ -6,14 +6,27 @@ export default {
   settings: 'Settings',
   general_settings: {
     label: 'General Settings',
+    select: 'Pick one...',
+    change: 'Change...',
     bike: {
       section: 'Setup your bike',
-      select: 'Pick one...',
-      change: 'Change...',
       brand: 'Brand',
       model: 'Model',
       version: 'Version',
-      year: 'Year'
+      year: 'Year',
+      mileage: 'Mileage'
+    },
+    legal: {
+      insurance: {
+        label: 'Insurance',
+        company: 'Company',
+        startDate: 'Start date',
+        period: 'Due date'
+      },
+      tax: {
+        label: 'TAX',
+        dueDate: 'Due date'
+      }
     },
     backup: {
       label: 'Backup all settings',

@@ -25,14 +25,8 @@
     <feature name="Device">
         <param name="ios-package" value="CDVDevice" />
     </feature>
-    <feature name="Geolocation">
-        <param name="ios-package" value="CDVLocation" />
-    </feature>
     <feature name="NativeClick">
         <param name="ios-package" value="NativeClick" />
-    </feature>
-    <feature name="NetworkStatus">
-        <param name="ios-package" value="CDVConnection" />
     </feature>
     <feature name="SplashScreen">
         <param name="ios-package" value="CDVSplashScreen" />

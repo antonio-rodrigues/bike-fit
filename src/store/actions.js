@@ -13,6 +13,14 @@ export const setBike = (context, payload) => {
   context.commit('SET_BIKE', payload)
 }
 
+export const setMileage = (context, payload) => {
+  context.commit('SET_MILEAGE', payload)
+}
+
+export const setInsurer = (context, payload) => {
+  context.commit('SET_INSURER', payload)
+}
+
 export const getSomeDataFromAPI = (context) => {
   context.commit('LOADING')
   Request.getFuelLog(context.getters.pagination).then(res => {
