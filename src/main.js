@@ -1,7 +1,9 @@
-/* global Framework7, nativeclick, f7 */
+/* global window, Framework7, nativeclick, f7 */
 import Vue from 'vue'
 import App from './components/App.vue'
-import VueResource from 'vue-resource'
+// import VueResource from 'vue-resource'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 import VueCordova from 'vue-cordova'
 import Framework7Vue from 'framework7-vue'
 
@@ -14,7 +16,6 @@ import VueMomentJS from 'vue-momentjs'
 
 require('framework7')
 
-// Available themes
 const THEMES = {
   IOS: 'ios',
   MATERIAL: 'material'
@@ -26,11 +27,12 @@ require('framework7/dist/css/framework7.' + theme + '.min.css')
 require('framework7/dist/css/framework7.' + theme + '.colors.min.css')
 require('framework7-icons/css/framework7-icons.css')
 
-Vue.use(VueResource)
+// Vue.use(VueResource)
 Vue.use(Framework7Vue)
 Vue.use(VueCordova, {})
 Vue.use(VueMomentJS, moment)
 
+Vue.use(VueAxios, axios)
 Vue.conf = require('./config').items
 Vue.prototype.$config = Vue.conf
 
@@ -49,39 +51,34 @@ Vue.app = {
     // const self = this
 
     /**
-     * set API base url
-     * @type {string}
+     * set global API url
      */
-    Vue.http.options.root = Vue.app.config.get('api').slug
+    const API = Vue.app.config.get('api').slug
 
     /**
-     * append cache to every request
      * append access token to every request
      */
-    Vue.http.interceptors.push(function (request, next) {
-      // [REQUEST] append access token
-      request.params['token'] = Vue.app.auth.token()
-      next()
+    Vue.axios = axios.create({
+      baseURL: API,
+      timeout: false,
+      params: {} // do not remove this, its added to add params later in the config
+    })
 
-      // // TODO: implement expires and invalidate cache option
-      // let cache = null
-      // if (request.method.toLowerCase() === 'get') {
-      //   cache = localStorage.getItem(`CACHE_${request.url}`) ? JSON.parse(localStorage.getItem(`CACHE_${request.url}`)) : null
-      //   if (cache) {
-      //     console.log('> from cache', request.url)
-      //     next(request.respondWith(cache, { status: 200, statusText: 'Ok' }))
-      //   } else {
-      //     console.log('> from server', request.url)
-      //   }
-      // }
-      // next(response => {
-      //   let { status, statusText, body } = response
-      //   if (status === 200 && request.method.toLowerCase() === 'get' && !cache) {
-      //     console.log('> persist to cache', request.url)
-      //     localStorage.setItem(`CACHE_${request.url}`, JSON.stringify(body))
-      //   }
-      //   request.respondWith(body, {status, statusText})
-      // })
+    // Add a request interceptor
+    Vue.axios.interceptors.request.use(config => {
+      let token = Vue.app.auth.token()
+      if (token) {
+        config.params['token'] = token
+        config.headers.common['Authorization'] = 'Bearer ' + token
+      }
+      // console.log('config:', config)
+      return config
+    }, error => {
+      return Promise.reject(error)
+    })
+
+    Vue.axios.interceptors.response.use(response => response, error => {
+      console.log(error.config)
     })
 
     /**
@@ -223,8 +220,8 @@ Vue.app = {
 
       setTimeout(() => {
         Vue.app.f7.hideIndicator()
-        Vue.app.router.load('/')
-      }, 3000)
+        Vue.app.router.load('home')
+      }, 2500)
     }
   },
 

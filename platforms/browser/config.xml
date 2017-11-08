@@ -15,5 +15,4 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <hook src="scripts/vueify-build.js" type="before_compile" />
 </widget>

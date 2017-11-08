@@ -7,7 +7,7 @@
           <i class="icon icon-bars"></i>
         </a>
       </div>
-      <div class="center">{{ $app.trans("name") }}</div>
+      <div class="center app-title">{{ $app.trans("name").toUpperCase() }}</div>
       <div class="right">
         <!-- <span v-if="$app.auth.check()">{{ $app.auth.user("username") }}</span> -->
         <a href="#" data-popover=".popover-user" class="link icon-only open-popover">
@@ -53,3 +53,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+  .app-title {
+    color: silver;
+  }
+</style>

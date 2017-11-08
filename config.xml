@@ -22,14 +22,12 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
-    <hook src="scripts/vueify-build.js" type="before_compile" />
-    <engine name="android" spec="^6.2.3" />
-    <engine name="browser" spec="^5.0.0" />
     <engine name="ios" spec="^4.5.0" />
+    <engine name="browser" spec="^5.0.0" />
     <engine name="android" spec="^6.3.0" />
     <plugin name="cordova-plugin-device" spec="^1.1.6" />
     <plugin name="cordova-plugin-nativeclicksound" spec="0.0.3" />
     <plugin name="cordova-plugin-vibration" spec="^2.1.5" />
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
-    <plugin name="cordova-plugin-console" spec="^1.0.7" />
+    <plugin name="cordova-plugin-network-information" spec="^1.3.3" />
 </widget>

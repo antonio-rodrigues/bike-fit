@@ -73,17 +73,20 @@ export default {
     }
   },
 
-  mounted: () => {
-    console.log('@Home.vue')
+  created: () => {
+    // console.log('@Home.created()')
   },
 
   methods: {
     onF7Init () {
+      // console.log('@Home.onF7Init()')
       const self = this
-      if (self.$app.auth.user('id')) {
-        this.isLogged = true
-      }
+
+      self.syncAuth()
+      console.log('is.authenticated?', self.isLogged)
+
       self.getNextServiceList()
+
       // pull to reload event
       self.$$('.pull-to-refresh-content').on('ptr:refresh', () => {
         self.getNextServiceList()
@@ -103,17 +106,26 @@ export default {
 
     getNextServiceList () {
       const self = this
-      self.$f7.showPreloader(self.trans('please_wait'))
-      self.$store.dispatch('services').then(() => {
-        self.$f7.pullToRefreshDone()
-        // self.$f7.initImagesLazyLoad('.homepage')
-        self.$f7.hidePreloader()
-      })
-      .catch(reason => self.handleError(reason))
+      if (self.isLogged) {
+        self.$f7.showPreloader(self.trans('please_wait'))
+        self.$store.dispatch('services').then(() => {
+          self.$f7.pullToRefreshDone()
+          // self.$f7.initImagesLazyLoad('.homepage')
+          self.$f7.hidePreloader()
+        })
+        .catch(reason => self.handleError(reason))
+      }
     },
 
     serviceIcon (service) {
       return mapServiceIcon(service.typeId)
+    },
+
+    syncAuth () {
+      const self = this
+      if (self.$app.auth.user('id')) {
+        self.isLogged = true
+      }
     },
 
     trans(key) {

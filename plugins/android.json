@@ -7,13 +7,13 @@
     "files": {}
   },
   "installed_plugins": {
-    "cordova-plugin-console": {
-      "PACKAGE_NAME": "com.app.bikefit"
-    },
     "cordova-plugin-device": {
       "PACKAGE_NAME": "com.app.bikefit"
     },
     "cordova-plugin-nativeclicksound": {
+      "PACKAGE_NAME": "com.app.bikefit"
+    },
+    "cordova-plugin-network-information": {
       "PACKAGE_NAME": "com.app.bikefit"
     },
     "cordova-plugin-splashscreen": {

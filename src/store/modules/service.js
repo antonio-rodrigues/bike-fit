@@ -52,14 +52,15 @@ export default {
         })
         return data
       }
-      return Vue.http.get('Service', []).then(response => {
-        if (response.status && parseInt(response.status) === 200) {
-          cache.setJson('services', response.data)
-          console.log('> PERSIST TO CACHE')
-          store.commit('services', appendInfo(response.data))
-        }
-      }, response => store.commit('error', handleError(response)))
-      .catch(reason => store.commit('error', handleError(reason)))
+      return Vue.axios.get('Service', [])
+        .then(response => {
+          if (response.status && parseInt(response.status) === 200) {
+            cache.setJson('services', response.data)
+            console.log('> PERSIST TO CACHE: services')
+            store.commit('services', appendInfo(response.data))
+          }
+        })
+        .catch(reason => store.commit('error', handleError(reason)))
     }
   }
 }

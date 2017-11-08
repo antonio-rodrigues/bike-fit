@@ -4,19 +4,23 @@ export default [
     component: require('./components/Home.vue')
   },
   {
-    path: '/settings',
-    component: require('./components/Settings.vue')
+    path: '/home',
+    component: require('./components/Home.vue')
   },
   {
     path: '/login',
-    component: require('./components/Login.vue')
+    component: require('./components/profile/Login.vue')
   },
   {
     path: '/register',
-    component: require('./components/Register.vue')
+    component: require('./components/profile/Register.vue')
   },
   {
     path: '/profile',
-    component: require('./components/Profile.vue')
+    component: require('./components/profile/Profile.vue')
+  },
+  {
+    path: '/settings',
+    component: require('./components/settings/Settings.vue')
   }
 ]

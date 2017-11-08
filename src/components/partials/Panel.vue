@@ -12,7 +12,7 @@
         <div class="list-block">
           <ul>
             <li>
-              <a href="/home" class="item-link close-panel" data-view=".view-main">
+              <a href="home" class="item-link close-panel" data-view=".view-main">
                 <div class="item-content">
                   <div class="item-media">
                     <i class="f7-icons">home</i>
@@ -29,7 +29,7 @@
               </a>
             </li>
             <li>
-              <a href="/settings" class="item-link close-panel" data-view=".view-main">
+              <a href="settings" class="item-link close-panel" data-view=".view-main">
                 <div class="item-content">
                   <div class="item-media">
                     <i class="f7-icons">settings</i>

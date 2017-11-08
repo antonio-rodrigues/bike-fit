@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import * as cache from '../../utils/cache'
 
 const handleError = (response) => {
   return {
@@ -37,9 +38,16 @@ export default {
 
   actions: {
     insurers: (store, insurers) => {
-      return Vue.http.get('Insurers', []).then(response => {
+      const _cached = cache.getJson('insurers')
+      if (_cached) {
+        console.log('> FROM CACHE: insurers')
+        return store.commit('insurers', _cached)
+      }
+      return Vue.axios.get('Insurers', []).then(response => {
         if (response.status && parseInt(response.status) === 200) {
           // console.log('response.data', {data: response.data})
+          cache.setJson('insurers', response.data)
+          console.log('> PERSIST TO CACHE: insurers')
           store.commit('insurers', response.data)
         }
       }, response => store.commit('insurersError', handleError(response)))
