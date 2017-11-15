@@ -4,8 +4,8 @@ export default [
     component: require('./components/Home.vue')
   },
   {
-    path: '/home',
-    component: require('./components/Home.vue')
+    path: '/settings',
+    component: require('./components/settings/Settings.vue')
   },
   {
     path: '/login',
@@ -20,7 +20,7 @@ export default [
     component: require('./components/profile/Profile.vue')
   },
   {
-    path: '/settings',
-    component: require('./components/settings/Settings.vue')
+    path: '/test',
+    component: require('./components/Test.vue')
   }
 ]

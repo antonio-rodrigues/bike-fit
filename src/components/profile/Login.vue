@@ -41,7 +41,7 @@
             <button style="width: 100%" type="submit" :disabled="submitted" class="button button-big button-fill" color="blue">{{ $app.trans('login') }}
             </button>
             <br/>
-            <a href="register" class="button button-big">{{ $app.trans('register_new_account') }}</a>
+            <a href="/register" class="button button-big">{{ $app.trans('register_new_account') }}</a>
           </f7-block>
         </div>
       </form>
@@ -76,24 +76,21 @@ export default {
         if (valid) {
           self.$store.dispatch('login', self.user).then(() => {
             // 200 ok response
-            // setTimeout(() => self.$app.router.load('home'), 2000)
             self.$f7.addNotification({
               title: self.$app.trans('login'),
               message: self.$app.trans('login_success'),
               hold: 2000
             })
+            self.$app.router.load('/')
           }, response => {
             // other responses
-            setTimeout(() => self.$app.router.load('home'), 4000)
-            self.$f7.addNotification({
-              title: self.$app.trans('login'),
-              message: response.body.data ? response.body.data : self.$app.trans('connection_error'),
-              hold: 4000
-            })
+            // self.$f7.addNotification({
+            //   title: self.$app.trans('login'),
+            //   message: response.body.data ? response.body.data : self.$app.trans('connection_error'),
+            //   hold: 6000
+            // })
           }).then(() => {
-            // finally
             self.submitted = false
-            setTimeout(() => self.$app.router.load('home'), 2000)
             self.$f7.hidePreloader()
           })
         } else {

@@ -31,10 +31,10 @@
     "is_top_level": true,
     "variables": {}
   },
-  "cordova-plugin-network-information": {
+  "cordova-plugin-console": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-network-information@^1.3.3"
+      "id": "cordova-plugin-console"
     },
     "is_top_level": true,
     "variables": {}

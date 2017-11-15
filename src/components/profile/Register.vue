@@ -81,7 +81,7 @@
           <f7-block>
             <button style="width: 100%" type="submit" class="button button-big button-fill" color="blue" :disabled="submitted">{{ $app.trans('register') }}</button>
             <br/>
-            <a href="login" class="button button-big">{{ $app.trans('have_an_account') }}</a>
+            <a href="/login" class="button button-big">{{ $app.trans('have_an_account') }}</a>
           </f7-block>
         </div>
       </form>
@@ -123,7 +123,7 @@ export default {
               message: self.$app.trans('register_success'),
               hold: 2500
             })
-            self.$app.router.load('home')
+            self.$app.router.load('/')
           }, response => {
             // other responses
             self.$f7.addNotification({

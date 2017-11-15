@@ -60,22 +60,16 @@ export default {
   actions: {
     login: (store, user) => {
       const params = {
+        username: user.username,
         email: user.email,
         password: user.password
       }
-      Vue.axios.post('/Persons/login', params)
-        .then(response => {
-          alert('http.persons/login:' + response.data)
-          console.info('http.persons/login:', response.status, response.data)
-          if (response.status && parseInt(response.status) === 200) {
-            store.commit('login', response.data)
-          }
-        })
-        .catch(response => {
-          // Error
-          alert('http.persons/error:' + JSON.stringify(response))
-          console.error('http.persons/error:', response)
-        })
+      return Vue.http.post('Persons/login', params).then(function (response) {
+        console.log('__ users.js__get.response', response)
+        if (response.status) {
+          store.commit('login', response.body)
+        }
+      })
     },
 
     register: (store, user) => {

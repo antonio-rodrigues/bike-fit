@@ -1,6 +1,6 @@
 {
-  "name": "BikeFit",
-  "short_name": "BikeFit",
+  "name": "HelloCordova",
+  "short_name": "HelloCordova",
   "description": "Description of your app from template",
   "start_url": "index.html",
   "scope": "index.html",
