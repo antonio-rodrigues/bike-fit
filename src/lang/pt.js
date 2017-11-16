@@ -9,6 +9,10 @@ export default {
     select: 'Escolher...',
     change: 'Modificar...',
     app: {
+      about: {
+        section: 'Sobre',
+        info: 'Informação'
+      },
       cache: {
         section: 'Dados da aplicação',
         reset: 'Limpar',

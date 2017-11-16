@@ -9,6 +9,10 @@ export default {
     select: 'Pick one...',
     change: 'Change...',
     app: {
+      about: {
+        section: 'About',
+        info: 'Info'
+      },
       cache: {
         section: 'Application Data',
         reset: 'Reset',

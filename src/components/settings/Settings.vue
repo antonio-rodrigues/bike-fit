@@ -107,6 +107,25 @@
         </div>
       </div>
 
+      <!--about.section-->
+      <div class="content-block">
+        <div class="content-block-title">{{ $app.trans("general_settings.app.about.section") }}</div>
+        <div class="list-block">
+          <ul>
+            <li>
+              <a href="#" class="item-link item-content open-popup" data-popup=".popup-about">
+                <div class="item-inner">
+                  <div class="item-title">{{ $app.trans("general_settings.app.about.info") }}</div>
+                  <div class="item-after"></div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="spacer"></div>
+
     </div>
     <!--page.content-->
 
@@ -192,6 +211,19 @@
         <p>{{ $app.trans('general_settings.backup.info.row2') }}</p>
       </div>
     </div>
+
+    <!-- About Popup -->
+    <div class="popup popup-about">
+      <div class="content-block">
+        <p>{{ $app.trans("general_settings.app.about.section") }}</p>
+        <p><a href="#" class="close-popup">{{ $app.trans("close") }}</a></p>
+        <p>Genius consequently delay in getting Ice Cream Sandwich for this reason Siri is better than TellMe and Google Voice put together.</p>
+        <p>Profit, finally profit what profit, but also iPhone rip-offs where Android is fragmented, eventually Android sucks, due to Flash sucks for one thing MacBook Air is just beautiful.</p>
+        <p>Awful user experience owing to Apple will only get better, then pleasure to use.</p>
+        <p>So-called “iPad killer” during user experience sucks overall gorgeous.</p>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -376,6 +408,12 @@ export default {
 </script>
 
 <style scoped>
+  .spacer {
+    display: inline-block;
+    height: 40px;    
+    min-height: 40px;    
+  }
+
   .backup-header {
     margin: 0;
   }
