@@ -1,6 +1,10 @@
 /* global Request */
 
 // actions to dispatch > commit mutation > change the state - use for async ops
+export const appReset = (context, payload) => {
+  context.commit('APP_RESET', payload)
+}
+
 export const setToken = (context, payload) => {
   context.commit('SET_TOKEN', payload)
 }

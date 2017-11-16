@@ -8,6 +8,18 @@ export default {
     label: 'Definições Gerais',
     select: 'Escolher...',
     change: 'Modificar...',
+    app: {
+      about: {
+        section: 'Sobre',
+        info: 'Informação'
+      },
+      cache: {
+        section: 'Dados da aplicação',
+        reset: 'Limpar',
+        confirm: 'Vai limpar todos os dados introduzidos. Confirma?',
+        success: 'Dados da aplicação eliminados'
+      }
+    },
     bike: {
       section: 'Configurar moto',
       brand: 'Marca',
