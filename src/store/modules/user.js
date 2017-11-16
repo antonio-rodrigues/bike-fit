@@ -1,12 +1,17 @@
 /* global localStorage */
-
 import Vue from 'vue'
+
+const handleError = (store, context, error) => {
+  console.error(`> ${context}: ${error}`)
+  return store.commit('authError')
+}
 
 export default {
   state: {
     user: JSON.parse(localStorage.getItem('user')) || {},
     token: localStorage.getItem('token') || null,
-    expiration: localStorage.getItem('expiration') || 0
+    expiration: localStorage.getItem('expiration') || 0,
+    authError: null
   },
 
   getters: {
@@ -21,7 +26,6 @@ export default {
     expiration: (state) => {
       return state.expiration
     },
-
     auth: (state) => {
       if (!state.token || !state.expiration) {
         return false
@@ -30,6 +34,10 @@ export default {
         return false
       }
       return true
+    },
+
+    authError: (state) => {
+      return state.authError
     }
   },
 
@@ -60,16 +68,34 @@ export default {
   actions: {
     login: (store, user) => {
       const params = {
-        username: user.username,
+        // username: user.username,
         email: user.email,
         password: user.password
       }
-      return Vue.http.post('Persons/login', params).then(function (response) {
-        console.log('__ users.js__get.response', response)
-        if (response.status) {
-          store.commit('login', response.body)
-        }
-      })
+      Vue.axios.post('Persons/login', params)
+        .then(response => {
+          if (response.status && parseInt(response.status) === 200) {
+            console.info('> axios.persons/login:', response.data)
+            store.commit('login', response.data)
+          } else {
+            console.error('> axios.persons/not-200:', response)
+            store.commit('login', response.data)
+          }
+        })
+        .catch(response => this.handleError(store, 'Login', response))
+    },
+
+    logout: (store, user) => {
+      Vue.axios.post('Persons/logout', [])
+        .then(response => {
+          if (response.status && parseInt(response.status) === 200) {
+            store.commit('logout', response.data)
+          } else {
+            console.error('> axios.persons/logout:', response)
+            store.commit('logout')
+          }
+        })
+        .catch(response => this.handleError(store, 'Logout', response))
     },
 
     register: (store, user) => {
@@ -98,7 +124,7 @@ export default {
           bs: 'harness real-time e-markets'
         }
       }
-      return Vue.http.post('Persons', params).then(response => {
+      return Vue.axios.post('Persons', params).then(response => {
         if (response.status) {
           store.commit('login', response.body)
         }

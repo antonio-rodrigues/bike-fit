@@ -44,15 +44,19 @@ export default {
         console.log('> FROM CACHE')
         return store.commit('bikes', _cached)
       }
-      return Vue.http.get('BikeData', []).then(response => {
-        if (response.status && parseInt(response.status) === 200) {
-          // console.log('response.data', {data: response.data})
-          cache.setJson('bikes', response.data)
-          console.log('> PERSIST TO CACHE')
-          store.commit('bikes', response.data)
-        }
-      }, response => store.commit('bikesError', handleError(response)))
-      .catch(reason => store.commit('bikesError', handleError(reason)))
+      Vue.axios.get('BikeData', [])
+        .then(response => {
+          if (response.status && parseInt(response.status) === 200) {
+            // console.log('response.data', {data: response.data})
+            cache.setJson('bikes', response.data)
+            console.log('> PERSIST TO CACHE: bikes')
+            store.commit('bikes', response.data)
+          }
+        })
+        .catch(response => {
+          console.error('axios.BikeData/error:', response)
+          handleError(response)
+        })
     }
   }
 }

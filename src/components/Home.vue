@@ -3,17 +3,19 @@
 
     <navbar></navbar>
 
-    <div class="page-content pull-to-refresh-content">
-      <div class="pull-to-refresh-layer">
-          <div class="preloader"></div>
-          <div class="pull-to-refresh-arrow"></div>
-      </div>
-
+    <div class="page-content" v-if="!isLogged">
       <div v-if="!isLogged" class="content-block center">
         <h1><i class="f7-icons">login</i> Login, please!</h1>
       </div>
+    </div>
 
-      <div v-if="isLogged" class="content-block">
+    <div class="page-content pull-to-refresh-content" v-if="isLogged">
+      <div class="pull-to-refresh-layer">
+        <div class="preloader"></div>
+        <div class="pull-to-refresh-arrow"></div>
+      </div>
+
+      <div class="content-block">
         <div class="content-block center">
           <i class="f7-icons color-red size-50">settings</i>
         </div>
@@ -55,6 +57,9 @@ const mapServiceIcon = (key) => {
 
 export default {
   computed: {
+    isLogged () {
+      return this.$store.getters.auth
+    },
     services () {
       return this.$store.getters.services
     },
@@ -65,7 +70,7 @@ export default {
 
   data: () => {
     return {
-      isLogged: false,
+      // isLogged: false,
       images: {
         background: bgImage,
         bike: bikeImage
@@ -73,20 +78,28 @@ export default {
     }
   },
 
+  created: () => {
+    console.log('@Home.created')
+  },
+
   mounted: () => {
-    console.log('@Home.vue')
+    console.log('@Home.mounted')
   },
 
   methods: {
     onF7Init () {
       const self = this
-      if (self.$app.auth.user('id')) {
-        this.isLogged = true
-      }
+      console.log('@Home.onF7Init()')
+      console.log('is.authenticated?', self.isLogged)
+
+      console.log('@Home.getNextServiceList()')
       self.getNextServiceList()
+
       // pull to reload event
       self.$$('.pull-to-refresh-content').on('ptr:refresh', () => {
-        self.getNextServiceList()
+        if (self.isLogged) {
+          self.getNextServiceList()
+        }
       })
     },
 
@@ -103,17 +116,26 @@ export default {
 
     getNextServiceList () {
       const self = this
-      self.$f7.showPreloader(self.trans('please_wait'))
-      self.$store.dispatch('services').then(() => {
-        self.$f7.pullToRefreshDone()
-        // self.$f7.initImagesLazyLoad('.homepage')
-        self.$f7.hidePreloader()
-      })
-      .catch(reason => self.handleError(reason))
+      if (self.isLogged) {
+        self.$f7.showPreloader(self.trans('please_wait'))
+        self.$store.dispatch('services').then(() => {
+          self.$f7.pullToRefreshDone()
+          // self.$f7.initImagesLazyLoad('.homepage')
+          self.$f7.hidePreloader()
+        })
+        .catch(reason => self.handleError(reason))
+      }
     },
 
     serviceIcon (service) {
       return mapServiceIcon(service.typeId)
+    },
+
+    syncAuth () {
+      const self = this
+      if (self.$app.auth.user('id')) {
+        self.isLogged = true
+      }
     },
 
     trans(key) {

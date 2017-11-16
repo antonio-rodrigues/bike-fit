@@ -41,7 +41,8 @@ module.exports.metadata =
   "cordova-plugin-device": "1.1.6",
   "cordova-plugin-nativeclicksound": "0.0.3",
   "cordova-plugin-splashscreen": "4.0.3",
-  "cordova-plugin-vibration": "2.1.5"
+  "cordova-plugin-vibration": "2.1.5",
+  "cordova-plugin-whitelist": "1.3.3"
 };
 // BOTTOM OF METADATA
 });

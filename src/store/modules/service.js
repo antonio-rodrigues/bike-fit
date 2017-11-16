@@ -39,11 +39,11 @@ export default {
 
   actions: {
     services: (store, services) => {
-      const _cached = cache.getJson('services')
-      if (_cached) {
-        console.log('> FROM CACHE')
-        return store.commit('services', _cached)
-      }
+      // const _cached = cache.getJson('services')
+      // if (_cached) {
+      //   console.log('> FROM CACHE')
+      //   return store.commit('services', _cached)
+      // }
       // add level and color
       const appendInfo = (data) => {
         data.map(d => {
@@ -52,14 +52,18 @@ export default {
         })
         return data
       }
-      return Vue.http.get('Service', []).then(response => {
-        if (response.status && parseInt(response.status) === 200) {
-          cache.setJson('services', response.data)
-          console.log('> PERSIST TO CACHE')
-          store.commit('services', appendInfo(response.data))
-        }
-      }, response => store.commit('error', handleError(response)))
-      .catch(reason => store.commit('error', handleError(reason)))
+      Vue.axios.get('Service', [])
+        .then(response => {
+          if (response.status && parseInt(response.status) === 200) {
+            // cache.setJson('services', appendInfo(response.data))
+            // console.log('> PERSIST TO CACHE')
+            store.commit('services', appendInfo(response.data))
+          }
+        })
+        .catch(response => {
+          console.error('axios.Service/error:', response)
+          handleError(response)
+        })
     }
   }
 }

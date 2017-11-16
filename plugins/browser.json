@@ -21,6 +21,9 @@
     },
     "cordova-plugin-vibration": {
       "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.app.bikefit"
     }
   },
   "dependent_plugins": {}

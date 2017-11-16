@@ -6,6 +6,7 @@
       <div class="login-screen-title">
         <a href="#home">{{ $app.trans("name") }}</a>
       </div>
+
       <!-- Login form -->
       <form @submit.prevent="login">
         <div class="list-block">
@@ -51,10 +52,19 @@
 
 <script>
 export default {
+  computed: {
+    isLogged () {
+      return this.$store.getters.auth
+    },
+    loginError () {
+      return this.$store.state.status.loginError
+    }
+  },
+
   data: function () {
     return {
       user: {
-        username: 'dean',
+        // username: 'dean',
         email: 'james.dean@biker.movie',
         password: 'Password.123'
       },
@@ -69,7 +79,7 @@ export default {
     login () {
       const self = this
 
-      self.$f7.showPreloader(this.$app.trans('please_wait'))
+      self.$f7.showIndicator()
       self.submitted = true
 
       self.$validator.validateAll().then(valid => {
@@ -79,30 +89,38 @@ export default {
             self.$f7.addNotification({
               title: self.$app.trans('login'),
               message: self.$app.trans('login_success'),
-              hold: 2000
+              hold: 1600
             })
-            self.$app.router.load('/')
+            setTimeout(() => {
+              self.$app.router.load('/')
+              self.$f7.hideIndicator()
+            }, 2000)
           }, response => {
             // other responses
-            // self.$f7.addNotification({
-            //   title: self.$app.trans('login'),
-            //   message: response.body.data ? response.body.data : self.$app.trans('connection_error'),
-            //   hold: 6000
-            // })
+            console.warn('Login:', JSON.stringify(response))
+            self.$f7.addNotification({
+              title: self.$app.trans('login'),
+              message: response.body.data ? response.body.data : self.$app.trans('connection_error'),
+              hold: 6000
+            })
           }).then(() => {
+            // finally
             self.submitted = false
-            self.$f7.hidePreloader()
+            // self.$f7.hideIndicator()
           })
         } else {
+          console.group('Login')
           self.$validator.errors.items.reverse().forEach(error => {
+            console.error('Error:', JSON.stringify(error))
             self.$f7.addNotification({
               title: self.$app.trans('login'),
               message: error.msg,
               hold: 6000
             })
           })
+          console.groupEnd()
           self.submitted = false
-          self.$f7.hidePreloader()
+          self.$f7.hideIndicator()
         }
       })
     }
