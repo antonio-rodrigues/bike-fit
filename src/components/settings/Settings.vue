@@ -90,6 +90,23 @@
         </div>
       </div>
 
+      <!--cache.section-->
+      <div class="content-block">
+        <div class="content-block-title">{{ $app.trans("general_settings.app.cache.section") }}</div>
+        <div class="list-block">
+          <ul>
+            <li>
+              <a href="#" class="item-link item-content" @click="clearCache()">
+                <div class="item-inner">
+                  <div class="item-title">{{ $app.trans("general_settings.app.cache.reset") }}</div>
+                  <div class="item-after"></div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
     </div>
     <!--page.content-->
 
@@ -316,6 +333,19 @@ export default {
         self.$store.dispatch('setLocale', locale)
         self.$app.router.load('/')
       }, 2600)
+    },
+
+    clearCache () {
+      const self = this
+      self.$f7.confirm(self.$app.trans('general_settings.app.cache.confirm'), self.$app.trans('general_settings.app.cache.section'), () => {
+        self.$f7.showIndicator()
+        setTimeout(() => {
+          self.$store.dispatch('appReset').then().catch(reason => self.handleError(reason))
+          self.$f7.alert(self.$app.trans('general_settings.app.cache.success'))
+          self.$app.router.load('/') // reload, must login again
+          self.$f7.hideIndicator()
+        }, 2000)
+      })
     },
 
     cloudBackup () {

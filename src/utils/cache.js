@@ -3,6 +3,14 @@ const prefix = (item) => `CACHE_${item}`
 
 // TODO: add auto-expires and invalidate cache flag
 
+export const invalidateAll = () => {
+  return localStorage.clear()
+}
+
+export const invalidate = (item) => {
+  return localStorage.removeItem(prefix(item))
+}
+
 export const get = (item) => {
   return localStorage.getItem(prefix(item)) ? JSON.stringify(localStorage.getItem(prefix(item))) : null
 }

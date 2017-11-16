@@ -1,6 +1,10 @@
 /* global localStorage */
 
 // mutation setters - possible mutations to state
+export const APP_RESET = (state, payload) => {
+  localStorage.clear()
+}
+
 export const SET_TOKEN = (state, payload) => {
   state.token = payload
   localStorage.setItem('token', payload)

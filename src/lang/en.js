@@ -8,6 +8,14 @@ export default {
     label: 'General Settings',
     select: 'Pick one...',
     change: 'Change...',
+    app: {
+      cache: {
+        section: 'Application Data',
+        reset: 'Reset',
+        confirm: 'This will reset all your data. Are you sure?',
+        success: 'Application data cleared'
+      }
+    },
     bike: {
       section: 'Setup your bike',
       brand: 'Brand',
