@@ -1,0 +1,227 @@
+<!-- Settings.vue.html -->
+<div class="page" data-page="settings">
+
+  <navbar :options="{back: true, title: $app.trans('settings'), modal: '.backup-options'}"></navbar>
+
+  <!--page.content-->
+  <div class="page-content">
+
+    <!--language.section-->
+    <div class="content-block">
+      <div class="content-block-title">{{ $app.trans("general_settings.label") }}</div>
+      <div class="list-block">
+        <ul>
+          <li>
+            <a href="#" class="item-link smart-select" data-open-in="picker" :data-back-text="$app.trans('close')" data-back-on-select="true">
+              <select @change="setLocale($event.target.value)">
+                <option value="en" :selected="locale == 'en'">English</option>
+                <option value="pt" :selected="locale == 'pt'">Português</option>
+              </select>
+              <div class="item-content">
+                <div class="item-inner">
+                  <div class="item-title">{{ $app.trans("language") }}</div>
+                </div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!--bike.section-->
+    <div class="content-block">
+      <div class="content-block-title">{{ $app.trans("general_settings.bike.section") }}</div>
+      <div class="list-block">
+        <ul>
+          <li>
+            <a href="#" class="item-link smart-select" data-searchbar="true" data-virtual-list="true" :data-back-text="$app.trans('close')" data-back-on-select="true">
+              <select name="selectBikeModel" @change="selectBike($event.target.value)">
+                <option v-for="item in bikes" :post="item.id" :key="item.id" :value="item.id" :selected="bike && bike.id == item.id">{{ item.title }}</option>
+              </select>
+              <div class="item-content">
+                <div class="item-inner">
+                  <div class="item-title">{{ bikeLabel }}</div>
+                </div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="item-link item-content open-picker" data-picker=".bike-mileage-options">
+              <div class="item-inner">
+                <div class="item-title">{{ $app.trans("general_settings.bike.mileage") }}</div>
+                <div class="item-after">{{ mileage }}</div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!--insurance.section-->
+    <div class="content-block">
+      <div class="content-block-title">{{ $app.trans("general_settings.legal.insurance.label") }}</div>
+      <div class="list-block">
+        <ul>
+          <li>
+            <a href="#" class="item-link smart-select" data-searchbar="true" data-virtual-list="true" :data-back-text="$app.trans('close')" data-back-on-select="true">
+              <select name="selectInsurerCompany" @change="selectInsurer($event.target.value)">
+                <option v-for="item in insurers" :post="item.id" :key="item.id" :value="item.id" :selected="insurer && insurer.id == item.id">{{ item.company }}</option>
+              </select>
+              <div class="item-content">
+                <div class="item-inner">
+                  <div class="item-title">{{ insurerLabel }}</div>
+                </div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title">{{ insuranceDueDateLabel }}</div>
+                <div class="item-after">
+                  <div class="item-input">
+                    <input type="text" placeholder="AAAA-MM-DD" readonly id="calendar-default">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!--cache.section-->
+    <div class="content-block">
+      <div class="content-block-title">{{ $app.trans("general_settings.app.cache.section") }}</div>
+      <div class="list-block">
+        <ul>
+          <li>
+            <a href="#" class="item-link item-content" @click="clearCache()">
+              <div class="item-inner">
+                <div class="item-title">{{ $app.trans("general_settings.app.cache.reset") }}</div>
+                <div class="item-after"></div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!--about.section-->
+    <div class="content-block">
+      <div class="content-block-title">{{ $app.trans("general_settings.app.about.section") }}</div>
+      <div class="list-block">
+        <ul>
+          <li>
+            <a href="#" class="item-link item-content open-popup" data-popup=".popup-about">
+              <div class="item-inner">
+                <div class="item-title">{{ $app.trans("general_settings.app.about.info") }}</div>
+                <div class="item-after"></div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+
+  </div>
+  <!--page.content-->
+
+  <!--Picker:bike-mileage-input-->
+  <div class="picker-modal bike-mileage-options">
+    <div class="toolbar">
+      <div class="toolbar-inner">
+        <div class="left"></div>
+        <div class="right"><a href="#" class="close-picker">Done</a></div>
+      </div>
+    </div>
+    <div class="picker-modal-inner">
+      <div class="content-block">
+        <h4>{{ $app.trans("general_settings.bike.mileage") }}</h4>
+        <div class="list-block">
+          <ul>
+            <li>
+              <div class="item-content">
+                <div class="item-media"><i class="icon f7-icons">gear</i></div>
+                <div class="item-inner">
+                  <div class="item-input">
+                    <input type="number" placeholder="0" v-model.number="mileage">
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--backup-options-->
+  <div class="toolbar toolbar-bottom toolbar-fixed">
+    <div class="toolbar-inner">
+      <div class="left"></div>
+      <div class="right">
+        <a href="#" class="link icon-only right open-picker" data-picker=".backup-options">
+          <i class="icon f7-icons icon-more">more_vertical</i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <!-- Picker:backup-options -->
+  <div class="picker-modal backup-options">
+    <div class="toolbar">
+      <div class="toolbar-inner">
+        <div class="left"></div>
+        <div class="right"><a href="#" class="link close-picker">{{ $app.trans('close') }}</a></div>
+      </div>
+    </div>
+    <div class="picker-modal-inner">
+      <div class="page-content">
+        <div class="content-block backup-header">
+          <div class="content-block-title"><span>{{ $app.trans('general_settings.backup.label') }}</span><i class="icon f7-icons color-bluegray help-icon" @click="showBackupInfo()">info</i></div>
+          <div class="list-block">
+            <ul>
+              <li>
+                <a href="#" class="list-button item-link item-link-icon" @click="cloudBackup($event.target.value)">
+                  <i class="icon f7-icons">cloud_upload</i>
+                  {{ $app.trans('general_settings.backup.save') }}
+                </a>
+              </li>
+              <li>
+                <a href="#" class="list-button item-link item-link-icon" @click="cloudRestore($event.target.value)">
+                  <i class="icon f7-icons">cloud_download</i>
+                  {{ $app.trans('general_settings.backup.restore') }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Backup Options Info Popup -->
+  <div class="popup popup-info-backup">
+    <div class="content-block">
+      <p>Backup options</p>
+      <p><a href="#" class="close-popup">{{ $app.trans('close') }}</a></p>
+      <p>{{ $app.trans('general_settings.backup.info.row1') }}</p>
+      <p>{{ $app.trans('general_settings.backup.info.row2') }}</p>
+    </div>
+  </div>
+
+  <!-- About Popup -->
+  <div class="popup popup-about">
+    <div class="content-block">
+      <p>{{ $app.trans("general_settings.app.about.section") }}</p>
+      <p><a href="#" class="close-popup">{{ $app.trans("close") }}</a></p>
+      <p>Genius consequently delay in getting Ice Cream Sandwich for this reason Siri is better than TellMe and Google Voice put together.</p>
+      <p>Profit, finally profit what profit, but also iPhone rip-offs where Android is fragmented, eventually Android sucks, due to Flash sucks for one thing MacBook Air is just beautiful.</p>
+      <p>Awful user experience owing to Apple will only get better, then pleasure to use.</p>
+      <p>So-called “iPad killer” during user experience sucks overall gorgeous.</p>
+    </div>
+  </div>
+
+</div>

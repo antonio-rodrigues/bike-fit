@@ -21,6 +21,6 @@ export default [
   },
   {
     path: '/test',
-    component: require('./components/Test.vue')
+    component: require('./components/test/Test.vue')
   }
 ]
