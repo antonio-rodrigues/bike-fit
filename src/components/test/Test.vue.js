@@ -1,34 +1,54 @@
-import { mapGetters } from 'vuex'
+// import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    bikes () {
-      return this.transformToList(this.$store.getters.bikes)
-    },
-    insurers () {
-      return this.$store.getters.insurers
-    },
-    error () {
-      return this.$store.state.status.error
-    },
-    mileage: {
-      get: function () {
-        return this.$store.getters.mileage
-      },
-      set: function (newMileage) {
-        return this.$store.dispatch('setMileage', newMileage)
-      }
-    },
-    ...mapGetters([
-      'locale', 'direction', 'bike', 'insurer'
-    ])
   },
 
-  data: () => {
+  data: function () {
     return {
-      bikeLabel: null,
-      insurerLabel: null,
-      insuranceDueDateLabel: null
+      contacts: {
+        'A': [
+          'Adele',
+          'Agnes',
+          'Albert'
+        ],
+        'B': [
+          'Bellamy',
+          'Belle'
+        ],
+        'C': [
+          'Candy',
+          'Cherilyn',
+          'Chloe'
+        ],
+        'V': [
+          'Vladimir'
+        ]
+      },
+      sorting: false,
+      items: [1, 2, 3, 4, 5],
+      name: 'Vladimir',
+      avatar: 'path/to/avatar-1.jpg',
+      messages: [
+        {
+          day: 'Wendesday',
+          time: '13:34'
+        },
+        {
+          name: 'Vladimir',
+          text: 'How are you?',
+          label: 'Sent in good mood :)',
+          avatar: 'path/to/avatar-1.jpg',
+          date: 'Yesterday 13:34'
+        },
+        {
+          name: 'Jane',
+          text: 'I\'m good, thank you!',
+          type: 'received',
+          avatar: 'path/to/avatar-2.jpg',
+          date: 'Yesterday at 13:50'
+        }
+      ]
     }
   },
 
@@ -63,141 +83,55 @@ export default {
 
   methods: {
     onF7Init () {
-      console.info('@Settings.onF7Init()')
-      const self = this
-      self.bikeLabel = self.bike ? self.bike.title : self.trans('general_settings.bike.model')
-      self.insurerLabel = self.insurer ? self.insurer.company : self.trans('general_settings.legal.insurance.company')
-      self.insuranceDueDateLabel = self.trans('general_settings.legal.insurance.period')
-      self.loadData()
-      // init calendar ctrl
-      self.$f7.calendar({
-        input: '#calendar-default'
-      })
+      console.info('@_TEST.onF7Init()')
+
+      // const self = this
+      // self.$f7.addView('.view-one'...
     },
 
-    handleError (stack) {
-      const self = this
-      console.error(stack)
-      self.$f7.hidePreloader()
-      self.$f7.addNotification({
-        title: self.$app.trans('error.title'),
-        message: stack.data ? stack.data : self.$app.trans('error.connection'),
-        hold: 6000
-      })
+    onChipDelete () {},
+    onActionClick () {},
+    onChange () {},
+    onSwipeoutDeleted () {},
+    doSomething () {},
+
+    onOpen: function () {
+      this.sorting = !this.sorting
+    },
+    onClose: function () {
+      this.sorting = !this.sorting
+    },
+    onSort: function (event, indexes) {
+      console.log('sort', indexes)
     },
 
-    // COMMON
-    loadData () {
-      const self = this
-      self.$f7.showPreloader(self.trans('please_wait'))
-      Promise.all([
-        self.loadBikeModels(),
-        self.loadInsureCompanies()
-      ]).then(() => {
-        console.log('Data loaded!')
-        self.$f7.hidePreloader()
-      })
-      .catch(reason => self.handleError(reason))
+    onClick: function (event) {
+      console.log('message click');
     },
-
-    // BIKE
-    transformToList (payload) {
-      return payload.map(item => {
-        return { title: `${item.brand} ${item.model} (${item.makeYear})`, ...item }
-      })
+    onAvatarClick: function () {
+      console.log('avatar-click');
     },
-
-    loadBikeModels () {
-      const self = this
-      return self.$store.dispatch('bikes').then().catch(reason => self.handleError(reason))
+    onTextClick: function () {
+      console.log('text-click');
     },
-
-    searchAll (query) {
-      const self = this
-      let found = []
-      for (var i = 0; i < self.bikes.length; i++) {
-        if (self.bikes[i].title.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i)
-      }
-      return found
+    onNameClick: function () {
+      console.log('name-click');
     },
-
-    selectBike (id) {
-      const self = this
-      const bike = self.getBikeById(id)
-      self.selectedBike = id
-      self.bikeLabel = bike.title
-      self.$store.dispatch('setBike', bike) // persist choice
-    },
-
-    getBikeById (id) {
-      const self = this
-      return self.bikes.filter(i => i.id === id)[0] || {}
-    },
-
-    // INSURER
-    loadInsureCompanies () {
-      const self = this
-      return self.$store.dispatch('insurers').then().catch(reason => self.handleError(reason))
-    },
-    searchAllInsurers (query) {
-      const self = this
-      let found = []
-      for (var i = 0; i < self.insurers.length; i++) {
-        if (self.insurers[i].title.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i)
-      }
-      return found
-    },
-    selectInsurer (id) {
-      const self = this
-      const insurerData = self.insurers.filter(i => i.id === id)[0] || {}
-      self.insurerLabel = insurerData.company
-      self.$store.dispatch('setInsurer', insurerData) // persist choice
-    },
-
-    // LANGUAGE
-    setLocale (locale) {
-      const self = this
-      self.$f7.showIndicator()
-      console.log('__ settings.setLocale()', locale)
-
-      setTimeout(() => {
-        self.$f7.hideIndicator()
-        self.$store.dispatch('setLocale', locale)
-        self.$app.router.load('/')
-      }, 2600)
-    },
-
-    clearCache () {
-      const self = this
-      self.$f7.confirm(self.$app.trans('general_settings.app.cache.confirm'), self.$app.trans('general_settings.app.cache.section'), () => {
-        self.$f7.showIndicator()
-        setTimeout(() => {
-          self.$store.dispatch('appReset').then().catch(reason => self.handleError(reason))
-          self.$f7.alert(self.$app.trans('general_settings.app.cache.success'))
-          self.$app.router.load('/') // reload, must login again
-          self.$f7.hideIndicator()
-        }, 2000)
-      })
-    },
-
-    cloudBackup () {
-      const self = this
-      console.log('__ onCloudBackup()')
-      self.$f7.alert(self.$app.trans('general_settings.backup.success'), self.$app.trans('general_settings.backup.save'))
-    },
-
-    cloudRestore () {
-      const self = this
-      console.log('__ onCloudRestore()')
-      self.$f7.alert(self.$app.trans('general_settings.backup.failure'), self.$app.trans('general_settings.backup.restore'))
-    },
-
-    showBackupInfo () {
-      this.$f7.popup('.popup-info-backup')
-    },
-
-    trans (key) {
-      return this.$app.trans(key, this.$store.getters.locale)
+    onSubmit: function (text, clear) {
+      if (text.trim().length === 0) return;
+      this.messages.push({
+        name: this.name,
+        avatar: this.avatar,
+        text: text,
+        date: (function () {
+          var now = new Date();
+          var hours = now.getHours();
+          var minutes = now.getMinutes();
+          return hours + ':' + minutes;
+        })()
+      });
+      // Clear Message Bar
+      clear();
     }
   },
 

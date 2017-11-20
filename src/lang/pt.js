@@ -4,6 +4,7 @@ export default {
   register: 'Registar',
   logout: 'Logout',
   settings: 'Definições',
+  test: 'Teste',
   general_settings: {
     label: 'Definições Gerais',
     select: 'Escolher...',

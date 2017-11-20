@@ -105,13 +105,13 @@ export default {
   },
 
   methods: {
-    onF7Init: () => {
+    onF7Init () {
     },
 
-    register: () => {
+    register () {
       const self = this
 
-      self.$f7.showPreloader('loading...')
+      self.$f7.showIndicator()
 
       self.submitted = true
       self.$validator.validateAll(this.user).then(valid => {
@@ -133,7 +133,7 @@ export default {
             })
           }).then(response => {
             self.submitted = false
-            self.$f7.hidePreloader()
+            self.$f7.hideIndicator()
           })
         } else {
           self.$validator.errors.items.reverse().forEach(error => {
@@ -144,7 +144,7 @@ export default {
             })
           })
           self.submitted = false
-          self.$f7.hidePreloader()
+          self.$f7.hideIndicator()
         }
       })
     }

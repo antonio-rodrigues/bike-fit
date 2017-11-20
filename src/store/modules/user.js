@@ -82,7 +82,7 @@ export default {
             store.commit('login', response.data)
           }
         })
-        .catch(response => this.handleError(store, 'Login', response))
+        .catch(response => handleError(store, 'Login', response))
     },
 
     logout: (store, user) => {
@@ -95,38 +95,29 @@ export default {
             store.commit('logout')
           }
         })
-        .catch(response => this.handleError(store, 'Logout', response))
+        .catch(response => handleError(store, 'Logout', response))
     },
 
     register: (store, user) => {
       // TODO: change Person fields to match API...
+      console.log('>> user:', user)
       const params = {
-        name: user.firstName + ' ' + user.lastName,
-        username: user.email.split('@')[0].toLowerCase(),
+        id: user.email,
+        firstName: user.first_name,
+        lastName: user.last_name,
         email: user.email,
-        password: user.password,
-        repassword: user.repassword,
-        address: {
-          street: 'Kulas Light',
-          suite: 'Apt. 556',
-          city: 'Gwenborough',
-          zipcode: '92998-3874',
-          geo: {
-            lat: '-37.3159',
-            lng: '81.1496'
-          }
-        },
-        phone: '1-770-736-8031 x56442',
-        website: 'elvis.io',
-        company: {
-          name: 'Romaguera-Crona',
-          catchPhrase: 'Multi-layered client-server neural-net',
-          bs: 'harness real-time e-markets'
-        }
+        avatar: 'no-avatar.png',
+        level: 'NoviceRider',
+        active: true,
+        username: user.email.split('@')[0].toLowerCase(),
+        password: user.password
+        // repassword: user.repassword
       }
       return Vue.axios.post('Persons', params).then(response => {
+        console.log('Person.post:', response)
         if (response.status) {
-          store.commit('login', response.body)
+          // Object.assign(response.data, { password: user.password })
+          store.commit('login', response.data)
         }
       })
     }

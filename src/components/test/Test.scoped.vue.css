@@ -4,19 +4,9 @@
   min-height: 40px;
 }
 
-.backup-header {
-  margin: 0;
-}
-
-.icon-more {
-  margin-right: 6px;
-}
-
-.help-icon {
-  font-size: 1.2em;
-  margin: -4px 0 0 10px;
-}
-
-.item-link-icon .f7-icons {
-  margin-right: 8px;
+.row > div {
+  padding: 10px;
+  background-color: royalblue;
+  border: 1px solid black;
+  opacity: 0.5;
 }

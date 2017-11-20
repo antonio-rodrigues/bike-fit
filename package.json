@@ -13,6 +13,7 @@
   },
   "browserslist": "last 2 versions, ie 10",
   "dependencies": {
+    "android-versions": "^1.2.1",
     "axios": "^0.17.1",
     "cordova-android": "^6.3.0",
     "cordova-browser": "^5.0.0",
@@ -47,6 +48,7 @@
     "babel-preset-stage-2": "^6.24.1",
     "cross-env": "^3.0.0",
     "css-loader": "^0.25.0",
+    "eslint-plugin-html": "^4.0.0",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.9.0",
     "html-webpack-plugin": "^2.30.1",

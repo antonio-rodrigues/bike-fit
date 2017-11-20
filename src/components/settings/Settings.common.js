@@ -54,15 +54,16 @@ export function setLocale (locale) {
   }, 2600)
 }
 
+// APP DATA
 export function clearCache () {
   const self = this
   self.$f7.confirm(self.$app.trans('general_settings.app.cache.confirm'), self.$app.trans('general_settings.app.cache.section'), () => {
     self.$f7.showIndicator()
     setTimeout(() => {
-      self.$store.dispatch('appReset').then().catch(reason => self.handleError(reason))
-      self.$f7.alert(self.$app.trans('general_settings.app.cache.success'))
-      self.$app.router.load('/') // reload, must login again
+      self.$store.dispatch('appReset') // .then().catch(reason => self.handleError(reason))
+      // self.$f7.alert(self.$app.trans('general_settings.app.cache.success'))
       self.$f7.hideIndicator()
+      self.$app.router.load('/') // reload, must login again
     }, 2000)
   })
 }
