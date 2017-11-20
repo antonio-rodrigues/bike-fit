@@ -7,7 +7,9 @@
           <i class="icon icon-bars"></i>
         </a>
       </div>
-      <div class="center app-title">{{ $app.trans("name").toUpperCase() }}</div>
+      <div class="center">
+        <span class="app-title">BIKE</span><span class="app-title__black">FIT</span>
+      </div>
       <div class="right">
         <!-- <span v-if="$app.auth.check()">{{ $app.auth.user("username") }}</span> -->
         <a href="#" data-popover=".popover-user" class="link icon-only open-popover">
@@ -56,5 +58,9 @@ export default {
 <style scoped>
   .app-title {
     color: #ffffff;
+  }
+  .app-title__black {
+    margin-left: 2px;
+    color: rgb(44, 44, 44);
   }
 </style>
