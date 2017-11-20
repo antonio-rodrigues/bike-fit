@@ -77,6 +77,8 @@ export default {
       if (self.isLogged) {
         self.$f7.showPreloader(self.trans('please_wait'))
         self.$store.dispatch('services').then(() => {
+          // console.log('____self.services.length:', self.services.length)
+          // self.$store.dispatch('serviceCount', self.services.length)
           self.$f7.pullToRefreshDone()
           // self.$f7.initImagesLazyLoad('.homepage')
           self.$f7.hidePreloader()

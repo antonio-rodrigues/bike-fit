@@ -30,8 +30,9 @@ export const SET_INSURER = (state, payload) => {
   localStorage.setItem('insurer', JSON.stringify(payload))
 }
 
-export const UPDATE_NEWS_TOTAL = (state, payload) => {
-  state.newsTotal = payload
+export const SET_INSURER_DUE_DATE = (state, payload) => {
+  state.insurerDueDate = payload
+  localStorage.setItem('insurerDueDate', payload)
 }
 
 export const LOADING = (state) => {

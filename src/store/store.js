@@ -1,5 +1,4 @@
 /* global localStorage */
-
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { VALUES } from './constants'
@@ -18,8 +17,8 @@ const state = {
   locale: localStorage.getItem('locale') || VALUES.DEFAULT_LANG,
   bike: localStorage.getItem('bike') ? JSON.parse(localStorage.getItem('bike')) : null,
   insurer: localStorage.getItem('insurer') ? JSON.parse(localStorage.getItem('insurer')) : null,
+  insurerDueDate: localStorage.getItem('insurerDueDate') ? new Date(localStorage.getItem('insurerDueDate')) : null,
   mileage: localStorage.getItem('mileage') || VALUES.DEFAULT_MILEAGE,
-  newsTotal: 0,
   loading: false,
   success: false,
   error: false

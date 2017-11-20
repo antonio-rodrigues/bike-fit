@@ -7,9 +7,18 @@ export function onF7Init () {
   self.insuranceDueDateLabel = self.trans('general_settings.legal.insurance.period')
   self.loadData()
   // init calendar ctrl
-  self.$f7.calendar({
-    input: '#calendar-default'
+
+  const insuranceCalendar = self.$f7.calendar({
+    input: '#calendar-default',
+    value: self.insurerDueDate,
+    onDayClick (p, dayContainer, year, month, day) {
+      if (day) {
+        self.$store.dispatch('setInsurerDueDate', new Date(year, month, day))
+      }
+      onInsuranceCalendarClose()
+    }
   })
+  const onInsuranceCalendarClose = () => insuranceCalendar.close()
 }
 
 export function handleError (stack) {

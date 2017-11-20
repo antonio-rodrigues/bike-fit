@@ -1,8 +1,9 @@
+import { insurerDueDate } from '../../store/getters';
 import { mapGetters } from 'vuex'
-import * as common from './Settings.common'
-import * as bike from './Settings.bike'
-import * as insurer from './Settings.insurer'
-import * as backup from './Settings.backup'
+import * as common from './Settings.common';
+import * as bike from './Settings.bike';
+import * as insurer from './Settings.insurer';
+import * as backup from './Settings.backup';
 
 export default {
   computed: {
@@ -15,6 +16,10 @@ export default {
     error () {
       return this.$store.state.status.error
     },
+    insurerDueDateFormated () {
+      // console.log('>>>>>>> this.$app.config:', this.$app.config.get('formatDate', this.insurerDueDate))
+      return this.$app.config.get('formatDate', this.insurerDueDate)
+    },
     mileage: {
       get: function () {
         return this.$store.getters.mileage
@@ -24,7 +29,7 @@ export default {
       }
     },
     ...mapGetters([
-      'locale', 'direction', 'bike', 'insurer'
+      'locale', 'direction', 'bike', 'insurer', 'insurerDueDate'
     ])
   },
 

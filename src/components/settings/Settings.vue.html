@@ -79,8 +79,8 @@
               <div class="item-inner">
                 <div class="item-title">{{ insuranceDueDateLabel }}</div>
                 <div class="item-after">
-                  <div class="item-input">
-                    <input type="text" placeholder="AAAA-MM-DD" readonly id="calendar-default">
+                  <div class="item-input due-date">
+                    <input type="text" :placeholder="insurerDueDateFormated" readonly id="calendar-default">
                   </div>
                 </div>
               </div>

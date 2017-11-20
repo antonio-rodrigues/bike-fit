@@ -57,7 +57,7 @@ export default {
 </script>
 <style scoped>
   .app-title {
-    color: #ffffff;
+    color: #2f2f2f;
   }
   .app-title__black {
     margin-left: 2px;

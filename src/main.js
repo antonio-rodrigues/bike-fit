@@ -193,7 +193,12 @@ Vue.app = {
      * @param item
      * @returns {boolean}
      */
-    get: function (item) {
+    get: function (item, options) {
+      if (item && item.toLowerCase() === 'formatdate' && Vue.conf['date']) {
+        const formatPlaceholder = store.getters.locale === 'pt' ? Vue.conf['date'].formatPt : Vue.conf['date'].formatDefault
+        if (!options) return formatPlaceholder
+        return Vue.moment(options).format(formatPlaceholder)
+      }
       return Vue.conf[item] !== undefined ? Vue.conf[item] : false
     },
 
