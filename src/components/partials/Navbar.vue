@@ -25,7 +25,7 @@
         </a>
       </div>
       <div class="center app-title">
-        TTT {{ getOptions.title }}
+        {{ getOptions.title }}
       </div>
       <div class="right"></div>
     </div>
