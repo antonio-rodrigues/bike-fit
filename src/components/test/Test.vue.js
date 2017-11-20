@@ -28,24 +28,26 @@ export default {
       sorting: false,
       items: [1, 2, 3, 4, 5],
       name: 'Vladimir',
-      avatar: 'path/to/avatar-1.jpg',
+      avatar: 'http://lorempixel.com/100/100/people/3/',
       messages: [
         {
           day: 'Wendesday',
           time: '13:34'
         },
         {
+          id: 1,
           name: 'Vladimir',
           text: 'How are you?',
           label: 'Sent in good mood :)',
-          avatar: 'path/to/avatar-1.jpg',
+          avatar: 'http://lorempixel.com/100/100/people/3/',
           date: 'Yesterday 13:34'
         },
         {
+          id: 2,
           name: 'Jane',
           text: 'I\'m good, thank you!',
           type: 'received',
-          avatar: 'path/to/avatar-2.jpg',
+          avatar: 'http://lorempixel.com/100/100/people/9/',
           date: 'Yesterday at 13:50'
         }
       ]

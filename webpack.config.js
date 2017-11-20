@@ -1,6 +1,5 @@
 var path = require('path')
 var webpack = require('webpack')
-var VueBuilder = require('vue-builder-webpack-plugin')
 
 module.exports = {
   entry: './src/main.js',
@@ -46,13 +45,6 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    // https://github.com/pksunkara/vue-builder-webpack-plugin
-    new VueBuilder({
-      path: 'src',
-      folder: true
-    })
-  ],
   resolve: {
     alias: {
       'vue$': 'vue/dist/vue.esm.js'

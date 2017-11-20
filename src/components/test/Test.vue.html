@@ -395,7 +395,7 @@
     <f7-list contacts>
       <f7-list-group v-for="(group, key) in contacts" :key="key">
         <f7-list-item :title="key" group-title></f7-list-item>
-        <f7-list-item v-for="name in group" :title="name" :key="name"></f7-list-item>
+        <f7-list-item v-for="(name, key, index) in group" :title="name" :key="index"></f7-list-item>
       </f7-list-group>
     </f7-list>
 
@@ -408,7 +408,7 @@
     <f7-link toggle-sortable="#sortable">{{sorting ? 'Done sorting' : 'Sort list items'}}</f7-link>
 
     <f7-list id="sortable" sortable @sortable:sort="onSort" @sortable:open="onOpen" @sortable:close="onClose">
-      <f7-list-item v-for="item in items" :title="'Item ' + item" :key="item"></f7-list-item>
+      <f7-list-item v-for="(item, key, index) in items" :title="'Item ' + item" :key="index"></f7-list-item>
     </f7-list>
 
 
@@ -539,8 +539,8 @@
 
 
     <f7-messages>
-      <f7-message v-for="message in messages"
-        :key="message"
+      <f7-message v-for="(message, key, index) in messages"
+        :key="index"
         :text="message.text"
         :label="message.label"
         :date="message.date"
