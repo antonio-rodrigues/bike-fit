@@ -1,8 +1,11 @@
 // scoped
+@import "../../styles/variables";
+
 .center {
   text-align: center;
   padding: 5px;
 }
 .size-50 {
   font-size: 50px;
+  color: $grey-500;
 }

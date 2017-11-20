@@ -61,6 +61,6 @@ export default {
   }
   .app-title__black {
     margin-left: 2px;
-    color: rgb(44, 44, 44);
+    color: #FF5722;
   }
 </style>

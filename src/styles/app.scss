@@ -1,0 +1,37 @@
+// app common styles
+@mixin cursor-pan() {
+  cursor: crosshair;
+  cursor: crosshair;
+  cursor: -moz-crosshair;
+  cursor: -webkit-crosshair;
+}
+
+@mixin cursor-grab() {
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+
+@mixin cursor-grabbing() {
+  cursor: move !important;
+  cursor: grabbing !important;
+  cursor: -moz-grabbing !important;
+  cursor: -webkit-grabbing !important;
+}
+
+@mixin cursor-readonly() {
+  cursor: not-allowed !important;
+}
+
+@import "fonts";
+@import "variables";
+
+// * {
+//   font-family: "Roboto Light", sans-serif;
+//   font-weight: lighter;
+// }
+
+// body {
+//   margin: 0;
+// }

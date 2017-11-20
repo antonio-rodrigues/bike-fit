@@ -29,6 +29,8 @@ const theme = (Framework7.prototype.device.android ? THEMES.MATERIAL : THEMES.IO
 require('framework7/dist/css/framework7.' + theme + '.min.css')
 require('framework7/dist/css/framework7.' + theme + '.colors.min.css')
 require('framework7-icons/css/framework7-icons.css')
+// global styles
+import './styles/app.scss'
 
 Vue.use(Framework7Vue)
 Vue.use(VueCordova, {})
