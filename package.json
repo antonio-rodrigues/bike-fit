@@ -1,7 +1,7 @@
 {
   "name": "com.app.bikefit",
   "description": "Keep your motorcycle fit and lean!",
-  "version": "0.0.14",
+  "version": "0.1.08",
   "author": "BikeFit Dev Team <dev@bikefitapp.com>",
   "private": true,
   "scripts": {
@@ -16,7 +16,7 @@
     "android-versions": "^1.2.1",
     "axios": "^0.17.1",
     "cordova-android": "^6.3.0",
-    "cordova-browser": "^5.0.0",
+    "cordova-browser": "^5.0.1",
     "cordova-ios": "^4.5.0",
     "cordova-plugin-console": "^1.0.7",
     "cordova-plugin-device": "^1.1.6",
@@ -71,9 +71,9 @@
       "cordova-plugin-whitelist": {}
     },
     "platforms": [
-      "browser",
       "ios",
-      "android"
+      "android",
+      "browser"
     ]
   }
 }
