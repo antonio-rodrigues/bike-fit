@@ -1,7 +1,7 @@
 export default [
   {
     path: '/',
-    component: require('./components/Home.vue')
+    component: require('./components/home/Home.vue')
   },
   {
     path: '/settings',

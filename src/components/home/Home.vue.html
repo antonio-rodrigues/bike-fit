@@ -1,0 +1,41 @@
+<div class="page toolbar-fixed homepage" data-page="home">
+
+  <navbar></navbar>
+
+  <div class="page-content" v-if="!isLogged">
+    <div v-if="!isLogged" class="content-block center">
+      <h1>
+        <i class="f7-icons">login</i> Login, please!</h1>
+    </div>
+  </div>
+
+  <div class="page-content pull-to-refresh-content" v-if="isLogged">
+    <div class="pull-to-refresh-layer">
+      <div class="preloader"></div>
+      <div class="pull-to-refresh-arrow"></div>
+    </div>
+
+    <div class="content-block">
+      <div class="content-block center">
+        <i class="f7-icons color-red size-50">settings</i>
+      </div>
+
+      <div class="content-block-title">{{ $app.trans("home.nextServices") }}</div>
+      <div class="list-block">
+        <ul>
+          <li class="item-content" v-for="service in services" :post="service" :key="service.id">
+            <div class="item-media">
+              <i class="icon f7-icons">{{ serviceIcon(service) }}</i>
+            </div>
+            <div class="item-inner">
+              <div class="item-title">{{ $app.trans("services.type." + service.typeId) }}</div>
+              <div class="item-after">{{ service.serviceDate.split('T')[0] }}</div>
+            </div>
+          </li>
+        </ul>
+        <div class="list-block-label">This items will generate notifications</div>
+      </div>
+    </div>
+
+  </div>
+</div>

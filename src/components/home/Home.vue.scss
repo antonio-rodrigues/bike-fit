@@ -1,0 +1,37 @@
+// app common styles
+// .background-photo {
+//   background-color: #000000;
+//   opacity: 0.8;
+// }
+
+// .bike-card-header-pic .card-header {
+//   height: 40vw;
+//   background-size: cover;
+//   background-position: 50% 25%;
+// }
+
+// .avatar {
+//   position: relative;
+//   top: -15px;
+//   left: 50%;
+//   right: auto;
+//   bottom: auto;
+//   margin-right: -50%;
+//   transform: translate(-50%, -50%);
+//   max-width: 110px;
+//   max-height: 110px;
+//   position: relative;
+//   border-radius: 50%;
+//   box-shadow: 0 0 0 1px #fff, 0 0 0 2px #999, 0 1px 3px 3px rgba(0,0,0,.2);
+// }
+
+// scoped
+.homepage {
+  .center {
+    text-align: center;
+    padding: 5px;
+  }
+  .size-50 {
+    font-size: 50px;
+  }
+}
