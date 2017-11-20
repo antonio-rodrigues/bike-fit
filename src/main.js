@@ -29,6 +29,8 @@ const theme = (Framework7.prototype.device.android ? THEMES.MATERIAL : THEMES.IO
 require('framework7/dist/css/framework7.' + theme + '.min.css')
 require('framework7/dist/css/framework7.' + theme + '.colors.min.css')
 require('framework7-icons/css/framework7-icons.css')
+// global styles
+import './styles/app.scss'
 
 Vue.use(Framework7Vue)
 Vue.use(VueCordova, {})
@@ -191,7 +193,12 @@ Vue.app = {
      * @param item
      * @returns {boolean}
      */
-    get: function (item) {
+    get: function (item, options) {
+      if (item && item.toLowerCase() === 'formatdate' && Vue.conf['date']) {
+        const formatPlaceholder = store.getters.locale === 'pt' ? Vue.conf['date'].formatPt : Vue.conf['date'].formatDefault
+        if (!options) return formatPlaceholder
+        return Vue.moment(options).format(formatPlaceholder)
+      }
       return Vue.conf[item] !== undefined ? Vue.conf[item] : false
     },
 

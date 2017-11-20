@@ -20,3 +20,7 @@ export const mileage = (state) => {
 export const insurer = (state) => {
   return state.insurer || null
 }
+
+export const insurerDueDate = (state) => {
+  return state.insurerDueDate || null
+}

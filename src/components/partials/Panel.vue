@@ -22,7 +22,7 @@
                       {{ $app.trans("home.title") }}
                     </div>
                     <div class="item-after">
-                      <span class="badge">{{ getOptions.badge }}</span>
+                      <span class="badge">{{ badge }}</span>
                     </div>
                   </div>
                 </div>
@@ -55,10 +55,8 @@ export default {
     'options'
   ],
   computed: {
-    getOptions () {
-      return Object.assign({ // default values, if not set
-        badge: 0
-      }, this.options)
+    badge () {
+      return this.$store.getters.services.length || 0
     }
   }
 }

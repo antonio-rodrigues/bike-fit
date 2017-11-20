@@ -1,0 +1,784 @@
+<!-- Test.vue.html -->
+<div class="page" data-page="test">
+
+  <navbar :options="{back: false, title: $app.trans('test')}"></navbar>
+
+  <div class="page-content">
+
+    <!-- With block title -->
+    <f7-block-title>F7-VUE KITCHEN SINK</f7-block-title>
+    <f7-block>f7-block</f7-block>
+
+    <!-- With additional "inner" element for extra highlighting -->
+    <f7-block inner>f7-block inner</f7-block>
+
+    <!-- Inset -->
+    <f7-block inset>f7-block inset</f7-block>
+
+
+
+
+    <f7-button>Button Single</f7-button>
+    <f7-buttons>
+      <f7-button>Button 1</f7-button>
+      <f7-button>Button 2</f7-button>
+      <f7-button>Button 3</f7-button>
+    </f7-buttons>
+
+    <f7-button color="red">Red Button</f7-button>
+    <f7-button color="green">Green Button</f7-button>
+
+    <f7-buttons theme="orange">
+      <f7-button active>Button 1</f7-button>
+      <f7-button>Button 2</f7-button>
+      <f7-button>Button 3</f7-button>
+    </f7-buttons>
+
+    <!-- With custom Touch-Ripple color, affects Material theme only -->
+    <f7-button ripple-color="yellow">Yellow-ripple Button</f7-button>
+
+    <f7-button big color="red">Big Red Button</f7-button>
+
+    <!-- "round" affects iOS theme only -->
+    <f7-button round color="green">Round Green Button</f7-button>
+    <f7-button big round>Big Round Button</f7-button>
+
+    <!-- "fill" affects iOS theme only -->
+    <f7-button fill>Filled-Color Button</f7-button>
+
+    <!-- "raised" affects Material theme only  -->
+    <f7-button raised>Raised Button</f7-button>
+    <f7-button big raised color="red">Big Red Raised Button</f7-button>
+
+
+
+
+    <f7-card title="Card Title" content="Card Content" footer="Card Footer"></f7-card>
+
+    <f7-card title="Card Title" content="Card Content" footer="Card Footer" :inner="false"></f7-card>
+
+    <div class="card">
+      <div class="card-header">Card Title</div>
+      <div class="card-content">Card Content</div>
+      <div class="card-footer">Card Footer</div>
+    </div>
+
+    <f7-card>
+      <f7-card-header>Card header content</f7-card-header>
+      <f7-card-content>Card content</f7-card-content>
+      <f7-card-footer>Card footer content</f7-card-footer>
+    </f7-card>
+
+
+    <!-- Simple Chip -->
+    <f7-chip text="Example Chip"></f7-chip>
+    <!-- Colored Chip -->
+    <f7-chip text="Another Chip" bg="red" color="white"></f7-chip>
+    <!-- Media Chip -->
+    <f7-chip text="Jane Doe" media='<img src="http://lorempixel.com/100/100/people/9/">'></f7-chip>
+    <!-- Deleteable Chip -->
+    <f7-chip text="Another Chip" deleteable @delete="onChipDelete"></f7-chip>
+    <!-- Deleteable Media Chip -->
+    <f7-chip text="Jane Doe" media='<img src="http://lorempixel.com/100/100/people/9/">' media-bg="red" deleteable @delete="onChipDelete"></f7-chip>
+
+
+    <f7-fab color="pink" @click="onActionClick">
+      <f7-icon icon="icon-plus"></f7-icon>
+    </f7-fab>
+
+    <f7-fab-speed-dial>
+      <!-- Actions -->
+      <f7-fab-actions>
+        <f7-fab-action color="pink" @click="onActionClick">A</f7-fab-action>
+        <f7-fab-action color="orange" @click="onActionClick">B</f7-fab-action>
+        <f7-fab-action color="green" @click="onActionClick">C</f7-fab-action>
+      </f7-fab-actions>
+      <!-- FAB -->
+      <f7-fab>
+        <!-- First icon to open Actions -->
+        <f7-icon icon="icon-plus"></f7-icon>
+        <!-- Second icon to close Actions -->
+        <f7-icon icon="icon-close"></f7-icon>
+      </f7-fab>
+    </f7-fab-speed-dial>
+
+
+
+    <f7-list form>
+      <f7-list-item checkbox name="my-checkbox" value="1" title="Checkbox 1" checked></f7-list-item>
+      <f7-list-item checkbox name="my-checkbox" value="2" title="Checkbox 1"></f7-list-item>
+      <f7-list-item checkbox name="my-checkbox" value="3" title="Checkbox 1"></f7-list-item>
+    </f7-list>
+
+
+
+
+
+    <hr />
+
+    <f7-list form>
+      <!-- Text Input -->
+      <f7-list-item>
+        <f7-label>Name</f7-label>
+        <f7-input type="text" placeholder="Name"/>
+      </f7-list-item>
+      <!-- Password -->
+      <f7-list-item>
+        <f7-label>Name</f7-label>
+        <f7-input type="password" placeholder="Password"/>
+      </f7-list-item>
+      <!-- Select -->
+      <f7-list-item>
+        <f7-label>Gender</f7-label>
+        <f7-input type="select">
+          <option value="1">Male</option>
+          <option value="1">Female</option>
+        </f7-input>
+      </f7-list-item>
+      <!-- Switch -->
+      <f7-list-item>
+        <f7-label>Switch</f7-label>
+        <f7-input type="switch" @change="onChange"></f7-input>
+      </f7-list-item>
+      <!-- Range -->
+      <f7-list-item>
+        <f7-label>Range</f7-label>
+        <f7-input type="range" min="0" max="100" step="1" value="90"></f7-input>
+      </f7-list-item>
+      <!-- Textarea -->
+      <f7-list-item>
+        <f7-label>Textarea</f7-label>
+        <f7-input type="textarea" placeholder="Textarea"></f7-input>
+      </f7-list-item>
+    </f7-list>
+
+    <!-- smart select -->
+    <f7-list form>
+      <!-- Enables Smart Select behavior by adding "smart-select" prop -->
+      <f7-list-item smart-select title="Fruit">
+        <!-- Select with values inside -->
+        <select name="fruits">
+          <option value="apple" selected>Apple</option>
+          <option value="pineapple">Pineapple</option>
+          <option value="pear">Pear</option>
+          <option value="orange">Orange</option>
+          <option value="melon">Melon</option>
+          <option value="peach">Peach</option>
+          <option value="banana">Banana</option>
+        </select>
+      </f7-list-item>
+      <!-- Multiple Smart Select With Searchbar -->
+      <f7-list-item smart-select smart-select-searchbar title="Car">
+        <select name="car" multiple="multiple">
+          <optgroup label="Japanese">
+            <option value="honda" selected>Honda</option>
+            <option value="lexus">Lexus</option>
+            <option value="mazda">Mazda</option>
+            <option value="nissan">Nissan</option>
+            <option value="toyota">Toyota</option>
+          </optgroup>
+          <optgroup label="German">
+            <option value="audi" selected>Audi</option>
+            <option value="bmw">BMW</option>
+            <option value="mercedes">Mercedes</option>
+            <option value="vw">Volkswagen</option>
+            <option value="volvo">Volvo</option>
+          </optgroup>
+          <optgroup label="American">
+            <option value="cadillac">Cadillac</option>
+            <option value="chrysler">Chrysler</option>
+            <option value="dodge">Dodge</option>
+            <option value="ford" selected>Ford</option>
+          </optgroup>
+        </select>
+      </f7-list-item>
+      <!-- With back on select -->
+      <f7-list-item smart-select smart-select-back-on-select title="Mac or Windows">
+        <select name="mac-windows">
+          <option value="mac">Mac</option>
+          <option value="windows">Windows</option>
+        </select>
+      </f7-list-item>
+    </f7-list>
+
+
+
+    <!-- Default back icon -->
+    <f7-icon icon="icon-back"></f7-icon>
+
+    <!-- Some custom icon -->
+    <f7-icon icon="icon-home"></f7-icon>
+
+    <!-- F7 Icons font icon -->
+    <f7-icon f7="home"></f7-icon>
+
+    <!-- Material Icons font icon -->
+    <f7-icon material="home"></f7-icon>
+
+    <!-- Font Awesome icons font icon -->
+    <f7-icon fa="home"></f7-icon>
+
+    <!-- Ionicons icons font icon -->
+    <f7-icon ion="home"></f7-icon>
+
+    <!-- F7 icons font icon with custom size and color -->
+    <f7-icon f7="home" size="44px" color="blue"></f7-icon>
+
+    <!-- Conditional icon -->
+    <f7-icon if-ios="f7:home" if-material="material:home"></f7-icon>
+
+
+
+    <hr />
+
+    <!-- grid -->
+    <f7-grid>
+      <f7-col>Col 1</f7-col>
+      <f7-col>Col 2</f7-col>
+      <f7-col>Col 3</f7-col>
+    </f7-grid>
+
+    No gutter and fixed size
+    <f7-grid no-gutter>
+      <f7-col width="50">Col 50%</f7-col>
+      <f7-col width="25">Col 25%</f7-col>
+      <f7-col width="25">Col 25%</f7-col>
+    </f7-grid>
+
+
+
+    <hr />
+
+
+    <f7-list>
+      <f7-list-item title="Item 1"></f7-list-item>
+      <f7-list-item title="Item 2"></f7-list-item>
+    </f7-list>
+
+    With Groups
+    <f7-list>
+      <f7-list-group>
+        <f7-list-item title="Group 1" group-title></f7-list-item>
+        <f7-list-item title="Item 1"></f7-list-item>
+        <f7-list-item title="Item 2"></f7-list-item>
+      </f7-list-group>
+      <f7-list-group>
+        <f7-list-item title="Group 2" group-title></f7-list-item>
+        <f7-list-item title="Item 1"></f7-list-item>
+        <f7-list-item title="Item 2"></f7-list-item>
+      </f7-list-group>
+    </f7-list>
+
+    Media List
+    <f7-list media-list>
+      <f7-list-item title="Item 1" subtitle="Subtitle 1" text="Item 1 Text"></f7-list-item>
+      <f7-list-item title="Item 1" subtitle="Subtitle 2" text="Item 2 Text"></f7-list-item>
+    </f7-list>
+
+    With Label
+    <f7-list>
+      <f7-list-item title="Item 1"></f7-list-item>
+      <f7-list-item title="Item 2"></f7-list-item>
+      <f7-list-label>List Label</f7-list-label>
+    </f7-list>
+
+
+
+    <hr />
+
+    Minimal Layout
+    <f7-list>
+      <f7-list-item title="Item 1"></f7-list-item>
+      <f7-list-item title="Item 2"></f7-list-item>
+    </f7-list>
+
+    With Badges And Divider
+    <f7-list>
+      <f7-list-item title="Item 1" badge="5" badge-color="red"></f7-list-item>
+      <f7-list-item title="Item 2" badge="3" badge-color="red"></f7-list-item>
+      <f7-list-item title="Items Divider" divider></f7-list-item>
+      <f7-list-item title="Item 3"></f7-list-item>
+    </f7-list>
+
+    Links Items
+    <f7-list>
+      <f7-list-item link="/about/" title="About"></f7-list-item>
+      <f7-list-item link="/contacts/" title="Contacts"></f7-list-item>
+    </f7-list>
+
+    Media List Items
+    <f7-list media-list>
+      <f7-list-item
+        link="/item/"
+        media="<img src='http://lorempixel.com/100/100/people/1/'>"
+        title="Item Title"
+        subtitle="Item Subtitle"
+        text="Some text"
+        after="Read more"
+      ></f7-list-item>
+    </f7-list>
+
+    Slots
+    <f7-list media-list>
+      <f7-list-item
+        link="/home/"
+        media="<img src='http://lorempixel.com/100/100/people/9/'>"
+        title="Item Title"
+        subtitle="Item Subtitle"
+        text="Text"
+        after="Read more"
+        >
+          <div slot="root-start">Root Start</div>
+          <div slot="root">Root</div>
+          <div slot="content-start">Content Start</div>
+          <div slot="content">Content</div>
+          <div slot="media-start">Media Start</div>
+          <div slot="media">Media</div>
+          <span slot="after-start">After Start</span>
+          <span slot="after">After</span>
+          <div slot="inner-start">Inner Start</div>
+          <div slot="inner">Inner</div>
+      </f7-list-item>
+    </f7-list>
+
+
+
+    <hr />
+
+    <f7-list>
+      <f7-list-button>Button 1</f7-list-button>
+      <f7-list-button>Button 2</f7-list-button>
+    </f7-list>
+
+    Colored Buttons
+    <f7-list>
+      <f7-list-button color="red">Red Button</f7-list-button>
+      <f7-list-button color="green">Green Button</f7-list-button>
+    </f7-list>
+
+    Control Buttons in Inset List
+    <f7-list inset>
+      <f7-list-button open-panel="left">Open Panel</f7-list-button>
+      <f7-list-button open-popup="#my-popup">Open Popup</f7-list-button>
+    </f7-list>
+
+
+
+
+    <hr />
+
+    <f7-list accordion>
+      <f7-list-item accordion-item title="Accordion Item 1">
+        <f7-accordion-content>
+          <f7-block>
+            <p>Accordion Item 1 Content</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu felis volutpat, rutrum ex quis, lobortis ex. Curabitur quis mattis lorem. Nullam magna lacus, interdum vel maximus nec, vestibulum non quam. Phasellus ornare efficitur porttitor. Quisque neque diam, imperdiet in fermentum nec, congue vitae ante. Nullam imperdiet maximus commodo. Morbi pharetra id purus ac ultrices. Duis non posuere libero.</p>
+          </f7-block>
+        </f7-accordion-content>
+      </f7-list-item>
+      <f7-list-item accordion-item title="Accordion Item 2">
+        <f7-accordion-content>
+          <f7-block>
+            <p>Accordion Item 2 Content</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu felis volutpat, rutrum ex quis, lobortis ex. Curabitur quis mattis lorem. Nullam magna lacus, interdum vel maximus nec, vestibulum non quam. Phasellus ornare efficitur porttitor. Quisque neque diam, imperdiet in fermentum nec, congue vitae ante. Nullam imperdiet maximus commodo. Morbi pharetra id purus ac ultrices. Duis non posuere libero.</p>
+          </f7-block>
+        </f7-accordion-content>
+      </f7-list-item>
+    </f7-list>
+
+
+
+
+
+    <hr />
+
+    <f7-list contacts>
+      <f7-list-group v-for="(group, key) in contacts" :key="key">
+        <f7-list-item :title="key" group-title></f7-list-item>
+        <f7-list-item v-for="(name, key, index) in group" :title="name" :key="index"></f7-list-item>
+      </f7-list-group>
+    </f7-list>
+
+
+
+
+    <hr />
+
+    <!-- Link to enable/disable sortable -->
+    <f7-link toggle-sortable="#sortable">{{sorting ? 'Done sorting' : 'Sort list items'}}</f7-link>
+
+    <f7-list id="sortable" sortable @sortable:sort="onSort" @sortable:open="onOpen" @sortable:close="onClose">
+      <f7-list-item v-for="(item, key, index) in items" :title="'Item ' + item" :key="index"></f7-list-item>
+    </f7-list>
+
+
+
+
+
+    <hr />
+    Swipe To Delete
+    <f7-list>
+      <f7-list-item swipeout title="Item 1" @swipeout:deleted="onSwipeoutDeleted">
+        <f7-swipeout-actions>
+          <f7-swipeout-button delete>Delete</f7-swipeout-button>
+        </f7-swipeout-actions>
+      </f7-list-item>
+      <f7-list-item swipeout title="Item 2" @swipeout:deleted="onSwipeoutDeleted">
+        <f7-swipeout-actions>
+          <f7-swipeout-button delete>Delete</f7-swipeout-button>
+        </f7-swipeout-actions>
+      </f7-list-item>
+    </f7-list>
+
+    With Additional Actions
+    <f7-list>
+      <f7-list-item swipeout title="Item 1" @swipeout:deleted="onSwipeoutDeleted">
+        <f7-swipeout-actions>
+          <f7-swipeout-button close color="blue">Reply</f7-swipeout-button>
+          <f7-swipeout-button delete>Delete</f7-swipeout-button>
+        </f7-swipeout-actions>
+      </f7-list-item>
+      <f7-list-item swipeout title="Item 2" @swipeout:deleted="onSwipeoutDeleted">
+        <f7-swipeout-actions>
+          <f7-swipeout-button close color="blue">Reply</f7-swipeout-button>
+          <f7-swipeout-button delete>Delete</f7-swipeout-button>
+        </f7-swipeout-actions>
+      </f7-list-item>
+    </f7-list>
+
+    With Actions On Left
+    <f7-list>
+      <f7-list-item swipeout title="Item 1">
+        <f7-swipeout-actions left>
+          <f7-swipeout-button close color="orange">Mark</f7-swipeout-button>
+        </f7-swipeout-actions>
+      </f7-list-item>
+      <f7-list-item swipeout title="Item 2">
+        <f7-swipeout-actions left>
+          <f7-swipeout-button close color="orange">Mark</f7-swipeout-button>
+        </f7-swipeout-actions>
+      </f7-list-item>
+    </f7-list>
+
+    With Actions On Both Sides
+    <f7-list>
+      <f7-list-item swipeout title="Item 1">
+        <f7-swipeout-actions left>
+          <f7-swipeout-button close color="orange">Mark</f7-swipeout-button>
+        </f7-swipeout-actions>
+        <f7-swipeout-actions right>
+          <f7-swipeout-button delete>Delete</f7-swipeout-button>
+        </f7-swipeout-actions>
+      </f7-list-item>
+      <f7-list-item swipeout title="Item 2">
+        <f7-swipeout-actions left>
+          <f7-swipeout-button close color="orange">Mark</f7-swipeout-button>
+        </f7-swipeout-actions>
+        <f7-swipeout-actions right>
+          <f7-swipeout-button delete>Delete</f7-swipeout-button>
+        </f7-swipeout-actions>
+      </f7-list-item>
+    </f7-list>
+
+
+
+
+    <hr />
+
+
+    Navigation Link
+    <f7-link href="/about/">About</f7-link>
+
+    Back Navigation Link
+    <f7-link back>Back</f7-link>
+
+    With Router Parameters
+    <f7-link href="/about/" :animate-pages="false" :ignore-cache="true">About</f7-link>
+
+    External Link
+    <f7-link href="http://google.com" external>Google</f7-link>
+
+    Tab Link
+    <!-- Tabs -->
+    <f7-tabs>
+      <f7-tab id="tab-1" active>Tab 1</f7-tab>
+      <f7-tab id="tab-1">Tab 2</f7-tab>
+    </f7-tabs>
+    <!-- Switch Between Tabs -->
+    <f7-link tab-link="#tab-1">Show Tab 1</f7-link>
+    <f7-link tab-link="#tab-2">Show Tab 2</f7-link>
+
+    <!-- Tabs -->
+    <f7-tabs>
+      <f7-tab route-tab-id="tab-1">Tab 1</f7-tab>
+      <f7-tab route-tab-id="tab-1">Tab 2</f7-tab>
+    </f7-tabs>
+    <!-- Switch Between Tabs -->
+    <f7-link route-tab-link="#tab-1" href="/tabs/">Show Tab 1</f7-link>
+    <f7-link route-tab-link="#tab-2" href="/tabs/tab-2/">Show Tab 2</f7-link>
+
+    Open and Close Panel
+    <f7-link open-panel="left">Open Left Panel</f7-link>
+    <f7-link close-panel>Close Panel</f7-link>
+
+    Open and Close Popup
+    <f7-link open-popup="#my-popup">Open Popup</f7-link>
+    <f7-link close-popup="#my-popup">Close Popup</f7-link>
+
+    With Icon & Color
+    <f7-link icon-f7="home" text="Home" color="red"></f7-link>
+
+
+
+    <hr />
+
+    <f7-messages>
+      <f7-message name="John" text="Hello, Kate!" type="received"></f7-message>
+      <f7-message name="Kate" text="Hi, John!" type="sent"></f7-message>
+    </f7-messages>
+
+
+    <f7-messages>
+      <f7-message v-for="(message, key, index) in messages"
+        :key="index"
+        :text="message.text"
+        :label="message.label"
+        :date="message.date"
+        :name="message.name"
+        :avatar="message.avatar"
+        :type="message.type"
+        :day="message.day"
+        :time="message.time"
+        @click="onClick"
+        @click:text="onTextClick"
+        @click:name="onNameClick"
+        @click:avatar="onAvatarClick"
+      ></f7-message>
+    </f7-messages>
+    <f7-messagebar placeholder="Message" send-link="Send" @submit="onSubmit"></f7-messagebar>
+
+
+
+
+
+    <hr />
+
+    <!-- Actions -->
+    <f7-actions>
+      <!-- Actions Group -->
+      <f7-actions-group>
+        <!-- Actions Label -->
+        <f7-actions-label>Hello</f7-actions-label>
+        <!-- Actions Buttons -->
+        <f7-actions-button>Button 1</f7-actions-button>
+        <f7-actions-button @click="doSomething">Button 2</f7-actions-button>
+      </f7-actions-group>
+      <!-- Another Group -->
+      <f7-actions-group>
+        <!-- Cancel/Close Button -->
+        <f7-actions-button color="red" bold>Cancel</f7-actions-button>
+      </f7-actions-group>
+    </f7-actions>
+
+
+    <!-- Picker Modal -->
+    <f7-picker-modal>
+      <!-- Picker Modal content goes here -->
+      Picker Modal content
+    </f7-picker-modal>
+
+
+    <!-- Popover -->
+    <f7-popover>
+      <!-- Popover content goes here -->
+      Popover content
+    </f7-popover>
+
+
+
+
+
+
+    <hr />
+
+    <f7-subnavbar>
+      <f7-buttons>
+        <f7-button tab-link="#tab1" active>Tab 1</f7-button>
+        <f7-button tab-link="#tab2">Tab 2</f7-button>
+      </f7-buttons>
+    </f7-subnavbar>
+
+
+
+
+    <hr />
+
+    <!-- Preloader -->
+    <f7-preloader></f7-preloader>
+
+    <!-- Red preloader -->
+    <f7-preloader color="red"></f7-preloader>
+
+    <!-- Blue with custom size -->
+    <f7-preloader color="blue" size="44px"></f7-preloader>
+
+
+
+
+    <hr />
+
+    <!-- Determinate Progress Bar -->
+    <f7-progressbar :progress="20"></f7-progressbar>
+
+    <!-- Determinate Red Progress Bar -->
+    <f7-progressbar :progress="30" color="red"></f7-progressbar>
+
+    <!-- Infinite Blue Progress Bar -->
+    <f7-progressbar infinite color="blue"></f7-progressbar>
+
+    <!-- Infinite Multi-color Progress Bar -->
+    <f7-progressbar infinite color="multi"></f7-progressbar>
+
+
+
+
+    <hr />
+
+    <f7-searchbar
+      cancel-link="Cancel"
+      placeholder="Search in items"
+      :clear-button="true">
+    </f7-searchbar>
+
+
+
+
+    <hr />
+
+    <f7-swiper>
+      <f7-swiper-slide>Slide 1</f7-swiper-slide>
+      <f7-swiper-slide>Slide 2</f7-swiper-slide>
+      <f7-swiper-slide>Slide 3</f7-swiper-slide>
+    </f7-swiper>
+
+
+
+    <hr />
+
+    <f7-tabs animated>
+      <f7-tab id="tab1" active>Tab 1 content...</f7-tab>
+      <f7-tab id="tab2">Tab 2 content...</f7-tab>
+    </f7-tabs>
+
+
+
+    <hr />
+
+    <f7-timeline>
+      <f7-timeline-item day="21" month="DEC" inner content="Some text goes here"></f7-timeline-item>
+      <f7-timeline-item day="22" month="DEC" inner content="Another text goes here"></f7-timeline-item>
+    </f7-timeline>
+
+    <f7-timeline sides>
+      <f7-timeline-item day="23" month="DEC" inner content="Some text goes here"></f7-timeline-item>
+      <f7-timeline-item day="24" month="DEC" inner content="Some text goes here"></f7-timeline-item>
+    </f7-timeline>
+
+    Forced Sides
+    <f7-timeline sides>
+      <f7-timeline-item side="right" day="21" month="DEC" inner content="Some text goes here"></f7-timeline-item>
+      <f7-timeline-item side="left" day="23" month="DEC" inner content="Just plain text"></f7-timeline-item>
+    </f7-timeline>
+
+    Rich Content
+    <f7-timeline>
+      <!-- With Item Elements -->
+      <f7-timeline-item
+        day="21"
+        month="DEC"
+        inner
+        time="12:56"
+        title="Item Title"
+        subtitle="Item Subtitle"
+        text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor fugiat ipsam hic porro enim, accusamus perferendis, quas commodi alias quaerat eius nemo deleniti. Odio quasi quos quis iure, aperiam pariatur?"
+      ></f7-timeline-item>
+
+      <!-- With List -->
+      <f7-timeline-item
+        day="23"
+        month="DEC">
+        <f7-list inset>
+          <f7-list-item link="#" title="Item 1"></f7-list-item>
+        </f7-list>
+      </f7-timeline-item>
+
+      <!-- With Card -->
+      <f7-timeline-item
+        day="24"
+        month="DEC">
+        <f7-card title="Card Header" content="Card Content" footer="Card Footer"></f7-card>
+      </f7-timeline-item>
+    </f7-timeline>
+
+    Horizontal Timeline
+    <f7-timeline horizontal col="33" tablet-col="20">
+      <f7-timeline-item day="21" month="DEC">
+        <f7-timeline-item-child inner time="12:56" text="Task 1" ></f7-timeline-item-child>
+        <f7-timeline-item-child inner time="13:15" text="Task 2" ></f7-timeline-item-child>
+      </f7-timeline-item>
+      <f7-timeline-item day="22" month="DEC">
+      </f7-timeline-item>
+    </f7-timeline>
+
+    Calendar Timeline
+    <f7-timeline horizontal col="33" tablet-col="15">
+      <!-- Year -->
+      <f7-timeline-year title="2016">
+        <!-- Month -->
+        <f7-timeline-month title="November">
+          <f7-timeline-item date="1">...</f7-timeline-item>
+          <f7-timeline-item date="30">...</f7-timeline-item>
+        </f7-timeline-month>
+        <!-- Another Month -->
+        <f7-timeline-month title="December">
+          <f7-timeline-item date="1">...</f7-timeline-item>
+          <f7-timeline-item date="31">...</f7-timeline-item>
+        </f7-timeline-month>
+      </f7-timeline-year>
+
+      <!-- Another Year -->
+      <f7-timeline-year title="2017">
+        <f7-timeline-month title="January">
+          <f7-timeline-item date="1">...</f7-timeline-item>
+          <f7-timeline-item date="30">...</f7-timeline-item>
+        </f7-timeline-month>
+      </f7-timeline-year>
+    </f7-timeline>
+
+
+
+
+
+    <hr />
+
+
+
+
+
+
+
+
+    <hr />
+
+
+
+
+
+    <hr />
+
+
+
+
+
+  </div>
+</div>

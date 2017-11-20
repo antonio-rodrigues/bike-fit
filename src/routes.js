@@ -1,7 +1,7 @@
 export default [
   {
     path: '/',
-    component: require('./components/Home.vue')
+    component: require('./components/home/Home.vue')
   },
   {
     path: '/settings',
@@ -21,6 +21,6 @@ export default [
   },
   {
     path: '/test',
-    component: require('./components/Test.vue')
+    component: require('./components/test/Test.vue')
   }
 ]

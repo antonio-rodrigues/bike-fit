@@ -4,6 +4,7 @@ export default {
   register: 'Register',
   logout: 'Logout',
   settings: 'Settings',
+  test: 'Test',
   general_settings: {
     label: 'General Settings',
     select: 'Pick one...',

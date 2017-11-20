@@ -25,6 +25,11 @@ export const setInsurer = (context, payload) => {
   context.commit('SET_INSURER', payload)
 }
 
+export const setInsurerDueDate = (context, payload) => {
+  console.log('setInsurerDueDate', payload)
+  context.commit('SET_INSURER_DUE_DATE', payload)
+}
+
 export const getSomeDataFromAPI = (context) => {
   context.commit('LOADING')
   Request.getFuelLog(context.getters.pagination).then(res => {
@@ -35,10 +40,6 @@ export const getSomeDataFromAPI = (context) => {
   .catch(e => {
     context.commit('ERROR', e)
   })
-}
-
-export const updateSomeTotal = (context, payload) => {
-  context.commit('UPDATE_NEWS_TOTAL', payload)
 }
 
 export const paginate = (context, payload) => {

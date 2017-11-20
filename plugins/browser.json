@@ -8,19 +8,19 @@
   },
   "installed_plugins": {
     "cordova-plugin-console": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.app.bikefit"
     },
     "cordova-plugin-device": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.app.bikefit"
     },
     "cordova-plugin-nativeclicksound": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.app.bikefit"
     },
     "cordova-plugin-splashscreen": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.app.bikefit"
     },
     "cordova-plugin-vibration": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.app.bikefit"
     },
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.app.bikefit"

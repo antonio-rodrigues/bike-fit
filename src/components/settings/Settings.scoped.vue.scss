@@ -1,0 +1,29 @@
+// scoped
+@import "../../styles/variables";
+
+.spacer {
+  display: inline-block;
+  height: 40px;
+  min-height: 40px;
+}
+
+.backup-header {
+  margin: 0;
+}
+
+.icon-more {
+  margin-right: 6px;
+}
+
+.help-icon {
+  font-size: 1.2em;
+  margin: -4px 0 0 10px;
+}
+
+.item-link-icon .f7-icons {
+  margin-right: 8px;
+}
+
+.due-date {
+  max-width: 110px;
+}

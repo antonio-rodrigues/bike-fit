@@ -6,5 +6,10 @@ export const items = {
     privateKey: 'API_PRIVATE_KEY',
     publicKey: 'API_PUBLIC_KEY'
   },
+  date: {
+    formatDefault: 'YYYY-MM-DD',
+    formatPt: 'DD-MM-YYYY',
+    formatEs: 'YYYY-MM-DD'
+  },
   imageFolder: 'img'
 }

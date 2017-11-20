@@ -7,7 +7,9 @@
           <i class="icon icon-bars"></i>
         </a>
       </div>
-      <div class="center">{{ $app.trans("name") }}</div>
+      <div class="center">
+        <span class="app-title">BIKE</span><span class="app-title__black">FIT</span>
+      </div>
       <div class="right">
         <!-- <span v-if="$app.auth.check()">{{ $app.auth.user("username") }}</span> -->
         <a href="#" data-popover=".popover-user" class="link icon-only open-popover">
@@ -22,7 +24,7 @@
           <i class="icon f7-icons">arrow-left</i>
         </a>
       </div>
-      <div class="center">
+      <div class="center app-title">
         {{ getOptions.title }}
       </div>
       <div class="right"></div>
@@ -53,3 +55,12 @@ export default {
   }
 }
 </script>
+<style scoped>
+  .app-title {
+    color: #2f2f2f;
+  }
+  .app-title__black {
+    margin-left: 2px;
+    color: #FF5722;
+  }
+</style>
