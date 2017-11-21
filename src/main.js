@@ -12,6 +12,7 @@ import { i18n } from './i18n'
 
 import moment from 'moment'
 import VueMomentJS from 'vue-momentjs'
+// import VueCropper from 'vue-cropperjs'
 
 require('framework7')
 
@@ -35,8 +36,9 @@ import './styles/app.scss'
 Vue.use(Framework7Vue)
 Vue.use(VueCordova, {})
 Vue.use(VueMomentJS, moment)
-
 Vue.use(VueAxios, axios)
+// Vue.use(VueCropper)
+
 Vue.conf = require('./config').items
 Vue.prototype.$config = Vue.conf
 

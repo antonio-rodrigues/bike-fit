@@ -20,6 +20,10 @@ export default [
     component: require('./components/profile/Profile.vue')
   },
   {
+    path: '/profile/avatar',
+    component: require('./components/profile/Avatar.vue')
+  },
+  {
     path: '/test',
     component: require('./components/test/Test.vue')
   }

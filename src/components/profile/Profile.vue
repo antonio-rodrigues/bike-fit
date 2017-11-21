@@ -9,7 +9,9 @@
           <div class="card-header color-white no-border background-photo" valign="bottom">...</div>
           <div class="card-content">
             <div class="card-content-inner">
-              <img :src="avatar" class="avatar" />
+              <f7-link href="/profile/avatar">
+                <img :src="avatar" class="avatar" />
+              </f7-link>
               <p class="color-gray">{{ user.userId }}</p>
             </div>
           </div>
@@ -57,6 +59,9 @@ export default {
 
   methods: {
     // onF7Init: function() {},
+    onAvatarClick () {
+      this.$route.go('profile/avatar')
+    }
   },
 
   components: {

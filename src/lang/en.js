@@ -93,6 +93,11 @@ export default {
     title: 'Profile',
     update: 'Update'
   },
+  avatar: {
+    title: 'Avatar',
+    select: 'Pick an image...',
+    update: 'Update'
+  },
   services: {
     type: {
       CHAIN_FULL_CLEAN: 'Chain full clean',
