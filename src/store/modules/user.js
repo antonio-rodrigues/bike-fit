@@ -75,8 +75,15 @@ export default {
       Vue.axios.post('Persons/login', params)
         .then(response => {
           if (response.status && parseInt(response.status) === 200) {
-            console.info('> axios.persons/login:', response.data)
-            store.commit('login', response.data)
+            // get user data from API
+            let userData = response.data
+            const endpoint = `Persons/${userData.userId}?access_token=${userData.id}`
+            Vue.axios.get(endpoint).then(response => {
+              Object.assign(userData, response.data) // merge extra data
+              // dispatch to store
+              store.commit('login', userData)
+            })
+            .catch(response => handleError(store, 'Login', response))
           } else {
             console.error('> axios.persons/not-200:', response)
             store.commit('login', response.data)

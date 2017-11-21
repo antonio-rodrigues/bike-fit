@@ -9,7 +9,7 @@
           <div class="card-header color-white no-border background-photo" valign="bottom">...</div>
           <div class="card-content">
             <div class="card-content-inner">
-              <img :src="images.avatar" class="avatar" />
+              <img :src="avatar" class="avatar" />
               <p class="color-gray">{{ user.userId }}</p>
             </div>
           </div>
@@ -26,11 +26,14 @@
 <script>
 // import Vue from 'vue'
 import { mapGetters } from 'vuex'
-import bgImage from '../../assets/road-bg.png'
-import avatarImage from '../../assets/my-bike.png'
+const bgImage = require('../../assets/road-bg.png')
+const avatarImage = require('../../assets/my-bike.png')
 
 export default {
   computed: {
+    avatar () {
+      return `data:image/png;base64,${this.user.avatar}`
+    },
     ...mapGetters([
       'user'
     ])
@@ -68,7 +71,7 @@ export default {
   }
 
   .background-photo {
-    background: url(../../assets/road-bg.png);
+    background: url(http://antonio-rodrigues.com/img/road-bg.png);
     background-color: #000000;
     opacity: 0.8;
   }
