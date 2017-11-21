@@ -3,7 +3,7 @@ import Vue from 'vue'
 
 const handleError = (store, context, error) => {
   console.error(`> ${context}: ${error}`)
-  return store.commit('authError')
+  return false // store.commit('authError')
 }
 
 export default {

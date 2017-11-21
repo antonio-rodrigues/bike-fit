@@ -81,7 +81,6 @@ Vue.app = {
     })
 
     Vue.axios.interceptors.response.use(response => response, error => {
-      alert('>> resp.error:' + JSON.stringify(error))
       console.error('>> resp.error:', error)
       return Promise.reject(error)
     })

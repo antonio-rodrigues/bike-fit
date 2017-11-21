@@ -32,6 +32,9 @@ const avatarImage = require('../../assets/my-bike.png')
 export default {
   computed: {
     avatar () {
+      if (this.user.avatar.toString().indexOf('no-avatar') >= 0) {
+        return `data:image/png;base64,${this.$app.config.get('defaultAvatar')}`
+      }
       return `data:image/png;base64,${this.user.avatar}`
     },
     ...mapGetters([
