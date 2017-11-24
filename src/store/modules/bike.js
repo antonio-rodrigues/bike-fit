@@ -1,5 +1,6 @@
+import { getBikeById } from '../../components/settings/Settings.bike';
 import Vue from 'vue'
-import * as cache from '../../utils/cache'
+import * as cache from '../../utils/cache';
 // import moment from 'moment'
 
 const handleError = (response) => {

@@ -20,7 +20,7 @@
               <div style="max-width: 900px; display: inline-block;">
                 <vue-cropper
                   ref="cropper"
-                  :guides="test"
+                  :guides="config.guides"
                   :view-mode="config.viewMode"
                   :drag-mode="config.dragMode"
                   :auto-crop-area="config.autoCropArea"
@@ -58,9 +58,10 @@
 import VueCropper from 'vue-cropperjs'
 
 export default {
+  computed: {},
+
   data: function () {
     return {
-      test: new Boolean(true),
       valid: false,
       imgSrc: '',
       cropImg: '',
@@ -165,7 +166,7 @@ export default {
 }
 </script>
 
-<style scoped lang="css">
+<style lang="css" scoped>
 cropper {
   width: 400px;
   height: 400px;

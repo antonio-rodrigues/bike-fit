@@ -72,7 +72,3 @@ typings/
 # Build files
 www/*
 !www/.gitkeep
-platforms/*
-!platforms/.gitkeep
-plugins/*
-!plugins/.gitkeep

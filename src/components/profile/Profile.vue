@@ -29,7 +29,7 @@
 // import Vue from 'vue'
 import { mapGetters } from 'vuex'
 const bgImage = require('../../assets/road-bg.png')
-const avatarImage = require('../../assets/my-bike.png')
+// const avatarImage = require('../../assets/my-bike.png')
 
 export default {
   computed: {
@@ -47,8 +47,7 @@ export default {
   data: () => {
     return {
       images: {
-        background: bgImage,
-        avatar: avatarImage
+        background: bgImage
       }
     }
   },
@@ -59,6 +58,9 @@ export default {
 
   methods: {
     // onF7Init: function() {},
+    // getImgUrl (img) {
+    //   return require('../../assets/' + img)
+    // },
     onAvatarClick () {
       this.$route.go('profile/avatar')
     }

@@ -336,6 +336,15 @@ Vue.app = {
   },
 
   /**
+   * import local images from assets
+   * @param img
+   * @returns {base64}
+   */
+  getImage: function (img) {
+    return require('./assets/' + img)
+  },
+
+  /**
    * application router object
    */
   router: {
