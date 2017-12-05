@@ -1,0 +1,8 @@
+// Convert photoshop letter-spacing values into em values
+@function letter-spacing-photoshop-to-em($photoshop-letter-spacing-value) {
+  @return $photoshop-letter-spacing-value/1000 * 1em;
+}
+
+@function px-to-rem($px-value, $px-base-value) {
+  @return ($px-value / $px-base-value) * 1rem;
+}

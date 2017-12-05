@@ -12,36 +12,22 @@
           <div class="card-content">
             <div class="card-content-inner">
               <!--avatar-cropper-->
-              <input type="file" name="image" accept="image/*"
-                style="font-size: 1.0em; padding: 10px 0;"
-                @change="setImage"
-              />
-              <br />
-              <div style="max-width: 900px; display: inline-block;">
-                <vue-cropper
-                  ref="cropper"
-                  :guides="config.guides"
-                  :view-mode="config.viewMode"
-                  :drag-mode="config.dragMode"
-                  :auto-crop-area="config.autoCropArea"
-                  :min-container-width="config.minContainerWidth"
-                  :min-container-height="config.minContainerHeight"
-                  :background="config.background"
-                  :rotatable="config.rotatable"
-                  :aspect-ratio="config.aspectRatio"
-                  :src="imgSrc"
-                  alt="Source image"
-                  :cropmove="cropImage">
-                </vue-cropper>
+              <croppa
+                v-model="croppa"
+                :width="300"
+                :height="300"
+                :prevent-white-space="true"
+                placeholder=""
+                @new-image-drawn="onPickImage"
+                @image-remove="onImageRemove"
+                :class="{liner: loaded}">
+               <img slot="placeholder" :src="imgPlaceholder">
+              </croppa>
+              <div class="buttons-row">
+                <button :disabled="!loaded" @click="croppa.rotate()" class="button button-raised">rotate</button>
+                <button :disabled="!loaded" @click="croppa.flipX()" class="button button-raised">flip horizontally</button>
+                <button :disabled="!loaded" @click="croppa.flipY()" class="button button-raised">flip vertically</button>
               </div>
-              <br />
-              <img
-                v-show="cropImg"
-                :src="cropImg"
-                class="avatar"
-                alt="Cropped avatar image"
-              />
-              <br />
             </div>
           </div>
           <div class="card-footer">
@@ -55,7 +41,7 @@
 </template>
 
 <script>
-import VueCropper from 'vue-cropperjs'
+const cropImage = require('../../assets/select-avatar-3.png')
 
 export default {
   computed: {},
@@ -75,12 +61,23 @@ export default {
         background: true,
         rotatable: true,
         aspectRatio: 1 / 1
-      }
+      },
+      croppa: {},
+      imgPlaceholder: cropImage,
+      loaded: false
     }
   },
 
   methods: {
     onF7Init () {},
+
+    onPickImage () {
+      this.loaded = true
+      console.log('Picked new image!')
+    },
+    onImageRemove () {
+      this.loaded = false
+    },
 
     setImage (e) {
       const file = e.target.files[0];
@@ -166,15 +163,21 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
-cropper {
-  width: 400px;
-  height: 400px;
-}
+<style lang="scss" scoped>
 .croppa-container {
-  width: 100%;
-  background-color: white;
-  border: 3px solid #424242;
+  padding: 0;
+  width: 300px;
+  height: 300px;
+  background-color: transparent;
+}
+.liner {
+  border: 1px solid #BDBDBD;
+}
+.croppa-container:hover {
+  background-color: #BDBDBD;
+}
+.buttons-row {
+  margin: 20px 0;
 }
 .avatar {
   position: relative;

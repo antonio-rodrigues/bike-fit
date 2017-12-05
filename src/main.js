@@ -13,6 +13,7 @@ import { i18n } from './i18n'
 import moment from 'moment'
 import VueMomentJS from 'vue-momentjs'
 // import VueCropper from 'vue-cropperjs'
+import Croppa from 'vue-croppa'
 
 require('framework7')
 
@@ -32,12 +33,13 @@ require('framework7/dist/css/framework7.' + theme + '.colors.min.css')
 require('framework7-icons/css/framework7-icons.css')
 // global styles
 import './styles/app.scss'
+import 'vue-croppa/dist/vue-croppa.css'
 
 Vue.use(Framework7Vue)
 Vue.use(VueCordova, {})
 Vue.use(VueMomentJS, moment)
 Vue.use(VueAxios, axios)
-// Vue.use(VueCropper)
+Vue.use(Croppa)
 
 Vue.conf = require('./config').items
 Vue.prototype.$config = Vue.conf
