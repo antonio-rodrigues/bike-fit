@@ -9,9 +9,11 @@
           <div class="card-header color-white no-border background-photo" valign="bottom">...</div>
           <div class="card-content">
             <div class="card-content-inner">
-              <f7-link href="/profile/avatar">
-                <img :src="avatar" class="avatar" />
-              </f7-link>
+              <a href="#" class="item-link item-content open-popup" data-popup=".popup-avatar">
+                <div class="item-inner">
+                  <img :src="avatar" class="avatar" />
+                </div>
+              </a>
               <p class="color-gray">{{ user.userId }}</p>
             </div>
           </div>
@@ -22,14 +24,39 @@
         </div>
       </div>
     </div>
+
+    <!-- Avatar Popup -->
+    <div class="popup popup-avatar">
+      <div class="content-block">
+        <p><a href="#" class="close-popup">{{ $app.trans('back') }}</a></p>
+        <!--avatar-cropper-->
+        <div class="text-center">
+          <img v-if="userAvatar">
+          <div id="pick-avatar" class="avatar-placeholder">
+            <img class="image-placeholder" :src="config.imgPlaceholder" />
+          </div>
+          <avatar-cropper
+            :uploaded="updateUserAvatar"
+            :labels="config.labels"
+            :uploadHandler="onUpload"
+            :uploadFormData="user"
+            trigger="#pick-avatar">
+          </avatar-cropper>
+          <p>
+            <img :src="userAvatar" class="avatar" />
+          </p>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
-// import Vue from 'vue'
 import { mapGetters } from 'vuex'
+import AvatarCropper from 'vue-avatar-cropper'
 const bgImage = require('../../assets/road-bg.png')
-// const avatarImage = require('../../assets/my-bike.png')
+const cropImage = require('../../assets/select-avatar-3.png')
 
 export default {
   computed: {
@@ -48,25 +75,48 @@ export default {
     return {
       images: {
         background: bgImage
-      }
+      },
+      config: {
+        imgPlaceholder: cropImage,
+        uploadUrl: 'Persons',
+        labels: {
+          submit: 'Ok',
+          cancel: 'Cancel'
+        }
+      },
+      loaded: false,
+      userAvatar: undefined
     }
   },
 
-  mounted: () => {
-    console.log('> Profile.vue: mounted')
+  mounted () {
+    this.config.labels.submit = this.$app.trans('actions.ok')
+    this.config.labels.cancel = this.$app.trans('actions.cancel')
   },
 
   methods: {
     // onF7Init: function() {},
-    // getImgUrl (img) {
-    //   return require('../../assets/' + img)
-    // },
-    onAvatarClick () {
-      this.$route.go('profile/avatar')
-    }
+
+    updateUserAvatar(resp) {
+      console.log('__updateUserAvatar', resp)
+      // this.$http.patch('/users/23', {
+      //   avatar: resp.relative_url
+      // }).then(() => {
+      //   this.userAvatar = resp.relative_url
+      // })
+    },
+    onUpload (payload) {
+      console.log('__onUpload', payload, payload.data)
+      this.userAvatar = payload.element.currentSrc
+      // this.user.avatar = r.image2.currentSrc
+    },
+    onUploadFormData (r) {
+      console.log('__onUploadFormData', r)
+    },
   },
 
   components: {
+    AvatarCropper,
     navbar: require('../partials/Navbar.vue'),
     card: require('../partials/Card.vue')
   }
@@ -98,5 +148,24 @@ export default {
     max-height: 110px;
     border-radius: 50%;
     box-shadow: 0 0 0 1px #fff, 0 0 0 2px #999, 0 1px 3px 3px rgba(0,0,0,.2);
+  }
+
+  .avatar-placeholder {
+    position: relative;
+    margin-top: 10px;
+    background-color: black;
+    width: 300px;
+    height: 300px;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    margin-right: -50%;
+    transform: translate(-50%, 0);
+    border-radius: 50%;
+    opacity: 0.75;
+  }
+  .image-placeholder {
+    width: 100%;
+    height: auto;
   }
 </style>

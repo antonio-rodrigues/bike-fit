@@ -12,7 +12,7 @@ import { i18n } from './i18n'
 
 import moment from 'moment'
 import VueMomentJS from 'vue-momentjs'
-// import VueCropper from 'vue-cropperjs'
+
 import Croppa from 'vue-croppa'
 
 require('framework7')

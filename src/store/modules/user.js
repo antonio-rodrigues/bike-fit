@@ -105,9 +105,21 @@ export default {
         .catch(response => handleError(store, 'Logout', response))
     },
 
+    avatar: (store, user) => {
+      Vue.axios.patch('Persons', user)
+        .then(response => {
+          if (response.status && parseInt(response.status) === 200) {
+            store.commit('logout', response.data)
+          } else {
+            console.error('> axios.persons/logout:', response)
+            store.commit('logout')
+          }
+        })
+        .catch(response => handleError(store, 'Logout', response))
+    },
+
     register: (store, user) => {
-      // TODO: change Person fields to match API...
-      console.log('>> user:', user)
+      console.log('>> register.user:', user)
       const params = {
         id: user.email,
         firstName: user.first_name,
